@@ -51,10 +51,10 @@ namespace treasureHuntHelper
 
                 //byte[] dataMsg = reader.ReadBytes(length);
 
-                //Console.WriteLine("id message : " + (ushort)idMsg + " lenType : " + lenType + " len : " + length + "\nData message : " + new SoapHexBinary(dataMsg));
-
                 if (messagesToCatch.Contains(idMsg))
                 {
+
+                Console.WriteLine("id message : " + (ushort)idMsg );
                     try
                     {
                         int lenType = header & 3;// getLenMsg(reader);
@@ -67,7 +67,7 @@ namespace treasureHuntHelper
                     }
                     catch (Exception e)
                     {
-                        //Console.WriteLine("not found exception");
+                        Console.WriteLine(e.Message);
                     }
                 }
 
