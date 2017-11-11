@@ -6,12 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TreasureHuntHelper;
+using Cookie.API.Gamedata;
+using Cookie.API.Gamedata.D2o.other;
+using Cookie.API.Gamedata.D2o;
 
 namespace treasureHuntHelper
 {
     public static class MessageHandler
     {
-        private static JsonManager jsonManager = new JsonManager();
 
         public static void handleMessage(NetworkMessage message)
         {
@@ -73,8 +75,10 @@ namespace treasureHuntHelper
             showMessageInfos(message);
             MapComplementaryInformationsDataMessage mapMessage = (MapComplementaryInformationsDataMessage)message;
             Console.Write("MapId : " + mapMessage.MapId);
-            Position position = jsonManager.getPosition(mapMessage.MapId);
-            Console.Write(" " + position.X + "," + position.Y+"\n");
+            //Position position = jsonManager.getPosition(mapMessage.MapId);
+            Point position = D2OParsing.GetMapCoordinates(mapMessage.MapId);
+            Console.Write(" " + position.x + "," + position.y+"\n");
+            
 
         }
         private static void showMessageInfos(NetworkMessage message)

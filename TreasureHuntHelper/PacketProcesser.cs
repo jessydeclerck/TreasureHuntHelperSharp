@@ -17,7 +17,6 @@ namespace treasureHuntHelper
 {
     class PacketProcesser
     {
-        private static JsonManager jsonManager = new JsonManager();
 
         private static List<ushort> messagesToCatch = new List<ushort>(new ushort[] { 226, 6491, 6509, 6484, 6485, 6483, 6510,6507,6508,6487,6499,6486,6489,6488,6498});
 
@@ -49,19 +48,18 @@ namespace treasureHuntHelper
                 int header = reader.ReadShort();
                 ushort idMsg = (ushort) (header >> 2);// getIdMsg(reader);
 
-                //byte[] dataMsg = reader.ReadBytes(length);
+                IDataReader datacpy = new BigEndianReader(rx_payload);
+                //byte[] dataMsg = reader.ReadBytes(length); make a copy to see data and compare
 
                 if (messagesToCatch.Contains(idMsg))
                 {
 
-                Console.WriteLine("id message : " + (ushort)idMsg );
+                Console.WriteLine("id message : " + (ushort)idMsg + "\n");
                     try
                     {
-                        int lenType = header & 3;// getLenMsg(reader);
+                        int lenType = header & 3;
                         int length = getLenMsg(lenType, reader);
                         NetworkMessage message = MessageReceiver.BuildMessage(idMsg, reader);
-
-
 
                         MessageHandler.handleMessage(message);
                     }

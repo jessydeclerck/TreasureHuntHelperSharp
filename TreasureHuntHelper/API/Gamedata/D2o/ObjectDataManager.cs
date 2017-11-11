@@ -16,9 +16,10 @@ namespace Cookie.API.Gamedata.D2o
             foreach (var D2oFile in Directory.EnumerateFiles(directory).Where(entry => entry.EndsWith(".d2o")))
             {
                 var reader = new D2oReader(D2oFile);
-
                 AddReader(reader);
             }
+            foreach (Type type in readers.Keys)
+                Console.WriteLine(type.ToString());
         }
 
         private void AddReader(D2oReader D2oFile)
