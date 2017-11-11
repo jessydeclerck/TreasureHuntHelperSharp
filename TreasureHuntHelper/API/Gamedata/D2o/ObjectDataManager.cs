@@ -18,8 +18,6 @@ namespace Cookie.API.Gamedata.D2o
                 var reader = new D2oReader(D2oFile);
                 AddReader(reader);
             }
-            foreach (Type type in readers.Keys)
-                Console.WriteLine(type.ToString());
         }
 
         private void AddReader(D2oReader D2oFile)

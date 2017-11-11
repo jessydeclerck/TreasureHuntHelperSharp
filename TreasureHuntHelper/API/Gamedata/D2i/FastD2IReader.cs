@@ -50,7 +50,7 @@ namespace Cookie.API.Gamedata.D2i
         /// <param name="d2IPath">Path to the .d2i file</param>
         /// <param name="fastLoad">Enable the fast load, by default it's set to True.</param>
         /// <remarks></remarks>
-        public void Init(string d2IPath, bool fastLoad = true)
+        public static void Init(string d2IPath, bool fastLoad = true)
         {
             //Assign fastload information so can be reused in GetText
             _isFastLoad = fastLoad;

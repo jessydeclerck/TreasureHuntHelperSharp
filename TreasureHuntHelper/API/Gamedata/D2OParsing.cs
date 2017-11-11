@@ -65,5 +65,17 @@ namespace Cookie.API.Gamedata
             var objectValue = RuntimeHelpers.GetObjectValue(ObjectDataManager.Instance.Get<Monster>(creatureId).NameId);
             return FastD2IReader.Instance.GetText(Convert.ToInt32(objectValue));
         }
+
+        public static string GetNpcName(int npcId)
+        {
+            var objectValue = RuntimeHelpers.GetObjectValue(ObjectDataManager.Instance.Get<Npc>(npcId).NameId);
+            return FastD2IReader.Instance.GetText(Convert.ToInt32(objectValue));
+        }
+
+        public static string GetPoiName(int poiLabelId)
+        {
+            var objectValue = RuntimeHelpers.GetObjectValue(ObjectDataManager.Instance.Get<PointOfInterest>(poiLabelId).NameId);
+            return FastD2IReader.Instance.GetText(Convert.ToInt32(objectValue));
+        }
     }
 }
