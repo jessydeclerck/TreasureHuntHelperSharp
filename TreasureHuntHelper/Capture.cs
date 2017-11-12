@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PcapDotNet.Core;
 using PcapDotNet.Packets;
+using System.Threading;
 
 namespace treasureHuntHelper
 {
@@ -12,6 +13,7 @@ namespace treasureHuntHelper
     {
       public Capture()
         {
+
                  // Retrieve the device list from the local machine
                 IList<LivePacketDevice> allDevices = LivePacketDevice.AllLocalMachine;
 
@@ -50,23 +52,45 @@ namespace treasureHuntHelper
                 // Open the device
                 using (PacketCommunicator communicator =
                     selectedDevice.Open(65536,                                  // portion of the packet to capture
-                                                                                // 65536 guarantees that the whole packet will be captured on all the link layers
                                         PacketDeviceOpenAttributes.Promiscuous, // promiscuous mode
-                                        1000))                                  // read timeout
+                                        15))                                  // read timeout
                 {
                     Console.WriteLine("Listening on " + selectedDevice.Description + "...");
 
                 // start the capture
                     communicator.SetFilter("net 213.248.126.0 mask 255.255.255.0");
-                    communicator.ReceivePackets(0, PacketHandler);
-                }
+                    packetProcesser = new PacketProcesser();
+                    Thread thread = new Thread(new ThreadStart(packetProcesser.process));
+                    thread.Start();
+                //communicator.ReceivePackets(0, PacketHandler);
+                // Retrieve the packets
+                Packet packet;
+
+                do
+                {
+                    PacketCommunicatorReceiveResult result = communicator.ReceivePacket(out packet);
+                    switch (result)
+                    {
+                        case PacketCommunicatorReceiveResult.Timeout:
+                            // Timeout elapsed
+                            continue;
+                        case PacketCommunicatorReceiveResult.Ok:
+                            packetProcesser.addPacket(packet);
+                            break;
+                        default:
+                            throw new InvalidOperationException("The result " + result + " shoudl never be reached here");
+                    }
+                } while (true);
+            }
             }
 
-            // Callback function invoked by Pcap.Net for every incoming packet
-            private void PacketHandler(Packet packet)
+        private PacketProcesser packetProcesser;
+
+        // Callback function invoked by Pcap.Net for every incoming packet
+        private void PacketHandler(Packet packet)
             {
             //Console.WriteLine(packet.Timestamp.ToString("yyyy-MM-dd hh:mm:ss.fff") + " length:" + packet.Length);
-            PacketProcesser.printMessage(packet);
+            packetProcesser.addPacket(packet);
             }
         
     }

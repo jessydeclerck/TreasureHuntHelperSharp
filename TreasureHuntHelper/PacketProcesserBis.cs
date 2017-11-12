@@ -4,31 +4,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
-using PcapDotNet.Packets;
-using PcapDotNet.Packets.IpV4;
-using PcapDotNet.Packets.Transport;
-using PcapDotNet.Core;
 using System.IO;
 using Cookie.API.Utils.IO;
 using Cookie.API.Protocol;
 using Cookie.API.Messages;
+using SharpPcap;
 using TreasureHuntHelper;
 using System.Collections.Concurrent;
+using PacketDotNet;
 
 namespace treasureHuntHelper
 {
-    class PacketProcesser
+    class PacketProcesserBis
     {
 
         private BlockingCollection<Packet> packets;
         //private Queue<Packet> packets;
 
-        public PacketProcesser()
+        public PacketProcesserBis()
         {
             packets = new BlockingCollection<Packet>();
             //this.process();
         }
-          
+
         public void addPacket(Packet packet)
         {
             packets.Add(packet);
@@ -37,27 +35,12 @@ namespace treasureHuntHelper
         private byte[] getData(Packet packet)
         {
 
-            /*Packet packetToRead = Packet.ParsePacket(packet.LinkLayerType, packet.Data);
             //IpPacket ipPacket = (IpPacket)packetToRead.Extract(typeof(IpPacket));
-            TcpPacket tcpPacket = (TcpPacket)packetToRead.Extract(typeof(TcpPacket));
+            TcpPacket tcpPacket = (TcpPacket)packet.Extract(typeof(TcpPacket));
             //var ip = ipPacket.SourceAddress;
-            //Console.WriteLine("Source address : " + ip);*/
-            IpV4Datagram ip = packet.Ethernet.IpV4;
-            TcpDatagram tcpDatagram = ip.Tcp;
-            Datagram tcpPayload = tcpDatagram.Payload;
-            if (null != tcpPayload)
-            {
-                int payloadLength = tcpPayload.Length;
-                byte[] rx_payload = new byte[payloadLength];
-                using (MemoryStream ms = tcpPayload.ToMemoryStream())
-                {
-                    ms.Read(rx_payload, 0, payloadLength);
-                }
-                return rx_payload;
-            }
+            //Console.WriteLine("Source address : " + ip);
+            return tcpPacket.PayloadData;
 
-            return null;
-            
         }
 
         private int getLenMsg(int lenType, IDataReader reader)
@@ -109,7 +92,7 @@ namespace treasureHuntHelper
                             fragmented = false;
                         }
                         Console.WriteLine("taille data to build : " + (data.Length - 1 - 32));
-                        Console.WriteLine(BitConverter.ToString(data).Replace("-", string.Empty));
+                        //Console.WriteLine(BitConverter.ToString(data).Replace("-", string.Empty));
                         
                         NetworkMessage message = MessageReceiver.BuildMessage(idMsg, reader);
                         MessageHandler.handleMessage(message);
