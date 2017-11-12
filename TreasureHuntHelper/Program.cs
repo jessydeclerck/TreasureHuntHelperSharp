@@ -15,8 +15,8 @@ namespace treasureHuntHelper
         {
             ProtocolTypeManager.Initialize();
             MessageReceiver.Initialize();
-            ObjectDataManager.Instance.AddReaders(@"C:\Users\Pepito\Desktop\Ankama\Dofus\app\data\common");
-            FastD2IReader.Init(@"C:\Users\Pepito\Desktop\Ankama\Dofus\app\data\i18n\i18n_fr.d2i");
+            ObjectDataManager.Instance.AddReaders(@"C:\Program Files (x86)\Ankama\Dofus\app\data\common");
+            FastD2IReader.Init(@"C:\Program Files (x86)\Ankama\Dofus\app\data\i18n\i18n_fr.d2i");
             Console.WriteLine(D2OParsing.GetPoiName(64));
             new Capture();
             return;

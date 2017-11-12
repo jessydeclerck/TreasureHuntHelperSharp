@@ -12,13 +12,13 @@ using System.IO;
 using Cookie.API.Utils.IO;
 using Cookie.API.Protocol;
 using Cookie.API.Messages;
+using TreasureHuntHelper;
 
 namespace treasureHuntHelper
 {
     class PacketProcesser
     {
 
-        private static List<ushort> messagesToCatch = new List<ushort>(new ushort[] { 226, 6491, 6509, 6484, 6485, 6483, 6510,6507,6508,6487,6499,6486,6489,6488,6498});
 
         private PacketProcesser()
         {
@@ -48,13 +48,19 @@ namespace treasureHuntHelper
                 int header = reader.ReadShort();
                 ushort idMsg = (ushort) (header >> 2);// getIdMsg(reader);
 
-                IDataReader datacpy = new BigEndianReader(rx_payload);
-                //byte[] dataMsg = reader.ReadBytes(length); make a copy to see data and compare
+                
 
-                if (messagesToCatch.Contains(idMsg))
+                if (ToCatch.MESSAGES.Contains(idMsg))
                 {
-
-                Console.WriteLine("id message : " + (ushort)idMsg + "\n");
+                    IDataReader datacpy = new BigEndianReader(rx_payload);
+                    int headercpy = datacpy.ReadShort();
+                    ushort idMsgcpy = (ushort)(headercpy >> 2);// getIdMsg(reader);
+                    int lentypecpy = (int)(headercpy & 3);
+                    //byte[] dataMsg = datacpy.ReadBytes(getLenMsg(lentypecpy, datacpy));
+                    
+                    Console.WriteLine("id message : " + (ushort)idMsg + " len : " + getLenMsg(lentypecpy, datacpy) + " lenrestant : "+ (rx_payload.Length - 1 - 32) + "\n");
+                    //Console.WriteLine(BitConverter.ToString(dataMsg).Replace("-", string.Empty));
+                    Console.WriteLine(BitConverter.ToString(rx_payload).Replace("-", string.Empty));
                     try
                     {
                         int lenType = header & 3;

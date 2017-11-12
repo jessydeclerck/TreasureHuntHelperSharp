@@ -36,30 +36,26 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AmaknaCore.AppData">
-      <HintPath>..\..\..\Desktop\Sniffer 2.45.7\AmaknaCore.AppData.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.4.4.10\lib\net45\NLog.dll</HintPath>
     </Reference>
+    <Reference Include="PacketDotNet, Version=0.16.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PacketDotNet.0.16.0\lib\PacketDotNet.dll</HintPath>
+    </Reference>
     <Reference Include="PcapDotNet.Base, Version=1.0.4.25027, Culture=neutral, PublicKeyToken=06a20bc2fabb1931, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\PcapDotNet.Binaries.1.0.4\PcapDotNet.Binaries.1.0.4.x86\PcapDotNet.Base.dll</HintPath>
+      <HintPath>..\packages\Pcap.Net.x86.1.0.4.1\lib\net45\PcapDotNet.Base.dll</HintPath>
     </Reference>
-    <Reference Include="PcapDotNet.Core, Version=1.0.4.25149, Culture=neutral, PublicKeyToken=06a20bc2fabb1931, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\PcapDotNet.Binaries.1.0.4\PcapDotNet.Binaries.1.0.4.x86\PcapDotNet.Core.dll</HintPath>
+    <Reference Include="PcapDotNet.Core, Version=1.0.4.25067, Culture=neutral, PublicKeyToken=06a20bc2fabb1931, processorArchitecture=x86">
+      <HintPath>..\packages\Pcap.Net.x86.1.0.4.1\lib\net45\PcapDotNet.Core.dll</HintPath>
     </Reference>
-    <Reference Include="PcapDotNet.Core.Extensions, Version=1.0.4.25151, Culture=neutral, PublicKeyToken=06a20bc2fabb1931, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\PcapDotNet.Binaries.1.0.4\PcapDotNet.Binaries.1.0.4.x86\PcapDotNet.Core.Extensions.dll</HintPath>
+    <Reference Include="PcapDotNet.Core.Extensions, Version=1.0.4.25069, Culture=neutral, PublicKeyToken=06a20bc2fabb1931, processorArchitecture=x86">
+      <HintPath>..\packages\Pcap.Net.x86.1.0.4.1\lib\net45\PcapDotNet.Core.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="PcapDotNet.Packets, Version=1.0.4.25028, Culture=neutral, PublicKeyToken=06a20bc2fabb1931, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\PcapDotNet.Binaries.1.0.4\PcapDotNet.Binaries.1.0.4.x86\PcapDotNet.Packets.dll</HintPath>
+      <HintPath>..\packages\Pcap.Net.x86.1.0.4.1\lib\net45\PcapDotNet.Packets.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -135,6 +131,9 @@
     <Compile Include="API\Game\Map\MapDirectionEnum.cs" />
     <Compile Include="API\Game\Map\MapEvent.cs" />
     <Compile Include="API\Game\Party\IParty.cs" />
+    <Compile Include="API\Protocol\Network\Messages\Debug\DebugClearHighlightCellsMessage.cs" />
+    <Compile Include="API\Protocol\Network\Messages\Debug\DebugHighlightCellsMessage.cs" />
+    <Compile Include="API\Protocol\Network\Messages\Debug\DebugInClientMessage.cs" />
     <Compile Include="Capture.cs" />
     <Compile Include="API\Messages\HostInitializationMessage.cs" />
     <Compile Include="API\Messages\IMessageFilter.cs" />
@@ -286,9 +285,6 @@
     <Compile Include="API\Protocol\Network\Messages\Connection\ServerSelectionMessage.cs" />
     <Compile Include="API\Protocol\Network\Messages\Connection\ServersListMessage.cs" />
     <Compile Include="API\Protocol\Network\Messages\Connection\ServerStatusUpdateMessage.cs" />
-    <Compile Include="API\Protocol\Network\Messages\Debug\DebugClearHighlightCellsMessage.cs" />
-    <Compile Include="API\Protocol\Network\Messages\Debug\DebugHighlightCellsMessage.cs" />
-    <Compile Include="API\Protocol\Network\Messages\Debug\DebugInClientMessage.cs" />
     <Compile Include="API\Protocol\Network\Messages\Game\Achievement\AchievementDetailedListMessage.cs" />
     <Compile Include="API\Protocol\Network\Messages\Game\Achievement\AchievementDetailedListRequestMessage.cs" />
     <Compile Include="API\Protocol\Network\Messages\Game\Achievement\AchievementDetailsMessage.cs" />
@@ -1851,6 +1847,7 @@
     <Compile Include="API\Datacenter\world\SuperArea.cs" />
     <Compile Include="API\Datacenter\world\Waypoint.cs" />
     <Compile Include="API\Datacenter\world\WorldMap.cs" />
+    <Compile Include="ToCatch.cs" />
     <Compile Include="MessageHandler.cs" />
     <Compile Include="JsonManager.cs" />
     <Compile Include="PacketProcesser.cs" />
@@ -1860,7 +1857,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="mapPositions.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
