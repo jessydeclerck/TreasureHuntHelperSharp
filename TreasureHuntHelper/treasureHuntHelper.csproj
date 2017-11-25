@@ -140,6 +140,7 @@
     <Compile Include="API\Protocol\Network\Messages\Debug\DebugInClientMessage.cs" />
     <Compile Include="API\Utils\IO\FastBigEndianReader.cs" />
     <Compile Include="API\Utils\IO\LittleEndianReader.cs" />
+    <Compile Include="Capture3.cs" />
     <Compile Include="CaptureBis.cs" />
     <Compile Include="Capture.cs" />
     <Compile Include="API\Messages\HostInitializationMessage.cs" />
@@ -1852,6 +1853,12 @@
     <Compile Include="API\Datacenter\world\SuperArea.cs" />
     <Compile Include="API\Datacenter\world\Waypoint.cs" />
     <Compile Include="API\Datacenter\world\WorldMap.cs" />
+    <Compile Include="Injection\DLLInjector.cs" />
+    <Compile Include="Injection\Injection.cs" />
+    <Compile Include="mitm\Client.cs" />
+    <Compile Include="mitm\ConnectionManager.cs" />
+    <Compile Include="mitm\PackManager.cs" />
+    <Compile Include="mitm\Server.cs" />
     <Compile Include="PacketProcesserBis.cs" />
     <Compile Include="ToCatch.cs" />
     <Compile Include="MessageHandler.cs" />

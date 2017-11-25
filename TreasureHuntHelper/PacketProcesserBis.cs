@@ -27,9 +27,9 @@ namespace treasureHuntHelper
             //this.process();
         }
 
-        public void addPacket(Packet packet)
+        public void addPacket(RawCapture packet)
         {
-            packets.Add(packet);
+            packets.Add(Packet.ParsePacket(packet.LinkLayerType, packet.Data));
         }
 
         private byte[] getData(Packet packet)
@@ -60,8 +60,8 @@ namespace treasureHuntHelper
             bool fragmented = false;
             while (isStarted)
             {
-                
 
+                Console.WriteLine("test");
                 Packet packet = packets.Take();
                 var watch = System.Diagnostics.Stopwatch.StartNew();
                 byte[] data = getData(packet);

@@ -154,7 +154,7 @@ namespace treasureHuntHelper
         private void PacketHandler(RawCapture packet)
         {
             //Console.WriteLine(packet.Timestamp.ToString("yyyy-MM-dd hh:mm:ss.fff") + " length:" + packet.Length);
-            packetProcesser.addPacket(Packet.ParsePacket(packet.LinkLayerType, packet.Data));
+            packetProcesser.addPacket(packet);
         }
 
         private void BackgroundThread()
@@ -189,7 +189,7 @@ namespace treasureHuntHelper
 
                     foreach (var packet in ourQueue)
                     {
-                        packetProcesser.addPacket(Packet.ParsePacket(packet.LinkLayerType, packet.Data));
+                        packetProcesser.addPacket(packet);
                         /*var time = packet.Timeval.Date;
                         var len = packet.Data.Length;
                         Console.WriteLine("BackgroundThread: {0}:{1}:{2},{3} Len={4}",
