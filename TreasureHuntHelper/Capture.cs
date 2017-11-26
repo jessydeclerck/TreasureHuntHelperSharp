@@ -57,7 +57,7 @@ namespace treasureHuntHelper
                 using (PacketCommunicator communicator =
                     selectedDevice.Open(2000,                                  // portion of the packet to capture
                                         PacketDeviceOpenAttributes.Promiscuous|PacketDeviceOpenAttributes.NoCaptureLocal|PacketDeviceOpenAttributes.NoCaptureRemote, // promiscuous mode
-                                        500))                                  // read timeout
+                                        100))                                  // read timeout
                 {
                     Console.WriteLine("Listening on " + selectedDevice.Description + "...");
 

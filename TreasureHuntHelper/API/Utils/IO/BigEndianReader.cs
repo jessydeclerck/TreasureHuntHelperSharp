@@ -59,6 +59,7 @@ namespace Cookie.API.Utils.IO
 
                 return data;
             }
+
         }
 
         public short ReadShort()

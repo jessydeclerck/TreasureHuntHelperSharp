@@ -33,7 +33,8 @@ namespace Cookie.API.Messages
             if (message == null)
                 throw new MessageNotFoundException($"Constructors[{id}] (delegate {_messages[id]}) does not exist");
 
-            message.Unpack(reader);
+            if(reader.Data.Length > 0)
+                message.Unpack(reader);
 
             return message;
         }
