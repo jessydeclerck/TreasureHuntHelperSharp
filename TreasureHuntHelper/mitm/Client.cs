@@ -58,6 +58,7 @@ namespace TreasureHuntHelper.mitm
         public void connect()
         {
             _socket.Connect(_remoteEP); // on connecte la socket
+            Console.WriteLine(IpAndPort + " : connecting socket");
             startReceive();
         }
 

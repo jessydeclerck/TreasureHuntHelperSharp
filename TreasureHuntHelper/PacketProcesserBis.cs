@@ -70,7 +70,7 @@ namespace treasureHuntHelper
                 int header = reader.ReadShort();
                 ushort idMsg = (ushort)(header >> 2);// getIdMsg(reader);
                 //Console.WriteLine(idMsg);
-                if (ToCatch.MESSAGES.Contains(idMsg))
+                if (ToCatch.MESSAGES.Contains((short)idMsg))
                 {
                     Console.WriteLine("packet received");
                     try

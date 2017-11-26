@@ -27,7 +27,8 @@ namespace Cookie.API.Game.Map
         Dictionary<int, IStatedElement> StatedElements { get; }
 
         /// <summary>Récupère l'identifiant du monde actuel</summary>
-        /// <returns>L'id du monde</returns>
+        /// <returns>L'
+        /// monde</returns>
         int WorldId { get; }
 
         // Properties

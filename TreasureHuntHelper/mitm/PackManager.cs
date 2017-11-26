@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using treasureHuntHelper;
 
 namespace TreasureHuntHelper.mitm
 {
@@ -43,9 +44,15 @@ namespace TreasureHuntHelper.mitm
         public PackManager()
         {
         }
+        private bool fragmented = false;
 
+        private void appendNextPacket()
+        {
+   
+        }
         public void ParsePacket(byte[] PacketToParse)
         {
+            //if fragmented
             try
             {
                 string content_hex = string.Empty;
@@ -55,7 +62,7 @@ namespace TreasureHuntHelper.mitm
                     content_hex += b.ToString("X2") + " ";
                     huit_bytes++;
                 }
-                Console.WriteLine("Paquet reçu = " + content_hex + "\nAnalyse...");
+                //Console.WriteLine("Paquet reçu = " + content_hex + "\nAnalyse...");
                 // Déclaration des variables qui seront utilisées
                 int index = 0;
                 short id_and_packet_lenght_type, packet_lenght_type;
@@ -89,16 +96,27 @@ namespace TreasureHuntHelper.mitm
                             _packet_lenght = PacketToParse[index] * 65536 + PacketToParse[index + 1] * 256 + PacketToParse[index + 2];
                             break;
                     }
-                    Console.WriteLine("Id du Paquet = " + _packet_id);
                     _packet_content = new byte[(int)_packet_lenght];
                     Array.Copy(PacketToParse, index + packet_lenght_type, _packet_content, 0, _packet_lenght);
-                    //TreatPacket(_packet_id, _packet_content);
                     index += _packet_lenght + packet_lenght_type;
+                    Console.WriteLine(_packet_id);
+                    if (ToCatch.MESSAGES.Contains(_packet_id))
+                    {
+                        try
+                        {
+                            NetworkMessage message = MessageReceiver.BuildMessage((ushort)_packet_id, new BigEndianReader(_packet_content));
+                            MessageHandler.handleMessage(message);
+                        }catch(Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
+                    }
+
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                //Console.WriteLine(e.ToString());
             }
         }
 

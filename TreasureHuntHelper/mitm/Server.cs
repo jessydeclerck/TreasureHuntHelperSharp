@@ -21,12 +21,12 @@ namespace TreasureHuntHelper.mitm
         /// <summary>
         /// Constructor that connect the server socket and start the _acceptingthread thread
         /// </summary>
-        public Server()
+        public Server(int listenPort)
         {
-            Console.WriteLine("Instantiating server");
+            Console.WriteLine("Instantiating server " + listenPort);
             _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             _acceptingthread = new Thread(new ThreadStart(accept));
-            _localEP = new IPEndPoint(IPAddress.Loopback, 5555);
+            _localEP = new IPEndPoint(IPAddress.Any, listenPort);
             _socket.Bind(_localEP); // écoute sur localhost
             _socket.Listen(100);
             _acceptingthread.Start(); // on démarre le thread d'acceptation
@@ -39,8 +39,9 @@ namespace TreasureHuntHelper.mitm
         {
             while (true)
             {
-                Console.WriteLine("waiting socket client");
+                Console.WriteLine("waiting : " + _localEP.Port);
                 Socket socket = _socket.Accept(); // on recupère la socket du nouveau client
+                Console.WriteLine("Local : " + _localEP.Port + "nouveau socket détecté");
                 Client client = new Client(socket);
                 onClientConnected?.Invoke(client); // on l'envoi via l'event
             }

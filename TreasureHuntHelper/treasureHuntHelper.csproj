@@ -1859,7 +1859,9 @@
     <Compile Include="mitm\ConnectionManager.cs" />
     <Compile Include="mitm\PackManager.cs" />
     <Compile Include="mitm\Server.cs" />
+    <Compile Include="mitm\ServersManager.cs" />
     <Compile Include="PacketProcesserBis.cs" />
+    <Compile Include="ParsedPacket.cs" />
     <Compile Include="ToCatch.cs" />
     <Compile Include="MessageHandler.cs" />
     <Compile Include="JsonManager.cs" />

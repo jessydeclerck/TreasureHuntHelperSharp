@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 using PcapDotNet.Core;
 using PcapDotNet.Packets;
 using System.Threading;
+using TreasureHuntHelper.mitm;
+using PcapDotNet.Packets.IpV4;
+using PcapDotNet.Packets.Transport;
+using System.IO;
 
 namespace treasureHuntHelper
 {
@@ -59,9 +63,12 @@ namespace treasureHuntHelper
 
                 // start the capture
                     communicator.SetFilter("net 213.248.126.0 mask 255.255.255.0");
-                    packetProcesser = new PacketProcesser();
-                    Thread thread = new Thread(new ThreadStart(packetProcesser.process));
-                    thread.Start();
+                packManager = new PackManager();
+                /*Thread thread = new Thread(new ThreadStart(packManager.process));
+                thread.Start();*/
+                //packetProcesser = new PacketProcesser();
+                //Thread thread = new Thread(new ThreadStart(packetProcesser.process));
+                //thread.Start();
                 //communicator.ReceivePackets(0, PacketHandler);
                 // Retrieve the packets
                 Packet packet;
@@ -75,7 +82,8 @@ namespace treasureHuntHelper
                             // Timeout elapsed
                             continue;
                         case PacketCommunicatorReceiveResult.Ok:
-                            packetProcesser.addPacket(packet);
+                            packManager.ParsePacket(getData(packet));
+                            //packetProcesser.addPacket(packet);
                             break;
                         default:
                             throw new InvalidOperationException("The result " + result + " shoudl never be reached here");
@@ -83,14 +91,39 @@ namespace treasureHuntHelper
                 } while (true);
             }
             }
+        private PackManager packManager;
+        private byte[] getData(Packet packet)
+        {
 
-        private PacketProcesser packetProcesser;
+            /*Packet packetToRead = Packet.ParsePacket(packet.LinkLayerType, packet.Data);
+            //IpPacket ipPacket = (IpPacket)packetToRead.Extract(typeof(IpPacket));
+            TcpPacket tcpPacket = (TcpPacket)packetToRead.Extract(typeof(TcpPacket));
+            //var ip = ipPacket.SourceAddress;
+            //Console.WriteLine("Source address : " + ip);*/
+            IpV4Datagram ip = packet.Ethernet.IpV4;
+            TcpDatagram tcpDatagram = ip.Tcp;
+            Datagram tcpPayload = tcpDatagram.Payload;
+            if (null != tcpPayload)
+            {
+                int payloadLength = tcpPayload.Length;
+                byte[] rx_payload = new byte[payloadLength];
+                using (MemoryStream ms = tcpPayload.ToMemoryStream())
+                {
+                    ms.Read(rx_payload, 0, payloadLength);
+                }
+                return rx_payload;
+            }
+
+            return null;
+
+        }
+        //private PacketProcesser packetProcesser;
 
         // Callback function invoked by Pcap.Net for every incoming packet
         private void PacketHandler(Packet packet)
             {
             //Console.WriteLine(packet.Timestamp.ToString("yyyy-MM-dd hh:mm:ss.fff") + " length:" + packet.Length);
-            packetProcesser.addPacket(packet);
+            //packetProcesser.addPacket(packet);
             }
         
     }
