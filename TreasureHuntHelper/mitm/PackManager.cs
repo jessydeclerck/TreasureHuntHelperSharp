@@ -55,9 +55,9 @@ namespace TreasureHuntHelper.mitm
 
         private byte[] appendNextPacket(byte[] dataToAppend)
         {
-            Console.WriteLine("appending next packet...");
+            //Console.WriteLine("appending next packet...");
             byte[] data = tmpPacket;
-            Console.WriteLine("taille packetToAppend : " + dataToAppend.Length);
+            //Console.WriteLine("taille packetToAppend : " + dataToAppend.Length);
             byte[] result = new byte[data.Length + dataToAppend.Length];
             System.Buffer.BlockCopy(data, 0, result, 0, data.Length);
             System.Buffer.BlockCopy(dataToAppend, 0, result, data.Length, dataToAppend.Length);
@@ -74,7 +74,7 @@ namespace TreasureHuntHelper.mitm
             if (fragmented && PacketToParse.Length != 0)
             {
                 PacketToParse = appendNextPacket(initPacket);
-                Console.WriteLine("total packet : " + PacketToParse.Length);
+                //Console.WriteLine("total packet : " + PacketToParse.Length);
                 initLength = PacketToParse.Length;
                 fragmented = false;
             }
@@ -113,10 +113,10 @@ namespace TreasureHuntHelper.mitm
                     {
                         fragmented = true;
                         tmpPacket = initPacket;
-                        Console.WriteLine("packet length type : " + packet_lenght_type);
+                        /*Console.WriteLine("packet length type : " + packet_lenght_type);
                         Console.WriteLine("packet length : " + _packet_lenght);
                         Console.WriteLine("packet content length : " + _packet_content.Length);
-                        Console.WriteLine("Init length : " + initLength);
+                        Console.WriteLine("Init length : " + initLength);*/
                         //Console.WriteLine("packet before appending : " + tmpPacket.Length);
                         return;
                     }
@@ -125,9 +125,9 @@ namespace TreasureHuntHelper.mitm
                     index += _packet_lenght + packet_lenght_type;
                     if (ToCatch.MESSAGES.Contains(_packet_id))
                     {
-                        Console.WriteLine("packet length type : " + packet_lenght_type);
+                        /*Console.WriteLine("packet length type : " + packet_lenght_type);
                         Console.WriteLine("packet length : " + _packet_lenght);
-                        Console.WriteLine("packet content length : " + _packet_content.Length);
+                        Console.WriteLine("packet content length : " + _packet_content.Length);*/
 
                         try
                         {

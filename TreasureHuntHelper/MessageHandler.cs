@@ -9,6 +9,11 @@ using TreasureHuntHelper;
 using Cookie.API.Gamedata;
 using Cookie.API.Gamedata.D2o.other;
 using Cookie.API.Gamedata.D2o;
+using TreasureHuntHelper.Web;
+using Cookie.API.Protocol.Network.Messages.Game.Context.Roleplay.TreasureHunt;
+using Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.TreasureHunt;
+using Cookie.API.Gamedata.D2i;
+using Cookie.API.Protocol.Network.Types.Game.Context.Roleplay;
 
 namespace treasureHuntHelper
 {
@@ -74,10 +79,22 @@ namespace treasureHuntHelper
         {
             showMessageInfos(message);
             MapComplementaryInformationsDataMessage mapMessage = (MapComplementaryInformationsDataMessage)message;
-            Console.Write("MapId : " + mapMessage.MapId);
             //Position position = jsonManager.getPosition(mapMessage.MapId);
-            Point position = D2OParsing.GetMapCoordinates(mapMessage.MapId);
-            Console.Write(" " + position.x + "," + position.y+"\n");
+            currentMap = D2OParsing.GetMapCoordinates(mapMessage.MapId);
+            Console.Write("Carte actuelle : " + currentMap.x + "," + currentMap.y+"\n");
+
+            foreach (GameRolePlayActorInformations actor in mapMessage.Actors)
+            {
+                if (actor.TypeID == 471)
+                {
+                    GameRolePlayTreasureHintInformations npc = (GameRolePlayTreasureHintInformations)actor;
+                    Console.WriteLine(npc.NpcId + " " + npcIdToFind);
+                    if (npc.NpcId == npcIdToFind)
+                        Console.WriteLine("Phorreur trouvé !");
+                }
+                
+            }
+
             
 
         }
@@ -102,10 +119,39 @@ namespace treasureHuntHelper
             showMessageInfos(message);
         }
 
+        private static Point currentMap;
+
+        private static int npcIdToFind;
+
         private static void handleTreasureHuntMessage(NetworkMessage message)
         {
-
+            Point startMap;
             showMessageInfos(message);
+
+            TreasureHuntMessage treasureHuntMessage = (TreasureHuntMessage)message;
+
+            TreasureHuntStep lastStep = treasureHuntMessage.KnownStepsList.Last();
+
+            if (treasureHuntMessage.KnownStepsList.Count == 1)
+                startMap = D2OParsing.GetMapCoordinates(treasureHuntMessage.StartMapId);
+            else
+                startMap = currentMap;
+
+            Console.Write(" " + startMap.x + "," + startMap.y + "\n");
+
+            try
+            {
+                TreasureHuntStepFollowDirectionToHint stepToFollow = (TreasureHuntStepFollowDirectionToHint)lastStep;
+                npcIdToFind = stepToFollow.NpcId;
+                Console.WriteLine("On cherche : " + D2OParsing.GetNpcName(stepToFollow.NpcId)); 
+            }
+            catch (Exception e)
+            {
+                TreasureHuntStepFollowDirectionToPOI stepToFollow = (TreasureHuntStepFollowDirectionToPOI)lastStep;
+                WebService.getData(startMap, stepToFollow.Direction, stepToFollow.PoiLabelId);
+                //Console.WriteLine("On cherche : " + D2OParsing.GetPoiName(stepToFollow.PoiLabelId));
+            }
+
         }
 
         private static void handleTreasureHuntLegendaryRequestMessage(NetworkMessage message)

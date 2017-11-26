@@ -1853,6 +1853,7 @@
     <Compile Include="API\Datacenter\world\SuperArea.cs" />
     <Compile Include="API\Datacenter\world\Waypoint.cs" />
     <Compile Include="API\Datacenter\world\WorldMap.cs" />
+    <Compile Include="Indice.cs" />
     <Compile Include="Injection\DLLInjector.cs" />
     <Compile Include="Injection\Injection.cs" />
     <Compile Include="mitm\Client.cs" />
@@ -1869,6 +1870,7 @@
     <Compile Include="Position.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Web\WebService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

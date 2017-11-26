@@ -9,6 +9,7 @@ using TreasureHuntHelper.Injection;
 using TreasureHuntHelper.mitm;
 using System.Net;
 using System.Threading;
+using TreasureHuntHelper.Web;
 
 namespace treasureHuntHelper
 {
@@ -22,6 +23,7 @@ namespace treasureHuntHelper
             MessageReceiver.Initialize();
             ObjectDataManager.Instance.AddReaders(@"C:\Program Files (x86)\Ankama\Dofus\app\data\common");
             FastD2IReader.Init(@"C:\Program Files (x86)\Ankama\Dofus\app\data\i18n\i18n_fr.d2i");
+            WebService.InitDofusHuntValues();
             //Injection injection = new Injection();
             //Thread thread = new Thread(new ThreadStart(injection.ProcessDofus));
             //thread.Start();
