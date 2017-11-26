@@ -100,7 +100,7 @@ namespace treasureHuntHelper
         }
         private static void showMessageInfos(NetworkMessage message)
         {
-            Console.WriteLine(message.MessageID + " " + message.GetType().Name);
+            //Console.WriteLine(message.MessageID + " " + message.GetType().Name);
         }
 
         private static void handleTreasureHuntShowLegendaryUIMessage(NetworkMessage message)
@@ -123,6 +123,7 @@ namespace treasureHuntHelper
 
         private static int npcIdToFind;
 
+        private static int sizeStepList = 1;
         private static void handleTreasureHuntMessage(NetworkMessage message)
         {
             Point startMap;
