@@ -71,12 +71,12 @@ namespace TreasureHuntHelper.mitm
             int index = 0;
             short id_and_packet_lenght_type, packet_lenght_type = 0;
             _packet_lenght = 0;
-            if (fragmented && PacketToParse.Length != 0)
+            if (fragmented && PacketToParse.Length != 0)//devrait être un while ?
             {
                 PacketToParse = appendNextPacket(initPacket);
                 //Console.WriteLine("total packet : " + PacketToParse.Length);
                 initLength = PacketToParse.Length;
-                fragmented = false;
+                fragmented = false;//manque condition ?
             }
             try
             {
