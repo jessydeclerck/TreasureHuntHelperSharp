@@ -53,6 +53,8 @@ namespace TreasureHuntHelper.mitm
 
         private byte[] tmpPacket;
 
+        private int totalLength;
+
         private byte[] appendNextPacket(byte[] dataToAppend)
         {
             //Console.WriteLine("appending next packet...");
@@ -76,7 +78,13 @@ namespace TreasureHuntHelper.mitm
                 PacketToParse = appendNextPacket(initPacket);
                 //Console.WriteLine("total packet : " + PacketToParse.Length);
                 initLength = PacketToParse.Length;
-                fragmented = false;//manque condition ?
+                if(initLength >= totalLength)
+                    fragmented = false;//manque condition ?
+                else
+                {
+                    tmpPacket = PacketToParse;
+                    return;
+                }
             }
             try
             {
@@ -111,6 +119,7 @@ namespace TreasureHuntHelper.mitm
                     }
                     if(initLength - 1 - 32 < _packet_lenght && _packet_id == 226 && isConstructed)
                     {
+                        totalLength = _packet_lenght;
                         fragmented = true;
                         tmpPacket = initPacket;
                         /*Console.WriteLine("packet length type : " + packet_lenght_type);
