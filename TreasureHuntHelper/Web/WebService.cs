@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using treasureHuntHelper;
 
 namespace TreasureHuntHelper.Web
 {
@@ -65,15 +66,15 @@ namespace TreasureHuntHelper.Web
                 //Console.WriteLine("n : " + indiceInfo.SelectToken("n") + " x :" + (int)indiceInfo.SelectToken("x"));
                 indices.Add(int.Parse(indiceInfo.SelectToken("n").ToString()), new Indice(int.Parse(indiceInfo.SelectToken("n").ToString()), new Point(int.Parse(indiceInfo.SelectToken("x").ToString()), int.Parse(indiceInfo.SelectToken("y").ToString())), int.Parse(indiceInfo.SelectToken("d").ToString())));
             }
-            Console.WriteLine("Resultat : ");
             int indiceDofusHuntToFind = DofusHuntValues[D2OParsing.GetPoiName(indiceToFind)];
             Indice indice = indices[indiceDofusHuntToFind];
-            Console.WriteLine(D2OParsing.GetPoiName(indiceToFind) + " : " + indice.position.x + ";" + indice.position.y + " : " + indice.direction + " cases vers " + getDir(direction));
+            Console.WriteLine(D2OParsing.GetPoiName(indiceToFind) + " : \n" + indice.position.x + ";" + indice.position.y + " : " + indice.direction + " cases vers " + getDir(direction));
+            MessageHandler.mapToGo = indice.position;
         }
 
 
 
-        private static string getDir(int dir)
+        public static string getDir(int dir)
         {
             switch (dir)
             {

@@ -77,11 +77,16 @@ namespace treasureHuntHelper
 
         private static void handleMapInfo(NetworkMessage message)
         {
-            showMessageInfos(message);
+            //showMessageInfos(message);
             MapComplementaryInformationsDataMessage mapMessage = (MapComplementaryInformationsDataMessage)message;
             //Position position = jsonManager.getPosition(mapMessage.MapId);
             currentMap = D2OParsing.GetMapCoordinates(mapMessage.MapId);
-            Console.Write("Carte actuelle : " + currentMap.x + "," + currentMap.y+"\n");
+            //Console.Write("Carte actuelle : " + currentMap.x + "," + currentMap.y+"\n");
+            if (currentMap == null || mapToGo == null)
+                return;
+
+            if (currentMap.x == mapToGo.x && currentMap.y == mapToGo.y)
+                Console.WriteLine("Indice trouvé !");
 
             foreach (GameRolePlayActorInformations actor in mapMessage.Actors)
             {
@@ -119,7 +124,7 @@ namespace treasureHuntHelper
             showMessageInfos(message);
         }
 
-        private static Point currentMap;
+        public static Point currentMap, mapToGo;
 
         private static int npcIdToFind;
 
@@ -133,18 +138,24 @@ namespace treasureHuntHelper
 
             TreasureHuntStep lastStep = treasureHuntMessage.KnownStepsList.Last();
 
+            if(treasureHuntMessage.TotalStepCount == treasureHuntMessage.Flags.Count)
+            {
+                Console.WriteLine("Etape terminée !");
+                return;
+            }
+
             if (treasureHuntMessage.KnownStepsList.Count == 1)
                 startMap = D2OParsing.GetMapCoordinates(treasureHuntMessage.StartMapId);
             else
                 startMap = currentMap;
 
-            Console.Write(" " + startMap.x + "," + startMap.y + "\n");
+            //Console.Write(" " + startMap.x + "," + startMap.y + "\n");
 
             try
             {
                 TreasureHuntStepFollowDirectionToHint stepToFollow = (TreasureHuntStepFollowDirectionToHint)lastStep;
                 npcIdToFind = stepToFollow.NpcId;
-                Console.WriteLine("On cherche : " + D2OParsing.GetNpcName(stepToFollow.NpcId)); 
+                Console.WriteLine("On cherche : \n" + D2OParsing.GetNpcName(stepToFollow.NpcId) + " vers " + WebService.getDir(stepToFollow.Direction)); 
             }
             catch (Exception e)
             {
