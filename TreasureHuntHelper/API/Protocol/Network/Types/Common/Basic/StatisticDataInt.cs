@@ -1,22 +1,19 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Common.Basic
+﻿namespace Cookie.API.Protocol.Network.Types.Common.Basic
 {
+    using Utils.IO;
+
     public class StatisticDataInt : StatisticData
     {
         public new const ushort ProtocolId = 485;
+        public override ushort TypeID => ProtocolId;
+        public int Value { get; set; }
 
         public StatisticDataInt(int value)
         {
             Value = value;
         }
 
-        public StatisticDataInt()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public int Value { get; set; }
+        public StatisticDataInt() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -29,5 +26,6 @@ namespace Cookie.API.Protocol.Network.Types.Common.Basic
             base.Deserialize(reader);
             Value = reader.ReadInt();
         }
+
     }
 }

@@ -1,16 +1,25 @@
-﻿using System.Collections.Generic;
-using Cookie.API.Protocol.Network.Types.Game.Look;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Guild.Tax
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Guild.Tax
 {
+    using Types.Game.Look;
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class TaxCollectorInformations : NetworkType
     {
         public const ushort ProtocolId = 167;
+        public override ushort TypeID => ProtocolId;
+        public double UniqueId { get; set; }
+        public ushort FirtNameId { get; set; }
+        public ushort LastNameId { get; set; }
+        public AdditionalTaxCollectorInformations AdditionalInfos { get; set; }
+        public short WorldX { get; set; }
+        public short WorldY { get; set; }
+        public ushort SubAreaId { get; set; }
+        public byte State { get; set; }
+        public EntityLook Look { get; set; }
+        public List<TaxCollectorComplementaryInformations> Complements { get; set; }
 
-        public TaxCollectorInformations(double uniqueId, ushort firtNameId, ushort lastNameId,
-            AdditionalTaxCollectorInformations additionalInfos, short worldX, short worldY, ushort subAreaId,
-            byte state, EntityLook look, List<TaxCollectorComplementaryInformations> complements)
+        public TaxCollectorInformations(double uniqueId, ushort firtNameId, ushort lastNameId, AdditionalTaxCollectorInformations additionalInfos, short worldX, short worldY, ushort subAreaId, byte state, EntityLook look, List<TaxCollectorComplementaryInformations> complements)
         {
             UniqueId = uniqueId;
             FirtNameId = firtNameId;
@@ -24,21 +33,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Guild.Tax
             Complements = complements;
         }
 
-        public TaxCollectorInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public double UniqueId { get; set; }
-        public ushort FirtNameId { get; set; }
-        public ushort LastNameId { get; set; }
-        public AdditionalTaxCollectorInformations AdditionalInfos { get; set; }
-        public short WorldX { get; set; }
-        public short WorldY { get; set; }
-        public ushort SubAreaId { get; set; }
-        public byte State { get; set; }
-        public EntityLook Look { get; set; }
-        public List<TaxCollectorComplementaryInformations> Complements { get; set; }
+        public TaxCollectorInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -51,7 +46,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Guild.Tax
             writer.WriteVarUhShort(SubAreaId);
             writer.WriteByte(State);
             Look.Serialize(writer);
-            writer.WriteShort((short) Complements.Count);
+            writer.WriteShort((short)Complements.Count);
             for (var complementsIndex = 0; complementsIndex < Complements.Count; complementsIndex++)
             {
                 var objectToSend = Complements[complementsIndex];
@@ -77,11 +72,11 @@ namespace Cookie.API.Protocol.Network.Types.Game.Guild.Tax
             Complements = new List<TaxCollectorComplementaryInformations>();
             for (var complementsIndex = 0; complementsIndex < complementsCount; complementsIndex++)
             {
-                var objectToAdd =
-                    ProtocolTypeManager.GetInstance<TaxCollectorComplementaryInformations>(reader.ReadUShort());
+                var objectToAdd = ProtocolTypeManager.GetInstance<TaxCollectorComplementaryInformations>(reader.ReadUShort());
                 objectToAdd.Deserialize(reader);
                 Complements.Add(objectToAdd);
             }
         }
+
     }
 }

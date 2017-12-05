@@ -1,32 +1,29 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
 {
+    using Utils.IO;
+
     public class FightTeamMemberCompanionInformations : FightTeamMemberInformations
     {
         public new const ushort ProtocolId = 451;
+        public override ushort TypeID => ProtocolId;
+        public byte CompanionId { get; set; }
+        public ushort Level { get; set; }
+        public double MasterId { get; set; }
 
-        public FightTeamMemberCompanionInformations(byte companionId, byte level, double masterId)
+        public FightTeamMemberCompanionInformations(byte companionId, ushort level, double masterId)
         {
             CompanionId = companionId;
             Level = level;
             MasterId = masterId;
         }
 
-        public FightTeamMemberCompanionInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public byte CompanionId { get; set; }
-        public byte Level { get; set; }
-        public double MasterId { get; set; }
+        public FightTeamMemberCompanionInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
             writer.WriteByte(CompanionId);
-            writer.WriteByte(Level);
+            writer.WriteVarUhShort(Level);
             writer.WriteDouble(MasterId);
         }
 
@@ -34,8 +31,9 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
         {
             base.Deserialize(reader);
             CompanionId = reader.ReadByte();
-            Level = reader.ReadByte();
+            Level = reader.ReadVarUhShort();
             MasterId = reader.ReadDouble();
         }
+
     }
 }

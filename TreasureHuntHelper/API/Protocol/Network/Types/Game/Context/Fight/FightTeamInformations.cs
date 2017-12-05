@@ -1,28 +1,25 @@
-﻿using System.Collections.Generic;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
 {
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class FightTeamInformations : AbstractFightTeamInformations
     {
         public new const ushort ProtocolId = 33;
+        public override ushort TypeID => ProtocolId;
+        public List<FightTeamMemberInformations> TeamMembers { get; set; }
 
         public FightTeamInformations(List<FightTeamMemberInformations> teamMembers)
         {
             TeamMembers = teamMembers;
         }
 
-        public FightTeamInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public List<FightTeamMemberInformations> TeamMembers { get; set; }
+        public FightTeamInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
-            writer.WriteShort((short) TeamMembers.Count);
+            writer.WriteShort((short)TeamMembers.Count);
             for (var teamMembersIndex = 0; teamMembersIndex < TeamMembers.Count; teamMembersIndex++)
             {
                 var objectToSend = TeamMembers[teamMembersIndex];
@@ -43,5 +40,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
                 TeamMembers.Add(objectToAdd);
             }
         }
+
     }
 }

@@ -8,12 +8,14 @@
         public new const ushort ProtocolId = 5741;
         public override ushort MessageID => ProtocolId;
         public short MarkId { get; set; }
+        public ushort MarkImpactCell { get; set; }
         public double TriggeringCharacterId { get; set; }
         public ushort TriggeredSpellId { get; set; }
 
-        public GameActionFightTriggerGlyphTrapMessage(short markId, double triggeringCharacterId, ushort triggeredSpellId)
+        public GameActionFightTriggerGlyphTrapMessage(short markId, ushort markImpactCell, double triggeringCharacterId, ushort triggeredSpellId)
         {
             MarkId = markId;
+            MarkImpactCell = markImpactCell;
             TriggeringCharacterId = triggeringCharacterId;
             TriggeredSpellId = triggeredSpellId;
         }
@@ -24,6 +26,7 @@
         {
             base.Serialize(writer);
             writer.WriteShort(MarkId);
+            writer.WriteVarUhShort(MarkImpactCell);
             writer.WriteDouble(TriggeringCharacterId);
             writer.WriteVarUhShort(TriggeredSpellId);
         }
@@ -32,6 +35,7 @@
         {
             base.Deserialize(reader);
             MarkId = reader.ReadShort();
+            MarkImpactCell = reader.ReadVarUhShort();
             TriggeringCharacterId = reader.ReadDouble();
             TriggeredSpellId = reader.ReadVarUhShort();
         }

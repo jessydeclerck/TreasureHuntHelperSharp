@@ -1,7 +1,7 @@
 ﻿namespace Cookie.API.Protocol.Network.Messages.Game.Context.Fight
 {
-    using Types.Game.Data.Items;
     using Types.Game.Character.Characteristic;
+    using Types.Game.Data.Items;
     using Types.Game.Shortcut;
     using System.Collections.Generic;
     using Utils.IO;

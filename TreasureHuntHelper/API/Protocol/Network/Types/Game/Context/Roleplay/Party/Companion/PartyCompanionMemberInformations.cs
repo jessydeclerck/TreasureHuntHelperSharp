@@ -1,13 +1,19 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Party.Companion
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Party.Companion
 {
+    using Types.Game.Look;
+    using Utils.IO;
+
     public class PartyCompanionMemberInformations : PartyCompanionBaseInformations
     {
         public new const ushort ProtocolId = 452;
+        public override ushort TypeID => ProtocolId;
+        public ushort Initiative { get; set; }
+        public uint LifePoints { get; set; }
+        public uint MaxLifePoints { get; set; }
+        public ushort Prospecting { get; set; }
+        public byte RegenRate { get; set; }
 
-        public PartyCompanionMemberInformations(ushort initiative, uint lifePoints, uint maxLifePoints,
-            ushort prospecting, byte regenRate)
+        public PartyCompanionMemberInformations(ushort initiative, uint lifePoints, uint maxLifePoints, ushort prospecting, byte regenRate)
         {
             Initiative = initiative;
             LifePoints = lifePoints;
@@ -16,16 +22,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Party.Companio
             RegenRate = regenRate;
         }
 
-        public PartyCompanionMemberInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ushort Initiative { get; set; }
-        public uint LifePoints { get; set; }
-        public uint MaxLifePoints { get; set; }
-        public ushort Prospecting { get; set; }
-        public byte RegenRate { get; set; }
+        public PartyCompanionMemberInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -46,5 +43,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Party.Companio
             Prospecting = reader.ReadVarUhShort();
             RegenRate = reader.ReadByte();
         }
+
     }
 }

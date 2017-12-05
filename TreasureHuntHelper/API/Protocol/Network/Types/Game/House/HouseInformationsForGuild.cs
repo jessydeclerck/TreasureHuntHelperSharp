@@ -1,14 +1,23 @@
-﻿using System.Collections.Generic;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.House
+﻿namespace Cookie.API.Protocol.Network.Types.Game.House
 {
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class HouseInformationsForGuild : HouseInformations
     {
         public new const ushort ProtocolId = 170;
+        public override ushort TypeID => ProtocolId;
+        public int InstanceId { get; set; }
+        public bool SecondHand { get; set; }
+        public string OwnerName { get; set; }
+        public short WorldX { get; set; }
+        public short WorldY { get; set; }
+        public double MapId { get; set; }
+        public ushort SubAreaId { get; set; }
+        public List<int> SkillListIds { get; set; }
+        public uint GuildshareParams { get; set; }
 
-        public HouseInformationsForGuild(int instanceId, bool secondHand, string ownerName, short worldX, short worldY,
-            double mapId, ushort subAreaId, List<int> skillListIds, uint guildshareParams)
+        public HouseInformationsForGuild(int instanceId, bool secondHand, string ownerName, short worldX, short worldY, double mapId, ushort subAreaId, List<int> skillListIds, uint guildshareParams)
         {
             InstanceId = instanceId;
             SecondHand = secondHand;
@@ -21,20 +30,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.House
             GuildshareParams = guildshareParams;
         }
 
-        public HouseInformationsForGuild()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public int InstanceId { get; set; }
-        public bool SecondHand { get; set; }
-        public string OwnerName { get; set; }
-        public short WorldX { get; set; }
-        public short WorldY { get; set; }
-        public double MapId { get; set; }
-        public ushort SubAreaId { get; set; }
-        public List<int> SkillListIds { get; set; }
-        public uint GuildshareParams { get; set; }
+        public HouseInformationsForGuild() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -46,9 +42,11 @@ namespace Cookie.API.Protocol.Network.Types.Game.House
             writer.WriteShort(WorldY);
             writer.WriteDouble(MapId);
             writer.WriteVarUhShort(SubAreaId);
-            writer.WriteShort((short) SkillListIds.Count);
+            writer.WriteShort((short)SkillListIds.Count);
             for (var skillListIdsIndex = 0; skillListIdsIndex < SkillListIds.Count; skillListIdsIndex++)
+            {
                 writer.WriteInt(SkillListIds[skillListIdsIndex]);
+            }
             writer.WriteVarUhInt(GuildshareParams);
         }
 
@@ -65,8 +63,11 @@ namespace Cookie.API.Protocol.Network.Types.Game.House
             var skillListIdsCount = reader.ReadUShort();
             SkillListIds = new List<int>();
             for (var skillListIdsIndex = 0; skillListIdsIndex < skillListIdsCount; skillListIdsIndex++)
+            {
                 SkillListIds.Add(reader.ReadInt());
+            }
             GuildshareParams = reader.ReadVarUhInt();
         }
+
     }
 }

@@ -1,13 +1,17 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Character.Alignment
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Character.Alignment
 {
+    using Utils.IO;
+
     public class ActorExtendedAlignmentInformations : ActorAlignmentInformations
     {
         public new const ushort ProtocolId = 202;
+        public override ushort TypeID => ProtocolId;
+        public ushort Honor { get; set; }
+        public ushort HonorGradeFloor { get; set; }
+        public ushort HonorNextGradeFloor { get; set; }
+        public byte Aggressable { get; set; }
 
-        public ActorExtendedAlignmentInformations(ushort honor, ushort honorGradeFloor, ushort honorNextGradeFloor,
-            byte aggressable)
+        public ActorExtendedAlignmentInformations(ushort honor, ushort honorGradeFloor, ushort honorNextGradeFloor, byte aggressable)
         {
             Honor = honor;
             HonorGradeFloor = honorGradeFloor;
@@ -15,15 +19,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Character.Alignment
             Aggressable = aggressable;
         }
 
-        public ActorExtendedAlignmentInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ushort Honor { get; set; }
-        public ushort HonorGradeFloor { get; set; }
-        public ushort HonorNextGradeFloor { get; set; }
-        public byte Aggressable { get; set; }
+        public ActorExtendedAlignmentInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -42,5 +38,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Character.Alignment
             HonorNextGradeFloor = reader.ReadVarUhShort();
             Aggressable = reader.ReadByte();
         }
+
     }
 }

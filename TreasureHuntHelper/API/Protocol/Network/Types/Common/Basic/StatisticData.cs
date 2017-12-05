@@ -1,12 +1,13 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Common.Basic
+﻿namespace Cookie.API.Protocol.Network.Types.Common.Basic
 {
+    using Utils.IO;
+
     public class StatisticData : NetworkType
     {
         public const ushort ProtocolId = 484;
-
         public override ushort TypeID => ProtocolId;
+
+        public StatisticData() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -15,5 +16,6 @@ namespace Cookie.API.Protocol.Network.Types.Common.Basic
         public override void Deserialize(IDataReader reader)
         {
         }
+
     }
 }

@@ -1,13 +1,18 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
 {
+    using Utils.IO;
+
     public class AbstractFightTeamInformations : NetworkType
     {
         public const ushort ProtocolId = 116;
+        public override ushort TypeID => ProtocolId;
+        public byte TeamId { get; set; }
+        public double LeaderId { get; set; }
+        public sbyte TeamSide { get; set; }
+        public byte TeamTypeId { get; set; }
+        public byte NbWaves { get; set; }
 
-        public AbstractFightTeamInformations(byte teamId, double leaderId, sbyte teamSide, byte teamTypeId,
-            byte nbWaves)
+        public AbstractFightTeamInformations(byte teamId, double leaderId, sbyte teamSide, byte teamTypeId, byte nbWaves)
         {
             TeamId = teamId;
             LeaderId = leaderId;
@@ -16,16 +21,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             NbWaves = nbWaves;
         }
 
-        public AbstractFightTeamInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public byte TeamId { get; set; }
-        public double LeaderId { get; set; }
-        public sbyte TeamSide { get; set; }
-        public byte TeamTypeId { get; set; }
-        public byte NbWaves { get; set; }
+        public AbstractFightTeamInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -44,5 +40,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             TeamTypeId = reader.ReadByte();
             NbWaves = reader.ReadByte();
         }
+
     }
 }

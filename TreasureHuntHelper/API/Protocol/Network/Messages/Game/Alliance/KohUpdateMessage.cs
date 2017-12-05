@@ -13,18 +13,18 @@
         public List<ushort> AllianceNbMembers { get; set; }
         public List<uint> AllianceRoundWeigth { get; set; }
         public List<byte> AllianceMatchScore { get; set; }
-        public BasicAllianceInformations AllianceMapWinner { get; set; }
+        public List<BasicAllianceInformations> AllianceMapWinners { get; set; }
         public uint AllianceMapWinnerScore { get; set; }
         public uint AllianceMapMyAllianceScore { get; set; }
         public double NextTickTime { get; set; }
 
-        public KohUpdateMessage(List<AllianceInformations> alliances, List<ushort> allianceNbMembers, List<uint> allianceRoundWeigth, List<byte> allianceMatchScore, BasicAllianceInformations allianceMapWinner, uint allianceMapWinnerScore, uint allianceMapMyAllianceScore, double nextTickTime)
+        public KohUpdateMessage(List<AllianceInformations> alliances, List<ushort> allianceNbMembers, List<uint> allianceRoundWeigth, List<byte> allianceMatchScore, List<BasicAllianceInformations> allianceMapWinners, uint allianceMapWinnerScore, uint allianceMapMyAllianceScore, double nextTickTime)
         {
             Alliances = alliances;
             AllianceNbMembers = allianceNbMembers;
             AllianceRoundWeigth = allianceRoundWeigth;
             AllianceMatchScore = allianceMatchScore;
-            AllianceMapWinner = allianceMapWinner;
+            AllianceMapWinners = allianceMapWinners;
             AllianceMapWinnerScore = allianceMapWinnerScore;
             AllianceMapMyAllianceScore = allianceMapMyAllianceScore;
             NextTickTime = nextTickTime;
@@ -55,7 +55,12 @@
             {
                 writer.WriteByte(AllianceMatchScore[allianceMatchScoreIndex]);
             }
-            AllianceMapWinner.Serialize(writer);
+            writer.WriteShort((short)AllianceMapWinners.Count);
+            for (var allianceMapWinnersIndex = 0; allianceMapWinnersIndex < AllianceMapWinners.Count; allianceMapWinnersIndex++)
+            {
+                var objectToSend = AllianceMapWinners[allianceMapWinnersIndex];
+                objectToSend.Serialize(writer);
+            }
             writer.WriteVarUhInt(AllianceMapWinnerScore);
             writer.WriteVarUhInt(AllianceMapMyAllianceScore);
             writer.WriteDouble(NextTickTime);
@@ -89,8 +94,14 @@
             {
                 AllianceMatchScore.Add(reader.ReadByte());
             }
-            AllianceMapWinner = new BasicAllianceInformations();
-            AllianceMapWinner.Deserialize(reader);
+            var allianceMapWinnersCount = reader.ReadUShort();
+            AllianceMapWinners = new List<BasicAllianceInformations>();
+            for (var allianceMapWinnersIndex = 0; allianceMapWinnersIndex < allianceMapWinnersCount; allianceMapWinnersIndex++)
+            {
+                var objectToAdd = new BasicAllianceInformations();
+                objectToAdd.Deserialize(reader);
+                AllianceMapWinners.Add(objectToAdd);
+            }
             AllianceMapWinnerScore = reader.ReadVarUhInt();
             AllianceMapMyAllianceScore = reader.ReadVarUhInt();
             NextTickTime = reader.ReadDouble();

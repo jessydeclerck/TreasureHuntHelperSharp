@@ -1,10 +1,15 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
 {
+    using Types.Game.Context;
+    using Types.Game.Look;
+    using Utils.IO;
+
     public class GameRolePlayHumanoidInformations : GameRolePlayNamedActorInformations
     {
         public new const ushort ProtocolId = 159;
+        public override ushort TypeID => ProtocolId;
+        public HumanInformations HumanoidInfo { get; set; }
+        public int AccountId { get; set; }
 
         public GameRolePlayHumanoidInformations(HumanInformations humanoidInfo, int accountId)
         {
@@ -12,13 +17,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             AccountId = accountId;
         }
 
-        public GameRolePlayHumanoidInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public HumanInformations HumanoidInfo { get; set; }
-        public int AccountId { get; set; }
+        public GameRolePlayHumanoidInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -35,5 +34,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             HumanoidInfo.Deserialize(reader);
             AccountId = reader.ReadInt();
         }
+
     }
 }

@@ -1,10 +1,14 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.House
+﻿namespace Cookie.API.Protocol.Network.Types.Game.House
 {
+    using Utils.IO;
+
     public class HouseInformationsInside : HouseInformations
     {
         public new const ushort ProtocolId = 218;
+        public override ushort TypeID => ProtocolId;
+        public HouseInstanceInformations HouseInfos { get; set; }
+        public short WorldX { get; set; }
+        public short WorldY { get; set; }
 
         public HouseInformationsInside(HouseInstanceInformations houseInfos, short worldX, short worldY)
         {
@@ -13,14 +17,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.House
             WorldY = worldY;
         }
 
-        public HouseInformationsInside()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public HouseInstanceInformations HouseInfos { get; set; }
-        public short WorldX { get; set; }
-        public short WorldY { get; set; }
+        public HouseInformationsInside() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -39,5 +36,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.House
             WorldX = reader.ReadShort();
             WorldY = reader.ReadShort();
         }
+
     }
 }

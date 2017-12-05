@@ -1,10 +1,17 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Friend
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Friend
 {
+    using Types.Game.Context.Roleplay;
+    using Types.Game.Look;
+    using Utils.IO;
+
     public class FriendSpouseOnlineInformations : FriendSpouseInformations
     {
         public new const ushort ProtocolId = 93;
+        public override ushort TypeID => ProtocolId;
+        public bool InFight { get; set; }
+        public bool FollowSpouse { get; set; }
+        public double MapId { get; set; }
+        public ushort SubAreaId { get; set; }
 
         public FriendSpouseOnlineInformations(bool inFight, bool followSpouse, double mapId, ushort subAreaId)
         {
@@ -14,15 +21,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Friend
             SubAreaId = subAreaId;
         }
 
-        public FriendSpouseOnlineInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public bool InFight { get; set; }
-        public bool FollowSpouse { get; set; }
-        public double MapId { get; set; }
-        public ushort SubAreaId { get; set; }
+        public FriendSpouseOnlineInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -44,5 +43,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Friend
             MapId = reader.ReadDouble();
             SubAreaId = reader.ReadVarUhShort();
         }
+
     }
 }

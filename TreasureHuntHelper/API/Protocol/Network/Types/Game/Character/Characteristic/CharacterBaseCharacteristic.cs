@@ -1,13 +1,18 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Character.Characteristic
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Character.Characteristic
 {
+    using Utils.IO;
+
     public class CharacterBaseCharacteristic : NetworkType
     {
         public const ushort ProtocolId = 4;
+        public override ushort TypeID => ProtocolId;
+        public short Base { get; set; }
+        public short Additionnal { get; set; }
+        public short ObjectsAndMountBonus { get; set; }
+        public short AlignGiftBonus { get; set; }
+        public short ContextModif { get; set; }
 
-        public CharacterBaseCharacteristic(short @base, short additionnal, short objectsAndMountBonus,
-            short alignGiftBonus, short contextModif)
+        public CharacterBaseCharacteristic(short @base, short additionnal, short objectsAndMountBonus, short alignGiftBonus, short contextModif)
         {
             Base = @base;
             Additionnal = additionnal;
@@ -16,16 +21,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Character.Characteristic
             ContextModif = contextModif;
         }
 
-        public CharacterBaseCharacteristic()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public short Base { get; set; }
-        public short Additionnal { get; set; }
-        public short ObjectsAndMountBonus { get; set; }
-        public short AlignGiftBonus { get; set; }
-        public short ContextModif { get; set; }
+        public CharacterBaseCharacteristic() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -44,5 +40,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Character.Characteristic
             AlignGiftBonus = reader.ReadVarShort();
             ContextModif = reader.ReadVarShort();
         }
+
     }
 }

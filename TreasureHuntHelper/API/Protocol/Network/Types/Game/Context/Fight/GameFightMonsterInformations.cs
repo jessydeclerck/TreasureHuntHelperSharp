@@ -1,10 +1,16 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
 {
+    using Types.Game.Context;
+    using Types.Game.Look;
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class GameFightMonsterInformations : GameFightAIInformations
     {
         public new const ushort ProtocolId = 29;
+        public override ushort TypeID => ProtocolId;
+        public ushort CreatureGenericId { get; set; }
+        public byte CreatureGrade { get; set; }
 
         public GameFightMonsterInformations(ushort creatureGenericId, byte creatureGrade)
         {
@@ -12,13 +18,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             CreatureGrade = creatureGrade;
         }
 
-        public GameFightMonsterInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ushort CreatureGenericId { get; set; }
-        public byte CreatureGrade { get; set; }
+        public GameFightMonsterInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -33,5 +33,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             CreatureGenericId = reader.ReadVarUhShort();
             CreatureGrade = reader.ReadByte();
         }
+
     }
 }

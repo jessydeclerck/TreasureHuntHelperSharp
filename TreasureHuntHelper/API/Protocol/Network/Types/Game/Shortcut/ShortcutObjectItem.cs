@@ -1,10 +1,13 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Shortcut
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Shortcut
 {
+    using Utils.IO;
+
     public class ShortcutObjectItem : ShortcutObject
     {
         public new const ushort ProtocolId = 371;
+        public override ushort TypeID => ProtocolId;
+        public int ItemUID { get; set; }
+        public int ItemGID { get; set; }
 
         public ShortcutObjectItem(int itemUID, int itemGID)
         {
@@ -12,13 +15,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Shortcut
             ItemGID = itemGID;
         }
 
-        public ShortcutObjectItem()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public int ItemUID { get; set; }
-        public int ItemGID { get; set; }
+        public ShortcutObjectItem() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -33,5 +30,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Shortcut
             ItemUID = reader.ReadInt();
             ItemGID = reader.ReadInt();
         }
+
     }
 }

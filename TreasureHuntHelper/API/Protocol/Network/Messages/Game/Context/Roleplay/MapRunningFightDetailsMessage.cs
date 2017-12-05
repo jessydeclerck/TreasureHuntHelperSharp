@@ -8,11 +8,11 @@
     {
         public const ushort ProtocolId = 5751;
         public override ushort MessageID => ProtocolId;
-        public int FightId { get; set; }
+        public ushort FightId { get; set; }
         public List<GameFightFighterLightInformations> Attackers { get; set; }
         public List<GameFightFighterLightInformations> Defenders { get; set; }
 
-        public MapRunningFightDetailsMessage(int fightId, List<GameFightFighterLightInformations> attackers, List<GameFightFighterLightInformations> defenders)
+        public MapRunningFightDetailsMessage(ushort fightId, List<GameFightFighterLightInformations> attackers, List<GameFightFighterLightInformations> defenders)
         {
             FightId = fightId;
             Attackers = attackers;
@@ -23,7 +23,7 @@
 
         public override void Serialize(IDataWriter writer)
         {
-            writer.WriteInt(FightId);
+            writer.WriteVarUhShort(FightId);
             writer.WriteShort((short)Attackers.Count);
             for (var attackersIndex = 0; attackersIndex < Attackers.Count; attackersIndex++)
             {
@@ -42,7 +42,7 @@
 
         public override void Deserialize(IDataReader reader)
         {
-            FightId = reader.ReadInt();
+            FightId = reader.ReadVarUhShort();
             var attackersCount = reader.ReadUShort();
             Attackers = new List<GameFightFighterLightInformations>();
             for (var attackersIndex = 0; attackersIndex < attackersCount; attackersIndex++)

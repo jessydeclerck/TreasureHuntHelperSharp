@@ -1,23 +1,22 @@
-﻿using Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Quest;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
 {
+    using Types.Game.Context;
+    using Types.Game.Context.Roleplay.Quest;
+    using Types.Game.Look;
+    using Utils.IO;
+
     public class GameRolePlayNpcWithQuestInformations : GameRolePlayNpcInformations
     {
         public new const ushort ProtocolId = 383;
+        public override ushort TypeID => ProtocolId;
+        public GameRolePlayNpcQuestFlag QuestFlag { get; set; }
 
         public GameRolePlayNpcWithQuestInformations(GameRolePlayNpcQuestFlag questFlag)
         {
             QuestFlag = questFlag;
         }
 
-        public GameRolePlayNpcWithQuestInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public GameRolePlayNpcQuestFlag QuestFlag { get; set; }
+        public GameRolePlayNpcWithQuestInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -31,5 +30,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             QuestFlag = new GameRolePlayNpcQuestFlag();
             QuestFlag.Deserialize(reader);
         }
+
     }
 }

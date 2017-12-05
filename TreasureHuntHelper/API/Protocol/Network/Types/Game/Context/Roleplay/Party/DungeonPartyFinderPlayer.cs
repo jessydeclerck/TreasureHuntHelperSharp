@@ -1,12 +1,19 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Party
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Party
 {
+    using Enums;
+    using Utils.IO;
+
     public class DungeonPartyFinderPlayer : NetworkType
     {
         public const ushort ProtocolId = 373;
+        public override ushort TypeID => ProtocolId;
+        public ulong PlayerId { get; set; }
+        public string PlayerName { get; set; }
+        public sbyte Breed { get; set; }
+        public bool Sex { get; set; }
+        public ushort Level { get; set; }
 
-        public DungeonPartyFinderPlayer(ulong playerId, string playerName, sbyte breed, bool sex, byte level)
+        public DungeonPartyFinderPlayer(ulong playerId, string playerName, sbyte breed, bool sex, ushort level)
         {
             PlayerId = playerId;
             PlayerName = playerName;
@@ -15,16 +22,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Party
             Level = level;
         }
 
-        public DungeonPartyFinderPlayer()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ulong PlayerId { get; set; }
-        public string PlayerName { get; set; }
-        public sbyte Breed { get; set; }
-        public bool Sex { get; set; }
-        public byte Level { get; set; }
+        public DungeonPartyFinderPlayer() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -32,7 +30,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Party
             writer.WriteUTF(PlayerName);
             writer.WriteSByte(Breed);
             writer.WriteBoolean(Sex);
-            writer.WriteByte(Level);
+            writer.WriteVarUhShort(Level);
         }
 
         public override void Deserialize(IDataReader reader)
@@ -41,7 +39,8 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Party
             PlayerName = reader.ReadUTF();
             Breed = reader.ReadSByte();
             Sex = reader.ReadBoolean();
-            Level = reader.ReadByte();
+            Level = reader.ReadVarUhShort();
         }
+
     }
 }

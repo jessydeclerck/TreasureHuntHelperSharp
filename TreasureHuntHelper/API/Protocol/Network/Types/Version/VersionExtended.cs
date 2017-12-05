@@ -1,10 +1,13 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Version
+﻿namespace Cookie.API.Protocol.Network.Types.Version
 {
+    using Utils.IO;
+
     public class VersionExtended : Version
     {
         public new const ushort ProtocolId = 393;
+        public override ushort TypeID => ProtocolId;
+        public byte Install { get; set; }
+        public byte Technology { get; set; }
 
         public VersionExtended(byte install, byte technology)
         {
@@ -12,13 +15,7 @@ namespace Cookie.API.Protocol.Network.Types.Version
             Technology = technology;
         }
 
-        public VersionExtended()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public byte Install { get; set; }
-        public byte Technology { get; set; }
+        public VersionExtended() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -33,5 +30,6 @@ namespace Cookie.API.Protocol.Network.Types.Version
             Install = reader.ReadByte();
             Technology = reader.ReadByte();
         }
+
     }
 }

@@ -1,22 +1,19 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Actions.Fight
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Actions.Fight
 {
+    using Utils.IO;
+
     public class FightTemporaryBoostStateEffect : FightTemporaryBoostEffect
     {
         public new const ushort ProtocolId = 214;
+        public override ushort TypeID => ProtocolId;
+        public short StateId { get; set; }
 
         public FightTemporaryBoostStateEffect(short stateId)
         {
             StateId = stateId;
         }
 
-        public FightTemporaryBoostStateEffect()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public short StateId { get; set; }
+        public FightTemporaryBoostStateEffect() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -29,5 +26,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Actions.Fight
             base.Deserialize(reader);
             StateId = reader.ReadShort();
         }
+
     }
 }

@@ -1,10 +1,14 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Data.Items.Effects
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Data.Items.Effects
 {
+    using Utils.IO;
+
     public class ObjectEffectDice : ObjectEffect
     {
         public new const ushort ProtocolId = 73;
+        public override ushort TypeID => ProtocolId;
+        public ushort DiceNum { get; set; }
+        public ushort DiceSide { get; set; }
+        public ushort DiceConst { get; set; }
 
         public ObjectEffectDice(ushort diceNum, ushort diceSide, ushort diceConst)
         {
@@ -13,14 +17,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Data.Items.Effects
             DiceConst = diceConst;
         }
 
-        public ObjectEffectDice()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ushort DiceNum { get; set; }
-        public ushort DiceSide { get; set; }
-        public ushort DiceConst { get; set; }
+        public ObjectEffectDice() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -37,5 +34,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Data.Items.Effects
             DiceSide = reader.ReadVarUhShort();
             DiceConst = reader.ReadVarUhShort();
         }
+
     }
 }

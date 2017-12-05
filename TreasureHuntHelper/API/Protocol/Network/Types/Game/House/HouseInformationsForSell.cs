@@ -1,15 +1,27 @@
-﻿using System.Collections.Generic;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.House
+﻿namespace Cookie.API.Protocol.Network.Types.Game.House
 {
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class HouseInformationsForSell : NetworkType
     {
         public const ushort ProtocolId = 221;
+        public override ushort TypeID => ProtocolId;
+        public int InstanceId { get; set; }
+        public bool SecondHand { get; set; }
+        public uint ModelId { get; set; }
+        public string OwnerName { get; set; }
+        public bool OwnerConnected { get; set; }
+        public short WorldX { get; set; }
+        public short WorldY { get; set; }
+        public ushort SubAreaId { get; set; }
+        public sbyte NbRoom { get; set; }
+        public sbyte NbChest { get; set; }
+        public List<int> SkillListIds { get; set; }
+        public bool IsLocked { get; set; }
+        public ulong Price { get; set; }
 
-        public HouseInformationsForSell(int instanceId, bool secondHand, uint modelId, string ownerName,
-            bool ownerConnected, short worldX, short worldY, ushort subAreaId, sbyte nbRoom, sbyte nbChest,
-            List<int> skillListIds, bool isLocked, ulong price)
+        public HouseInformationsForSell(int instanceId, bool secondHand, uint modelId, string ownerName, bool ownerConnected, short worldX, short worldY, ushort subAreaId, sbyte nbRoom, sbyte nbChest, List<int> skillListIds, bool isLocked, ulong price)
         {
             InstanceId = instanceId;
             SecondHand = secondHand;
@@ -26,24 +38,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.House
             Price = price;
         }
 
-        public HouseInformationsForSell()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public int InstanceId { get; set; }
-        public bool SecondHand { get; set; }
-        public uint ModelId { get; set; }
-        public string OwnerName { get; set; }
-        public bool OwnerConnected { get; set; }
-        public short WorldX { get; set; }
-        public short WorldY { get; set; }
-        public ushort SubAreaId { get; set; }
-        public sbyte NbRoom { get; set; }
-        public sbyte NbChest { get; set; }
-        public List<int> SkillListIds { get; set; }
-        public bool IsLocked { get; set; }
-        public ulong Price { get; set; }
+        public HouseInformationsForSell() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -57,9 +52,11 @@ namespace Cookie.API.Protocol.Network.Types.Game.House
             writer.WriteVarUhShort(SubAreaId);
             writer.WriteSByte(NbRoom);
             writer.WriteSByte(NbChest);
-            writer.WriteShort((short) SkillListIds.Count);
+            writer.WriteShort((short)SkillListIds.Count);
             for (var skillListIdsIndex = 0; skillListIdsIndex < SkillListIds.Count; skillListIdsIndex++)
+            {
                 writer.WriteInt(SkillListIds[skillListIdsIndex]);
+            }
             writer.WriteBoolean(IsLocked);
             writer.WriteVarUhLong(Price);
         }
@@ -79,9 +76,12 @@ namespace Cookie.API.Protocol.Network.Types.Game.House
             var skillListIdsCount = reader.ReadUShort();
             SkillListIds = new List<int>();
             for (var skillListIdsIndex = 0; skillListIdsIndex < skillListIdsCount; skillListIdsIndex++)
+            {
                 SkillListIds.Add(reader.ReadInt());
+            }
             IsLocked = reader.ReadBoolean();
             Price = reader.ReadVarUhLong();
         }
+
     }
 }

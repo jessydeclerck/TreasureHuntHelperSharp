@@ -1,13 +1,17 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
 {
+    using Utils.IO;
+
     public class FightOptionsInformations : NetworkType
     {
         public const ushort ProtocolId = 20;
+        public override ushort TypeID => ProtocolId;
+        public bool IsSecret { get; set; }
+        public bool IsRestrictedToPartyOnly { get; set; }
+        public bool IsClosed { get; set; }
+        public bool IsAskingForHelp { get; set; }
 
-        public FightOptionsInformations(bool isSecret, bool isRestrictedToPartyOnly, bool isClosed,
-            bool isAskingForHelp)
+        public FightOptionsInformations(bool isSecret, bool isRestrictedToPartyOnly, bool isClosed, bool isAskingForHelp)
         {
             IsSecret = isSecret;
             IsRestrictedToPartyOnly = isRestrictedToPartyOnly;
@@ -15,15 +19,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             IsAskingForHelp = isAskingForHelp;
         }
 
-        public FightOptionsInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public bool IsSecret { get; set; }
-        public bool IsRestrictedToPartyOnly { get; set; }
-        public bool IsClosed { get; set; }
-        public bool IsAskingForHelp { get; set; }
+        public FightOptionsInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -43,5 +39,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             IsClosed = BooleanByteWrapper.GetFlag(flag, 2);
             IsAskingForHelp = BooleanByteWrapper.GetFlag(flag, 3);
         }
+
     }
 }

@@ -1,15 +1,26 @@
-﻿using Cookie.API.Protocol.Network.Types.Game.Character.Status;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Job
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Job
 {
+    using Enums;
+    using Types.Game.Character.Status;
+    using Utils.IO;
+
     public class JobCrafterDirectoryEntryPlayerInfo : NetworkType
     {
         public const ushort ProtocolId = 194;
+        public override ushort TypeID => ProtocolId;
+        public ulong PlayerId { get; set; }
+        public string PlayerName { get; set; }
+        public sbyte AlignmentSide { get; set; }
+        public sbyte Breed { get; set; }
+        public bool Sex { get; set; }
+        public bool IsInWorkshop { get; set; }
+        public short WorldX { get; set; }
+        public short WorldY { get; set; }
+        public double MapId { get; set; }
+        public ushort SubAreaId { get; set; }
+        public PlayerStatus Status { get; set; }
 
-        public JobCrafterDirectoryEntryPlayerInfo(ulong playerId, string playerName, sbyte alignmentSide, sbyte breed,
-            bool sex, bool isInWorkshop, short worldX, short worldY, double mapId, ushort subAreaId,
-            PlayerStatus status)
+        public JobCrafterDirectoryEntryPlayerInfo(ulong playerId, string playerName, sbyte alignmentSide, sbyte breed, bool sex, bool isInWorkshop, short worldX, short worldY, double mapId, ushort subAreaId, PlayerStatus status)
         {
             PlayerId = playerId;
             PlayerName = playerName;
@@ -24,22 +35,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Job
             Status = status;
         }
 
-        public JobCrafterDirectoryEntryPlayerInfo()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ulong PlayerId { get; set; }
-        public string PlayerName { get; set; }
-        public sbyte AlignmentSide { get; set; }
-        public sbyte Breed { get; set; }
-        public bool Sex { get; set; }
-        public bool IsInWorkshop { get; set; }
-        public short WorldX { get; set; }
-        public short WorldY { get; set; }
-        public double MapId { get; set; }
-        public ushort SubAreaId { get; set; }
-        public PlayerStatus Status { get; set; }
+        public JobCrafterDirectoryEntryPlayerInfo() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -72,5 +68,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Job
             Status = ProtocolTypeManager.GetInstance<PlayerStatus>(reader.ReadUShort());
             Status.Deserialize(reader);
         }
+
     }
 }

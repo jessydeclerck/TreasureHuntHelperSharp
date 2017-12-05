@@ -1,5 +1,6 @@
 ﻿namespace Cookie.API.Protocol.Network.Messages.Game.Achievement
 {
+    using Types.Game.Achievement;
     using Utils.IO;
 
     public class AchievementFinishedInformationMessage : AchievementFinishedMessage

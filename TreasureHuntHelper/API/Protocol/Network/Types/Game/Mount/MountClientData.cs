@@ -1,20 +1,49 @@
-﻿using System.Collections.Generic;
-using Cookie.API.Protocol.Network.Types.Game.Data.Items.Effects;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Mount
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Mount
 {
+    using Types.Game.Data.Items.Effects;
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class MountClientData : NetworkType
     {
         public const ushort ProtocolId = 178;
+        public override ushort TypeID => ProtocolId;
+        public bool Sex { get; set; }
+        public bool IsRideable { get; set; }
+        public bool IsWild { get; set; }
+        public bool IsFecondationReady { get; set; }
+        public bool UseHarnessColors { get; set; }
+        public double ObjectId { get; set; }
+        public uint Model { get; set; }
+        public List<int> Ancestor { get; set; }
+        public List<int> Behaviors { get; set; }
+        public string Name { get; set; }
+        public int OwnerId { get; set; }
+        public ulong Experience { get; set; }
+        public ulong ExperienceForLevel { get; set; }
+        public double ExperienceForNextLevel { get; set; }
+        public byte Level { get; set; }
+        public uint MaxPods { get; set; }
+        public uint Stamina { get; set; }
+        public uint StaminaMax { get; set; }
+        public uint Maturity { get; set; }
+        public uint MaturityForAdult { get; set; }
+        public uint Energy { get; set; }
+        public uint EnergyMax { get; set; }
+        public int Serenity { get; set; }
+        public int AggressivityMax { get; set; }
+        public uint SerenityMax { get; set; }
+        public uint Love { get; set; }
+        public uint LoveMax { get; set; }
+        public int FecondationTime { get; set; }
+        public int BoostLimiter { get; set; }
+        public double BoostMax { get; set; }
+        public int ReproductionCount { get; set; }
+        public uint ReproductionCountMax { get; set; }
+        public ushort HarnessGID { get; set; }
+        public List<ObjectEffectInteger> EffectList { get; set; }
 
-        public MountClientData(bool sex, bool isRideable, bool isWild, bool isFecondationReady, bool useHarnessColors,
-            double objectId, uint model, List<int> ancestor, List<int> behaviors, string name, int ownerId,
-            ulong experience, ulong experienceForLevel, double experienceForNextLevel, byte level, uint maxPods,
-            uint stamina, uint staminaMax, uint maturity, uint maturityForAdult, uint energy, uint energyMax,
-            int serenity, int aggressivityMax, uint serenityMax, uint love, uint loveMax, int fecondationTime,
-            int boostLimiter, double boostMax, int reproductionCount, uint reproductionCountMax, ushort harnessGID,
-            List<ObjectEffectInteger> effectList)
+        public MountClientData(bool sex, bool isRideable, bool isWild, bool isFecondationReady, bool useHarnessColors, double objectId, uint model, List<int> ancestor, List<int> behaviors, string name, int ownerId, ulong experience, ulong experienceForLevel, double experienceForNextLevel, byte level, uint maxPods, uint stamina, uint staminaMax, uint maturity, uint maturityForAdult, uint energy, uint energyMax, int serenity, int aggressivityMax, uint serenityMax, uint love, uint loveMax, int fecondationTime, int boostLimiter, double boostMax, int reproductionCount, uint reproductionCountMax, ushort harnessGID, List<ObjectEffectInteger> effectList)
         {
             Sex = sex;
             IsRideable = isRideable;
@@ -52,45 +81,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Mount
             EffectList = effectList;
         }
 
-        public MountClientData()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public bool Sex { get; set; }
-        public bool IsRideable { get; set; }
-        public bool IsWild { get; set; }
-        public bool IsFecondationReady { get; set; }
-        public bool UseHarnessColors { get; set; }
-        public double ObjectId { get; set; }
-        public uint Model { get; set; }
-        public List<int> Ancestor { get; set; }
-        public List<int> Behaviors { get; set; }
-        public string Name { get; set; }
-        public int OwnerId { get; set; }
-        public ulong Experience { get; set; }
-        public ulong ExperienceForLevel { get; set; }
-        public double ExperienceForNextLevel { get; set; }
-        public byte Level { get; set; }
-        public uint MaxPods { get; set; }
-        public uint Stamina { get; set; }
-        public uint StaminaMax { get; set; }
-        public uint Maturity { get; set; }
-        public uint MaturityForAdult { get; set; }
-        public uint Energy { get; set; }
-        public uint EnergyMax { get; set; }
-        public int Serenity { get; set; }
-        public int AggressivityMax { get; set; }
-        public uint SerenityMax { get; set; }
-        public uint Love { get; set; }
-        public uint LoveMax { get; set; }
-        public int FecondationTime { get; set; }
-        public int BoostLimiter { get; set; }
-        public double BoostMax { get; set; }
-        public int ReproductionCount { get; set; }
-        public uint ReproductionCountMax { get; set; }
-        public ushort HarnessGID { get; set; }
-        public List<ObjectEffectInteger> EffectList { get; set; }
+        public MountClientData() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -103,12 +94,16 @@ namespace Cookie.API.Protocol.Network.Types.Game.Mount
             writer.WriteByte(flag);
             writer.WriteDouble(ObjectId);
             writer.WriteVarUhInt(Model);
-            writer.WriteShort((short) Ancestor.Count);
+            writer.WriteShort((short)Ancestor.Count);
             for (var ancestorIndex = 0; ancestorIndex < Ancestor.Count; ancestorIndex++)
+            {
                 writer.WriteInt(Ancestor[ancestorIndex]);
-            writer.WriteShort((short) Behaviors.Count);
+            }
+            writer.WriteShort((short)Behaviors.Count);
             for (var behaviorsIndex = 0; behaviorsIndex < Behaviors.Count; behaviorsIndex++)
+            {
                 writer.WriteInt(Behaviors[behaviorsIndex]);
+            }
             writer.WriteUTF(Name);
             writer.WriteInt(OwnerId);
             writer.WriteVarUhLong(Experience);
@@ -133,7 +128,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Mount
             writer.WriteInt(ReproductionCount);
             writer.WriteVarUhInt(ReproductionCountMax);
             writer.WriteVarUhShort(HarnessGID);
-            writer.WriteShort((short) EffectList.Count);
+            writer.WriteShort((short)EffectList.Count);
             for (var effectListIndex = 0; effectListIndex < EffectList.Count; effectListIndex++)
             {
                 var objectToSend = EffectList[effectListIndex];
@@ -154,11 +149,15 @@ namespace Cookie.API.Protocol.Network.Types.Game.Mount
             var ancestorCount = reader.ReadUShort();
             Ancestor = new List<int>();
             for (var ancestorIndex = 0; ancestorIndex < ancestorCount; ancestorIndex++)
+            {
                 Ancestor.Add(reader.ReadInt());
+            }
             var behaviorsCount = reader.ReadUShort();
             Behaviors = new List<int>();
             for (var behaviorsIndex = 0; behaviorsIndex < behaviorsCount; behaviorsIndex++)
+            {
                 Behaviors.Add(reader.ReadInt());
+            }
             Name = reader.ReadUTF();
             OwnerId = reader.ReadInt();
             Experience = reader.ReadVarUhLong();
@@ -192,5 +191,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Mount
                 EffectList.Add(objectToAdd);
             }
         }
+
     }
 }

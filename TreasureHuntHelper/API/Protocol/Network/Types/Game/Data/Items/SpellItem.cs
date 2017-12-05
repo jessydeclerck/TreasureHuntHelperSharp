@@ -1,10 +1,13 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Data.Items
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Data.Items
 {
+    using Utils.IO;
+
     public class SpellItem : Item
     {
         public new const ushort ProtocolId = 49;
+        public override ushort TypeID => ProtocolId;
+        public int SpellId { get; set; }
+        public short SpellLevel { get; set; }
 
         public SpellItem(int spellId, short spellLevel)
         {
@@ -12,13 +15,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Data.Items
             SpellLevel = spellLevel;
         }
 
-        public SpellItem()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public int SpellId { get; set; }
-        public short SpellLevel { get; set; }
+        public SpellItem() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -33,5 +30,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Data.Items
             SpellId = reader.ReadInt();
             SpellLevel = reader.ReadShort();
         }
+
     }
 }

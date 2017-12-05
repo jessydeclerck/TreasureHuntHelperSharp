@@ -1,10 +1,14 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
 {
+    using Utils.IO;
+
     public class FightResultListEntry : NetworkType
     {
         public const ushort ProtocolId = 16;
+        public override ushort TypeID => ProtocolId;
+        public ushort Outcome { get; set; }
+        public byte Wave { get; set; }
+        public FightLoot Rewards { get; set; }
 
         public FightResultListEntry(ushort outcome, byte wave, FightLoot rewards)
         {
@@ -13,14 +17,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             Rewards = rewards;
         }
 
-        public FightResultListEntry()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ushort Outcome { get; set; }
-        public byte Wave { get; set; }
-        public FightLoot Rewards { get; set; }
+        public FightResultListEntry() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -36,5 +33,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             Rewards = new FightLoot();
             Rewards.Deserialize(reader);
         }
+
     }
 }

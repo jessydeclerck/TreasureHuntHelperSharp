@@ -1,10 +1,15 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Prism
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Prism
 {
+    using Utils.IO;
+
     public class PrismGeolocalizedInformation : PrismSubareaEmptyInfo
     {
         public new const ushort ProtocolId = 434;
+        public override ushort TypeID => ProtocolId;
+        public short WorldX { get; set; }
+        public short WorldY { get; set; }
+        public double MapId { get; set; }
+        public PrismInformation Prism { get; set; }
 
         public PrismGeolocalizedInformation(short worldX, short worldY, double mapId, PrismInformation prism)
         {
@@ -14,15 +19,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Prism
             Prism = prism;
         }
 
-        public PrismGeolocalizedInformation()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public short WorldX { get; set; }
-        public short WorldY { get; set; }
-        public double MapId { get; set; }
-        public PrismInformation Prism { get; set; }
+        public PrismGeolocalizedInformation() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -43,5 +40,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Prism
             Prism = ProtocolTypeManager.GetInstance<PrismInformation>(reader.ReadUShort());
             Prism.Deserialize(reader);
         }
+
     }
 }

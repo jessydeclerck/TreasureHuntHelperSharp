@@ -1,11 +1,17 @@
-﻿using Cookie.API.Protocol.Network.Types.Game.Character.Status;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
 {
+    using Types.Game.Character.Status;
+    using Types.Game.Context;
+    using Types.Game.Look;
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class GameFightFighterNamedInformations : GameFightFighterInformations
     {
         public new const ushort ProtocolId = 158;
+        public override ushort TypeID => ProtocolId;
+        public string Name { get; set; }
+        public PlayerStatus Status { get; set; }
 
         public GameFightFighterNamedInformations(string name, PlayerStatus status)
         {
@@ -13,13 +19,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             Status = status;
         }
 
-        public GameFightFighterNamedInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public string Name { get; set; }
-        public PlayerStatus Status { get; set; }
+        public GameFightFighterNamedInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -35,5 +35,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             Status = new PlayerStatus();
             Status.Deserialize(reader);
         }
+
     }
 }

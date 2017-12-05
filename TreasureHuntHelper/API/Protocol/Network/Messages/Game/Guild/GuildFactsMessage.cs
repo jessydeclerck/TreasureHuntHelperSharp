@@ -1,7 +1,7 @@
 ﻿namespace Cookie.API.Protocol.Network.Messages.Game.Guild
 {
-    using Types.Game.Social;
     using Types.Game.Character;
+    using Types.Game.Social;
     using System.Collections.Generic;
     using Utils.IO;
 

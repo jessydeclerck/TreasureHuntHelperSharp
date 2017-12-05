@@ -1,22 +1,19 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
 {
+    using Utils.IO;
+
     public class GameFightMinimalStatsPreparation : GameFightMinimalStats
     {
         public new const ushort ProtocolId = 360;
+        public override ushort TypeID => ProtocolId;
+        public uint Initiative { get; set; }
 
         public GameFightMinimalStatsPreparation(uint initiative)
         {
             Initiative = initiative;
         }
 
-        public GameFightMinimalStatsPreparation()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public uint Initiative { get; set; }
+        public GameFightMinimalStatsPreparation() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -29,5 +26,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             base.Deserialize(reader);
             Initiative = reader.ReadVarUhInt();
         }
+
     }
 }

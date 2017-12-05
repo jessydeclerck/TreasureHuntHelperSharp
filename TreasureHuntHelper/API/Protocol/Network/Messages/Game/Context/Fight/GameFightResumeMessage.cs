@@ -1,8 +1,8 @@
 ﻿namespace Cookie.API.Protocol.Network.Messages.Game.Context.Fight
 {
-    using Types.Game.Context.Fight;
     using Types.Game.Action.Fight;
     using Types.Game.Actions.Fight;
+    using Types.Game.Context.Fight;
     using Types.Game.Idol;
     using System.Collections.Generic;
     using Utils.IO;

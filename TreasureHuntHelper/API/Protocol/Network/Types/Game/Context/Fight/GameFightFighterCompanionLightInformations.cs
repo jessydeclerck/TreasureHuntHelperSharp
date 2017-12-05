@@ -1,10 +1,13 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
 {
+    using Utils.IO;
+
     public class GameFightFighterCompanionLightInformations : GameFightFighterLightInformations
     {
         public new const ushort ProtocolId = 454;
+        public override ushort TypeID => ProtocolId;
+        public byte CompanionId { get; set; }
+        public double MasterId { get; set; }
 
         public GameFightFighterCompanionLightInformations(byte companionId, double masterId)
         {
@@ -12,13 +15,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             MasterId = masterId;
         }
 
-        public GameFightFighterCompanionLightInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public byte CompanionId { get; set; }
-        public double MasterId { get; set; }
+        public GameFightFighterCompanionLightInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -33,5 +30,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             CompanionId = reader.ReadByte();
             MasterId = reader.ReadDouble();
         }
+
     }
 }

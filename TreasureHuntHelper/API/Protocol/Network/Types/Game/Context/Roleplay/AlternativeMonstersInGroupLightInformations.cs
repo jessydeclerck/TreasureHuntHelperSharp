@@ -1,31 +1,27 @@
-﻿using System.Collections.Generic;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
 {
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class AlternativeMonstersInGroupLightInformations : NetworkType
     {
         public const ushort ProtocolId = 394;
+        public override ushort TypeID => ProtocolId;
+        public int PlayerCount { get; set; }
+        public List<MonsterInGroupLightInformations> Monsters { get; set; }
 
-        public AlternativeMonstersInGroupLightInformations(int playerCount,
-            List<MonsterInGroupLightInformations> monsters)
+        public AlternativeMonstersInGroupLightInformations(int playerCount, List<MonsterInGroupLightInformations> monsters)
         {
             PlayerCount = playerCount;
             Monsters = monsters;
         }
 
-        public AlternativeMonstersInGroupLightInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public int PlayerCount { get; set; }
-        public List<MonsterInGroupLightInformations> Monsters { get; set; }
+        public AlternativeMonstersInGroupLightInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteInt(PlayerCount);
-            writer.WriteShort((short) Monsters.Count);
+            writer.WriteShort((short)Monsters.Count);
             for (var monstersIndex = 0; monstersIndex < Monsters.Count; monstersIndex++)
             {
                 var objectToSend = Monsters[monstersIndex];
@@ -45,5 +41,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
                 Monsters.Add(objectToAdd);
             }
         }
+
     }
 }

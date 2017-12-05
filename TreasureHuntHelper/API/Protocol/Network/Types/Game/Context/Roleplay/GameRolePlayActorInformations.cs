@@ -1,12 +1,16 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
 {
+    using Types.Game.Context;
+    using Types.Game.Context;
+    using Types.Game.Look;
+    using Utils.IO;
+
     public class GameRolePlayActorInformations : GameContextActorInformations
     {
         public new const ushort ProtocolId = 141;
-
         public override ushort TypeID => ProtocolId;
+
+        public GameRolePlayActorInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -17,5 +21,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
         {
             base.Deserialize(reader);
         }
+
     }
 }

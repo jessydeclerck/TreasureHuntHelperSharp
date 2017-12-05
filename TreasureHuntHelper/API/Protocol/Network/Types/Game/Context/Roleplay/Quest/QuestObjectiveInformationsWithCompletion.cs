@@ -1,10 +1,14 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Quest
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Quest
 {
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class QuestObjectiveInformationsWithCompletion : QuestObjectiveInformations
     {
         public new const ushort ProtocolId = 386;
+        public override ushort TypeID => ProtocolId;
+        public ushort CurCompletion { get; set; }
+        public ushort MaxCompletion { get; set; }
 
         public QuestObjectiveInformationsWithCompletion(ushort curCompletion, ushort maxCompletion)
         {
@@ -12,13 +16,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Quest
             MaxCompletion = maxCompletion;
         }
 
-        public QuestObjectiveInformationsWithCompletion()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ushort CurCompletion { get; set; }
-        public ushort MaxCompletion { get; set; }
+        public QuestObjectiveInformationsWithCompletion() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -33,5 +31,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Quest
             CurCompletion = reader.ReadVarUhShort();
             MaxCompletion = reader.ReadVarUhShort();
         }
+
     }
 }

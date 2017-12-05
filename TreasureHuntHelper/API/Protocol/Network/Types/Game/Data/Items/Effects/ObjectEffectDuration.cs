@@ -1,10 +1,14 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Data.Items.Effects
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Data.Items.Effects
 {
+    using Utils.IO;
+
     public class ObjectEffectDuration : ObjectEffect
     {
         public new const ushort ProtocolId = 75;
+        public override ushort TypeID => ProtocolId;
+        public ushort Days { get; set; }
+        public byte Hours { get; set; }
+        public byte Minutes { get; set; }
 
         public ObjectEffectDuration(ushort days, byte hours, byte minutes)
         {
@@ -13,14 +17,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Data.Items.Effects
             Minutes = minutes;
         }
 
-        public ObjectEffectDuration()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ushort Days { get; set; }
-        public byte Hours { get; set; }
-        public byte Minutes { get; set; }
+        public ObjectEffectDuration() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -37,5 +34,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Data.Items.Effects
             Hours = reader.ReadByte();
             Minutes = reader.ReadByte();
         }
+
     }
 }

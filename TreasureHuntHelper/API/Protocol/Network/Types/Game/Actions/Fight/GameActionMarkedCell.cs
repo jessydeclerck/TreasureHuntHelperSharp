@@ -1,10 +1,15 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Actions.Fight
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Actions.Fight
 {
+    using Utils.IO;
+
     public class GameActionMarkedCell : NetworkType
     {
         public const ushort ProtocolId = 85;
+        public override ushort TypeID => ProtocolId;
+        public ushort CellId { get; set; }
+        public sbyte ZoneSize { get; set; }
+        public int CellColor { get; set; }
+        public sbyte CellsType { get; set; }
 
         public GameActionMarkedCell(ushort cellId, sbyte zoneSize, int cellColor, sbyte cellsType)
         {
@@ -14,15 +19,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Actions.Fight
             CellsType = cellsType;
         }
 
-        public GameActionMarkedCell()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ushort CellId { get; set; }
-        public sbyte ZoneSize { get; set; }
-        public int CellColor { get; set; }
-        public sbyte CellsType { get; set; }
+        public GameActionMarkedCell() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -39,5 +36,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Actions.Fight
             CellColor = reader.ReadInt();
             CellsType = reader.ReadSByte();
         }
+
     }
 }

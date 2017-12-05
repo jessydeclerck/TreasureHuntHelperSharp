@@ -1,10 +1,15 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Guild
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Guild
 {
+    using Utils.IO;
+
     public class GuildEmblem : NetworkType
     {
         public const ushort ProtocolId = 87;
+        public override ushort TypeID => ProtocolId;
+        public ushort SymbolShape { get; set; }
+        public int SymbolColor { get; set; }
+        public byte BackgroundShape { get; set; }
+        public int BackgroundColor { get; set; }
 
         public GuildEmblem(ushort symbolShape, int symbolColor, byte backgroundShape, int backgroundColor)
         {
@@ -14,15 +19,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Guild
             BackgroundColor = backgroundColor;
         }
 
-        public GuildEmblem()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ushort SymbolShape { get; set; }
-        public int SymbolColor { get; set; }
-        public byte BackgroundShape { get; set; }
-        public int BackgroundColor { get; set; }
+        public GuildEmblem() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -39,5 +36,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Guild
             BackgroundShape = reader.ReadByte();
             BackgroundColor = reader.ReadInt();
         }
+
     }
 }

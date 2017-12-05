@@ -1,22 +1,19 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
 {
+    using Utils.IO;
+
     public class FightTeamMemberInformations : NetworkType
     {
         public const ushort ProtocolId = 44;
+        public override ushort TypeID => ProtocolId;
+        public double ObjectId { get; set; }
 
         public FightTeamMemberInformations(double objectId)
         {
             ObjectId = objectId;
         }
 
-        public FightTeamMemberInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public double ObjectId { get; set; }
+        public FightTeamMemberInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -27,5 +24,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
         {
             ObjectId = reader.ReadDouble();
         }
+
     }
 }

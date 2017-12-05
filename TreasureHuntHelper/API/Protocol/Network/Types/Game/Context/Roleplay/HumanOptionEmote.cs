@@ -1,10 +1,13 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
 {
+    using Utils.IO;
+
     public class HumanOptionEmote : HumanOption
     {
         public new const ushort ProtocolId = 407;
+        public override ushort TypeID => ProtocolId;
+        public byte EmoteId { get; set; }
+        public double EmoteStartTime { get; set; }
 
         public HumanOptionEmote(byte emoteId, double emoteStartTime)
         {
@@ -12,13 +15,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             EmoteStartTime = emoteStartTime;
         }
 
-        public HumanOptionEmote()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public byte EmoteId { get; set; }
-        public double EmoteStartTime { get; set; }
+        public HumanOptionEmote() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -33,5 +30,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             EmoteId = reader.ReadByte();
             EmoteStartTime = reader.ReadDouble();
         }
+
     }
 }

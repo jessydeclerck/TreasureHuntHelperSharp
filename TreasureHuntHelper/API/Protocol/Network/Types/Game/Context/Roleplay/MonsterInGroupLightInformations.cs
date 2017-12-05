@@ -1,10 +1,13 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
 {
+    using Utils.IO;
+
     public class MonsterInGroupLightInformations : NetworkType
     {
         public const ushort ProtocolId = 395;
+        public override ushort TypeID => ProtocolId;
+        public int CreatureGenericId { get; set; }
+        public byte Grade { get; set; }
 
         public MonsterInGroupLightInformations(int creatureGenericId, byte grade)
         {
@@ -12,13 +15,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             Grade = grade;
         }
 
-        public MonsterInGroupLightInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public int CreatureGenericId { get; set; }
-        public byte Grade { get; set; }
+        public MonsterInGroupLightInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -31,5 +28,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             CreatureGenericId = reader.ReadInt();
             Grade = reader.ReadByte();
         }
+
     }
 }

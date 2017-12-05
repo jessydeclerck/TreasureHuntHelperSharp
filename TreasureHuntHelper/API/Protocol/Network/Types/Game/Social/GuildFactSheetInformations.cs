@@ -1,11 +1,15 @@
-﻿using Cookie.API.Protocol.Network.Types.Game.Context.Roleplay;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Social
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Social
 {
+    using Types.Game.Context.Roleplay;
+    using Types.Game.Guild;
+    using Utils.IO;
+
     public class GuildFactSheetInformations : GuildInformations
     {
         public new const ushort ProtocolId = 424;
+        public override ushort TypeID => ProtocolId;
+        public ulong LeaderId { get; set; }
+        public ushort NbMembers { get; set; }
 
         public GuildFactSheetInformations(ulong leaderId, ushort nbMembers)
         {
@@ -13,13 +17,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Social
             NbMembers = nbMembers;
         }
 
-        public GuildFactSheetInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ulong LeaderId { get; set; }
-        public ushort NbMembers { get; set; }
+        public GuildFactSheetInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -34,5 +32,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Social
             LeaderId = reader.ReadVarUhLong();
             NbMembers = reader.ReadVarUhShort();
         }
+
     }
 }

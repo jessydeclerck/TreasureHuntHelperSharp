@@ -1,12 +1,13 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Friend
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Friend
 {
+    using Utils.IO;
+
     public class IgnoredInformations : AbstractContactInformations
     {
         public new const ushort ProtocolId = 106;
-
         public override ushort TypeID => ProtocolId;
+
+        public IgnoredInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -17,5 +18,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Friend
         {
             base.Deserialize(reader);
         }
+
     }
 }

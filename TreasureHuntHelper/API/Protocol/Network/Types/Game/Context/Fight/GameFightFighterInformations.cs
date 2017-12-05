@@ -1,14 +1,22 @@
-﻿using System.Collections.Generic;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
 {
+    using Types.Game.Context;
+    using Types.Game.Context;
+    using Types.Game.Look;
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class GameFightFighterInformations : GameContextActorInformations
     {
         public new const ushort ProtocolId = 143;
+        public override ushort TypeID => ProtocolId;
+        public byte TeamId { get; set; }
+        public byte Wave { get; set; }
+        public bool Alive { get; set; }
+        public GameFightMinimalStats Stats { get; set; }
+        public List<ushort> PreviousPositions { get; set; }
 
-        public GameFightFighterInformations(byte teamId, byte wave, bool alive, GameFightMinimalStats stats,
-            List<ushort> previousPositions)
+        public GameFightFighterInformations(byte teamId, byte wave, bool alive, GameFightMinimalStats stats, List<ushort> previousPositions)
         {
             TeamId = teamId;
             Wave = wave;
@@ -17,16 +25,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             PreviousPositions = previousPositions;
         }
 
-        public GameFightFighterInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public byte TeamId { get; set; }
-        public byte Wave { get; set; }
-        public bool Alive { get; set; }
-        public GameFightMinimalStats Stats { get; set; }
-        public List<ushort> PreviousPositions { get; set; }
+        public GameFightFighterInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -36,11 +35,11 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             writer.WriteBoolean(Alive);
             writer.WriteUShort(Stats.TypeID);
             Stats.Serialize(writer);
-            writer.WriteShort((short) PreviousPositions.Count);
-            for (var previousPositionsIndex = 0;
-                previousPositionsIndex < PreviousPositions.Count;
-                previousPositionsIndex++)
+            writer.WriteShort((short)PreviousPositions.Count);
+            for (var previousPositionsIndex = 0; previousPositionsIndex < PreviousPositions.Count; previousPositionsIndex++)
+            {
                 writer.WriteVarUhShort(PreviousPositions[previousPositionsIndex]);
+            }
         }
 
         public override void Deserialize(IDataReader reader)
@@ -53,10 +52,11 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             Stats.Deserialize(reader);
             var previousPositionsCount = reader.ReadUShort();
             PreviousPositions = new List<ushort>();
-            for (var previousPositionsIndex = 0;
-                previousPositionsIndex < previousPositionsCount;
-                previousPositionsIndex++)
+            for (var previousPositionsIndex = 0; previousPositionsIndex < previousPositionsCount; previousPositionsIndex++)
+            {
                 PreviousPositions.Add(reader.ReadVarUhShort());
+            }
         }
+
     }
 }

@@ -1,10 +1,13 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context
 {
+    using Utils.IO;
+
     public class EntityDispositionInformations : NetworkType
     {
         public const ushort ProtocolId = 60;
+        public override ushort TypeID => ProtocolId;
+        public short CellId { get; set; }
+        public byte Direction { get; set; }
 
         public EntityDispositionInformations(short cellId, byte direction)
         {
@@ -12,13 +15,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context
             Direction = direction;
         }
 
-        public EntityDispositionInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public short CellId { get; set; }
-        public byte Direction { get; set; }
+        public EntityDispositionInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -31,5 +28,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context
             CellId = reader.ReadShort();
             Direction = reader.ReadByte();
         }
+
     }
 }

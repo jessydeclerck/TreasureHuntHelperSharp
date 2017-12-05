@@ -1,22 +1,19 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Shortcut
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Shortcut
 {
+    using Utils.IO;
+
     public class ShortcutSpell : Shortcut
     {
         public new const ushort ProtocolId = 368;
+        public override ushort TypeID => ProtocolId;
+        public ushort SpellId { get; set; }
 
         public ShortcutSpell(ushort spellId)
         {
             SpellId = spellId;
         }
 
-        public ShortcutSpell()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ushort SpellId { get; set; }
+        public ShortcutSpell() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -29,5 +26,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Shortcut
             base.Deserialize(reader);
             SpellId = reader.ReadVarUhShort();
         }
+
     }
 }

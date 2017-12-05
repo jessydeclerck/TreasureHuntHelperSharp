@@ -1,10 +1,17 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Version
+﻿namespace Cookie.API.Protocol.Network.Types.Version
 {
+    using Utils.IO;
+
     public class Version : NetworkType
     {
         public const ushort ProtocolId = 11;
+        public override ushort TypeID => ProtocolId;
+        public byte Major { get; set; }
+        public byte Minor { get; set; }
+        public byte Release { get; set; }
+        public int Revision { get; set; }
+        public byte Patch { get; set; }
+        public byte BuildType { get; set; }
 
         public Version(byte major, byte minor, byte release, int revision, byte patch, byte buildType)
         {
@@ -16,17 +23,7 @@ namespace Cookie.API.Protocol.Network.Types.Version
             BuildType = buildType;
         }
 
-        public Version()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public byte Major { get; set; }
-        public byte Minor { get; set; }
-        public byte Release { get; set; }
-        public int Revision { get; set; }
-        public byte Patch { get; set; }
-        public byte BuildType { get; set; }
+        public Version() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -47,5 +44,6 @@ namespace Cookie.API.Protocol.Network.Types.Version
             Patch = reader.ReadByte();
             BuildType = reader.ReadByte();
         }
+
     }
 }

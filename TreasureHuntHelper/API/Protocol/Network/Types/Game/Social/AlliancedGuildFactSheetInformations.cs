@@ -1,23 +1,22 @@
-﻿using Cookie.API.Protocol.Network.Types.Game.Context.Roleplay;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Social
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Social
 {
+    using Types.Game.Context.Roleplay;
+    using Types.Game.Context.Roleplay;
+    using Types.Game.Guild;
+    using Utils.IO;
+
     public class AlliancedGuildFactSheetInformations : GuildInformations
     {
         public new const ushort ProtocolId = 422;
+        public override ushort TypeID => ProtocolId;
+        public BasicNamedAllianceInformations AllianceInfos { get; set; }
 
         public AlliancedGuildFactSheetInformations(BasicNamedAllianceInformations allianceInfos)
         {
             AllianceInfos = allianceInfos;
         }
 
-        public AlliancedGuildFactSheetInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public BasicNamedAllianceInformations AllianceInfos { get; set; }
+        public AlliancedGuildFactSheetInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -31,5 +30,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Social
             AllianceInfos = new BasicNamedAllianceInformations();
             AllianceInfos.Deserialize(reader);
         }
+
     }
 }

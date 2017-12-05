@@ -6,10 +6,10 @@
     {
         public const ushort ProtocolId = 6488;
         public override ushort MessageID => ProtocolId;
-        public byte QuestLevel { get; set; }
+        public ushort QuestLevel { get; set; }
         public byte QuestType { get; set; }
 
-        public TreasureHuntRequestMessage(byte questLevel, byte questType)
+        public TreasureHuntRequestMessage(ushort questLevel, byte questType)
         {
             QuestLevel = questLevel;
             QuestType = questType;
@@ -19,13 +19,13 @@
 
         public override void Serialize(IDataWriter writer)
         {
-            writer.WriteByte(QuestLevel);
+            writer.WriteVarUhShort(QuestLevel);
             writer.WriteByte(QuestType);
         }
 
         public override void Deserialize(IDataReader reader)
         {
-            QuestLevel = reader.ReadByte();
+            QuestLevel = reader.ReadVarUhShort();
             QuestType = reader.ReadByte();
         }
 

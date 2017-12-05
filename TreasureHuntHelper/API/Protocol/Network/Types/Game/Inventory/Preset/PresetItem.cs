@@ -1,10 +1,14 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Inventory.Preset
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Inventory.Preset
 {
+    using Utils.IO;
+
     public class PresetItem : NetworkType
     {
         public const ushort ProtocolId = 354;
+        public override ushort TypeID => ProtocolId;
+        public byte Position { get; set; }
+        public ushort ObjGid { get; set; }
+        public uint ObjUid { get; set; }
 
         public PresetItem(byte position, ushort objGid, uint objUid)
         {
@@ -13,14 +17,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Inventory.Preset
             ObjUid = objUid;
         }
 
-        public PresetItem()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public byte Position { get; set; }
-        public ushort ObjGid { get; set; }
-        public uint ObjUid { get; set; }
+        public PresetItem() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -35,5 +32,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Inventory.Preset
             ObjGid = reader.ReadVarUhShort();
             ObjUid = reader.ReadVarUhInt();
         }
+
     }
 }

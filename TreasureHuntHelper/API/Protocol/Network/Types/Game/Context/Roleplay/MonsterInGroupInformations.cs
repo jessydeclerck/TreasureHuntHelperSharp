@@ -1,23 +1,20 @@
-﻿using Cookie.API.Protocol.Network.Types.Game.Look;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
 {
+    using Types.Game.Look;
+    using Utils.IO;
+
     public class MonsterInGroupInformations : MonsterInGroupLightInformations
     {
         public new const ushort ProtocolId = 144;
+        public override ushort TypeID => ProtocolId;
+        public EntityLook Look { get; set; }
 
         public MonsterInGroupInformations(EntityLook look)
         {
             Look = look;
         }
 
-        public MonsterInGroupInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public EntityLook Look { get; set; }
+        public MonsterInGroupInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -31,5 +28,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             Look = new EntityLook();
             Look.Deserialize(reader);
         }
+
     }
 }

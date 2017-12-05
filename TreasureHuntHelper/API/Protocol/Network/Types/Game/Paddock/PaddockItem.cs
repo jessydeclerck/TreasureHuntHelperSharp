@@ -1,24 +1,21 @@
-﻿using Cookie.API.Protocol.Network.Types.Game.Context.Roleplay;
-using Cookie.API.Protocol.Network.Types.Game.Mount;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Paddock
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Paddock
 {
+    using Types.Game.Context.Roleplay;
+    using Types.Game.Mount;
+    using Utils.IO;
+
     public class PaddockItem : ObjectItemInRolePlay
     {
         public new const ushort ProtocolId = 185;
+        public override ushort TypeID => ProtocolId;
+        public ItemDurability Durability { get; set; }
 
         public PaddockItem(ItemDurability durability)
         {
             Durability = durability;
         }
 
-        public PaddockItem()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ItemDurability Durability { get; set; }
+        public PaddockItem() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -32,5 +29,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Paddock
             Durability = new ItemDurability();
             Durability.Deserialize(reader);
         }
+
     }
 }

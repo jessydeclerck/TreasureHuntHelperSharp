@@ -1,10 +1,14 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Data.Items.Effects
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Data.Items.Effects
 {
+    using Utils.IO;
+
     public class ObjectEffectMount : ObjectEffect
     {
         public new const ushort ProtocolId = 179;
+        public override ushort TypeID => ProtocolId;
+        public int MountId { get; set; }
+        public double Date { get; set; }
+        public ushort ModelId { get; set; }
 
         public ObjectEffectMount(int mountId, double date, ushort modelId)
         {
@@ -13,14 +17,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Data.Items.Effects
             ModelId = modelId;
         }
 
-        public ObjectEffectMount()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public int MountId { get; set; }
-        public double Date { get; set; }
-        public ushort ModelId { get; set; }
+        public ObjectEffectMount() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -37,5 +34,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Data.Items.Effects
             Date = reader.ReadDouble();
             ModelId = reader.ReadVarUhShort();
         }
+
     }
 }

@@ -1,13 +1,20 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Paddock
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Paddock
 {
+    using Utils.IO;
+
     public class PaddockInformationsForSell : NetworkType
     {
         public const ushort ProtocolId = 222;
+        public override ushort TypeID => ProtocolId;
+        public string GuildOwner { get; set; }
+        public short WorldX { get; set; }
+        public short WorldY { get; set; }
+        public ushort SubAreaId { get; set; }
+        public sbyte NbMount { get; set; }
+        public sbyte NbObject { get; set; }
+        public ulong Price { get; set; }
 
-        public PaddockInformationsForSell(string guildOwner, short worldX, short worldY, ushort subAreaId,
-            sbyte nbMount, sbyte nbObject, ulong price)
+        public PaddockInformationsForSell(string guildOwner, short worldX, short worldY, ushort subAreaId, sbyte nbMount, sbyte nbObject, ulong price)
         {
             GuildOwner = guildOwner;
             WorldX = worldX;
@@ -18,18 +25,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Paddock
             Price = price;
         }
 
-        public PaddockInformationsForSell()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public string GuildOwner { get; set; }
-        public short WorldX { get; set; }
-        public short WorldY { get; set; }
-        public ushort SubAreaId { get; set; }
-        public sbyte NbMount { get; set; }
-        public sbyte NbObject { get; set; }
-        public ulong Price { get; set; }
+        public PaddockInformationsForSell() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -52,5 +48,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Paddock
             NbObject = reader.ReadSByte();
             Price = reader.ReadVarUhLong();
         }
+
     }
 }

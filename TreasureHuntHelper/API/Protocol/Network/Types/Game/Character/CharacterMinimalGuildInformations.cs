@@ -1,23 +1,21 @@
-﻿using Cookie.API.Protocol.Network.Types.Game.Context.Roleplay;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Character
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Character
 {
+    using Types.Game.Context.Roleplay;
+    using Types.Game.Look;
+    using Utils.IO;
+
     public class CharacterMinimalGuildInformations : CharacterMinimalPlusLookInformations
     {
         public new const ushort ProtocolId = 445;
+        public override ushort TypeID => ProtocolId;
+        public BasicGuildInformations Guild { get; set; }
 
         public CharacterMinimalGuildInformations(BasicGuildInformations guild)
         {
             Guild = guild;
         }
 
-        public CharacterMinimalGuildInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public BasicGuildInformations Guild { get; set; }
+        public CharacterMinimalGuildInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -31,5 +29,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Character
             Guild = new BasicGuildInformations();
             Guild.Deserialize(reader);
         }
+
     }
 }

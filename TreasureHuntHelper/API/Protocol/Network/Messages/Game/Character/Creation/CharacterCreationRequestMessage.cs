@@ -11,15 +11,13 @@
         public string Name { get; set; }
         public sbyte Breed { get; set; }
         public bool Sex { get; set; }
-        public List<int> Colors { get; set; }
         public ushort CosmeticId { get; set; }
 
-        public CharacterCreationRequestMessage(string name, sbyte breed, bool sex, List<int> colors, ushort cosmeticId)
+        public CharacterCreationRequestMessage(string name, sbyte breed, bool sex, ushort cosmeticId)
         {
             Name = name;
             Breed = breed;
             Sex = sex;
-            Colors = colors;
             CosmeticId = cosmeticId;
         }
 
@@ -30,8 +28,6 @@
             writer.WriteUTF(Name);
             writer.WriteSByte(Breed);
             writer.WriteBoolean(Sex);
-            for (var i = 0; i < 5; i++)
-                writer.WriteInt(Colors[i]);
             writer.WriteVarUhShort(CosmeticId);
         }
 
@@ -40,8 +36,6 @@
             Name = reader.ReadUTF();
             Breed = reader.ReadSByte();
             Sex = reader.ReadBoolean();
-            for (var i = 0; i < 5; i++)
-                Colors[i] = reader.ReadInt();
             CosmeticId = reader.ReadVarUhShort();
         }
 

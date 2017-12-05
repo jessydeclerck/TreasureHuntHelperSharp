@@ -1,15 +1,24 @@
-﻿using Cookie.API.Protocol.Network.Types.Game.Context.Roleplay;
-using Cookie.API.Protocol.Network.Types.Game.Look;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Friend
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Friend
 {
+    using Types.Game.Context.Roleplay;
+    using Types.Game.Look;
+    using Utils.IO;
+
     public class FriendSpouseInformations : NetworkType
     {
         public const ushort ProtocolId = 77;
+        public override ushort TypeID => ProtocolId;
+        public int SpouseAccountId { get; set; }
+        public ulong SpouseId { get; set; }
+        public string SpouseName { get; set; }
+        public ushort SpouseLevel { get; set; }
+        public sbyte Breed { get; set; }
+        public sbyte Sex { get; set; }
+        public EntityLook SpouseEntityLook { get; set; }
+        public GuildInformations GuildInfo { get; set; }
+        public sbyte AlignmentSide { get; set; }
 
-        public FriendSpouseInformations(int spouseAccountId, ulong spouseId, string spouseName, byte spouseLevel,
-            sbyte breed, sbyte sex, EntityLook spouseEntityLook, GuildInformations guildInfo, sbyte alignmentSide)
+        public FriendSpouseInformations(int spouseAccountId, ulong spouseId, string spouseName, ushort spouseLevel, sbyte breed, sbyte sex, EntityLook spouseEntityLook, GuildInformations guildInfo, sbyte alignmentSide)
         {
             SpouseAccountId = spouseAccountId;
             SpouseId = spouseId;
@@ -22,27 +31,14 @@ namespace Cookie.API.Protocol.Network.Types.Game.Friend
             AlignmentSide = alignmentSide;
         }
 
-        public FriendSpouseInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public int SpouseAccountId { get; set; }
-        public ulong SpouseId { get; set; }
-        public string SpouseName { get; set; }
-        public byte SpouseLevel { get; set; }
-        public sbyte Breed { get; set; }
-        public sbyte Sex { get; set; }
-        public EntityLook SpouseEntityLook { get; set; }
-        public GuildInformations GuildInfo { get; set; }
-        public sbyte AlignmentSide { get; set; }
+        public FriendSpouseInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteInt(SpouseAccountId);
             writer.WriteVarUhLong(SpouseId);
             writer.WriteUTF(SpouseName);
-            writer.WriteByte(SpouseLevel);
+            writer.WriteVarUhShort(SpouseLevel);
             writer.WriteSByte(Breed);
             writer.WriteSByte(Sex);
             SpouseEntityLook.Serialize(writer);
@@ -55,7 +51,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Friend
             SpouseAccountId = reader.ReadInt();
             SpouseId = reader.ReadVarUhLong();
             SpouseName = reader.ReadUTF();
-            SpouseLevel = reader.ReadByte();
+            SpouseLevel = reader.ReadVarUhShort();
             Breed = reader.ReadSByte();
             Sex = reader.ReadSByte();
             SpouseEntityLook = new EntityLook();
@@ -64,5 +60,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Friend
             GuildInfo.Deserialize(reader);
             AlignmentSide = reader.ReadSByte();
         }
+
     }
 }

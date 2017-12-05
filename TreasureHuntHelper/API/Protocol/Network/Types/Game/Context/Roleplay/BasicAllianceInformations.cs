@@ -1,11 +1,14 @@
-﻿using Cookie.API.Protocol.Network.Types.Game.Social;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
 {
+    using Types.Game.Social;
+    using Utils.IO;
+
     public class BasicAllianceInformations : AbstractSocialGroupInfos
     {
         public new const ushort ProtocolId = 419;
+        public override ushort TypeID => ProtocolId;
+        public uint AllianceId { get; set; }
+        public string AllianceTag { get; set; }
 
         public BasicAllianceInformations(uint allianceId, string allianceTag)
         {
@@ -13,13 +16,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             AllianceTag = allianceTag;
         }
 
-        public BasicAllianceInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public uint AllianceId { get; set; }
-        public string AllianceTag { get; set; }
+        public BasicAllianceInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -34,5 +31,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             AllianceId = reader.ReadVarUhInt();
             AllianceTag = reader.ReadUTF();
         }
+
     }
 }

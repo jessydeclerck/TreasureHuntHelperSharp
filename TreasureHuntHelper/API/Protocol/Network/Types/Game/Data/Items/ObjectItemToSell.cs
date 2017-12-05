@@ -1,15 +1,20 @@
-﻿using System.Collections.Generic;
-using Cookie.API.Protocol.Network.Types.Game.Data.Items.Effects;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Data.Items
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Data.Items
 {
+    using Types.Game.Data.Items.Effects;
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class ObjectItemToSell : Item
     {
         public new const ushort ProtocolId = 120;
+        public override ushort TypeID => ProtocolId;
+        public ushort ObjectGID { get; set; }
+        public List<ObjectEffect> Effects { get; set; }
+        public uint ObjectUID { get; set; }
+        public uint Quantity { get; set; }
+        public ulong ObjectPrice { get; set; }
 
-        public ObjectItemToSell(ushort objectGID, List<ObjectEffect> effects, uint objectUID, uint quantity,
-            ulong objectPrice)
+        public ObjectItemToSell(ushort objectGID, List<ObjectEffect> effects, uint objectUID, uint quantity, ulong objectPrice)
         {
             ObjectGID = objectGID;
             Effects = effects;
@@ -18,22 +23,13 @@ namespace Cookie.API.Protocol.Network.Types.Game.Data.Items
             ObjectPrice = objectPrice;
         }
 
-        public ObjectItemToSell()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ushort ObjectGID { get; set; }
-        public List<ObjectEffect> Effects { get; set; }
-        public uint ObjectUID { get; set; }
-        public uint Quantity { get; set; }
-        public ulong ObjectPrice { get; set; }
+        public ObjectItemToSell() { }
 
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
             writer.WriteVarUhShort(ObjectGID);
-            writer.WriteShort((short) Effects.Count);
+            writer.WriteShort((short)Effects.Count);
             for (var effectsIndex = 0; effectsIndex < Effects.Count; effectsIndex++)
             {
                 var objectToSend = Effects[effectsIndex];
@@ -61,5 +57,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Data.Items
             Quantity = reader.ReadVarUhInt();
             ObjectPrice = reader.ReadVarUhLong();
         }
+
     }
 }

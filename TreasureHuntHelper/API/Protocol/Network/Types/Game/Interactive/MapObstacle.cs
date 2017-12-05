@@ -1,10 +1,13 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Interactive
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Interactive
 {
+    using Utils.IO;
+
     public class MapObstacle : NetworkType
     {
         public const ushort ProtocolId = 200;
+        public override ushort TypeID => ProtocolId;
+        public ushort ObstacleCellId { get; set; }
+        public byte State { get; set; }
 
         public MapObstacle(ushort obstacleCellId, byte state)
         {
@@ -12,13 +15,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Interactive
             State = state;
         }
 
-        public MapObstacle()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ushort ObstacleCellId { get; set; }
-        public byte State { get; set; }
+        public MapObstacle() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -31,5 +28,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Interactive
             ObstacleCellId = reader.ReadVarUhShort();
             State = reader.ReadByte();
         }
+
     }
 }

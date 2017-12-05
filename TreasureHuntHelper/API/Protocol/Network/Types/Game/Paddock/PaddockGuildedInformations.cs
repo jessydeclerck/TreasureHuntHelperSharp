@@ -1,11 +1,14 @@
-﻿using Cookie.API.Protocol.Network.Types.Game.Context.Roleplay;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Paddock
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Paddock
 {
+    using Types.Game.Context.Roleplay;
+    using Utils.IO;
+
     public class PaddockGuildedInformations : PaddockBuyableInformations
     {
         public new const ushort ProtocolId = 508;
+        public override ushort TypeID => ProtocolId;
+        public bool Deserted { get; set; }
+        public GuildInformations GuildInfo { get; set; }
 
         public PaddockGuildedInformations(bool deserted, GuildInformations guildInfo)
         {
@@ -13,13 +16,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Paddock
             GuildInfo = guildInfo;
         }
 
-        public PaddockGuildedInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public bool Deserted { get; set; }
-        public GuildInformations GuildInfo { get; set; }
+        public PaddockGuildedInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -35,5 +32,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Paddock
             GuildInfo = new GuildInformations();
             GuildInfo.Deserialize(reader);
         }
+
     }
 }

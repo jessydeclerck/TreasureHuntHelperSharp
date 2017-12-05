@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Quest
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Quest
 {
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class QuestActiveDetailedInformations : QuestActiveInformations
     {
         public new const ushort ProtocolId = 382;
+        public override ushort TypeID => ProtocolId;
+        public ushort StepId { get; set; }
+        public List<QuestObjectiveInformations> Objectives { get; set; }
 
         public QuestActiveDetailedInformations(ushort stepId, List<QuestObjectiveInformations> objectives)
         {
@@ -13,19 +16,13 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Quest
             Objectives = objectives;
         }
 
-        public QuestActiveDetailedInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ushort StepId { get; set; }
-        public List<QuestObjectiveInformations> Objectives { get; set; }
+        public QuestActiveDetailedInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
             writer.WriteVarUhShort(StepId);
-            writer.WriteShort((short) Objectives.Count);
+            writer.WriteShort((short)Objectives.Count);
             for (var objectivesIndex = 0; objectivesIndex < Objectives.Count; objectivesIndex++)
             {
                 var objectToSend = Objectives[objectivesIndex];
@@ -47,5 +44,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Quest
                 Objectives.Add(objectToAdd);
             }
         }
+
     }
 }

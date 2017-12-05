@@ -1,12 +1,13 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
 {
+    using Utils.IO;
+
     public class FightResultAdditionalData : NetworkType
     {
         public const ushort ProtocolId = 191;
-
         public override ushort TypeID => ProtocolId;
+
+        public FightResultAdditionalData() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -15,5 +16,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
         public override void Deserialize(IDataReader reader)
         {
         }
+
     }
 }

@@ -1,14 +1,23 @@
-﻿using System.Collections.Generic;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Actions.Fight
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Actions.Fight
 {
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class GameActionMark : NetworkType
     {
         public const ushort ProtocolId = 351;
+        public override ushort TypeID => ProtocolId;
+        public double MarkAuthorId { get; set; }
+        public byte MarkTeamId { get; set; }
+        public int MarkSpellId { get; set; }
+        public short MarkSpellLevel { get; set; }
+        public short MarkId { get; set; }
+        public sbyte MarkType { get; set; }
+        public short MarkimpactCell { get; set; }
+        public List<GameActionMarkedCell> Cells { get; set; }
+        public bool Active { get; set; }
 
-        public GameActionMark(double markAuthorId, byte markTeamId, int markSpellId, short markSpellLevel, short markId,
-            sbyte markType, short markimpactCell, List<GameActionMarkedCell> cells, bool active)
+        public GameActionMark(double markAuthorId, byte markTeamId, int markSpellId, short markSpellLevel, short markId, sbyte markType, short markimpactCell, List<GameActionMarkedCell> cells, bool active)
         {
             MarkAuthorId = markAuthorId;
             MarkTeamId = markTeamId;
@@ -21,20 +30,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Actions.Fight
             Active = active;
         }
 
-        public GameActionMark()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public double MarkAuthorId { get; set; }
-        public byte MarkTeamId { get; set; }
-        public int MarkSpellId { get; set; }
-        public short MarkSpellLevel { get; set; }
-        public short MarkId { get; set; }
-        public sbyte MarkType { get; set; }
-        public short MarkimpactCell { get; set; }
-        public List<GameActionMarkedCell> Cells { get; set; }
-        public bool Active { get; set; }
+        public GameActionMark() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -45,7 +41,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Actions.Fight
             writer.WriteShort(MarkId);
             writer.WriteSByte(MarkType);
             writer.WriteShort(MarkimpactCell);
-            writer.WriteShort((short) Cells.Count);
+            writer.WriteShort((short)Cells.Count);
             for (var cellsIndex = 0; cellsIndex < Cells.Count; cellsIndex++)
             {
                 var objectToSend = Cells[cellsIndex];
@@ -73,5 +69,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Actions.Fight
             }
             Active = reader.ReadBoolean();
         }
+
     }
 }

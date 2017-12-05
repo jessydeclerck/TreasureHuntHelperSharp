@@ -1,13 +1,18 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Prism
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Prism
 {
+    using Utils.IO;
+
     public class PrismInformation : NetworkType
     {
         public const ushort ProtocolId = 428;
+        public override ushort TypeID => ProtocolId;
+        public byte TypeId { get; set; }
+        public byte State { get; set; }
+        public int NextVulnerabilityDate { get; set; }
+        public int PlacementDate { get; set; }
+        public uint RewardTokenCount { get; set; }
 
-        public PrismInformation(byte typeId, byte state, int nextVulnerabilityDate, int placementDate,
-            uint rewardTokenCount)
+        public PrismInformation(byte typeId, byte state, int nextVulnerabilityDate, int placementDate, uint rewardTokenCount)
         {
             TypeId = typeId;
             State = state;
@@ -16,16 +21,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Prism
             RewardTokenCount = rewardTokenCount;
         }
 
-        public PrismInformation()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public byte TypeId { get; set; }
-        public byte State { get; set; }
-        public int NextVulnerabilityDate { get; set; }
-        public int PlacementDate { get; set; }
-        public uint RewardTokenCount { get; set; }
+        public PrismInformation() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -44,5 +40,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Prism
             PlacementDate = reader.ReadInt();
             RewardTokenCount = reader.ReadVarUhInt();
         }
+
     }
 }

@@ -11,11 +11,11 @@
         public ulong MemberId { get; set; }
         public int MemberAccountId { get; set; }
         public string MemberName { get; set; }
-        public int FightId { get; set; }
+        public ushort FightId { get; set; }
         public MapCoordinatesExtended FightMap { get; set; }
         public short TimeBeforeFightStart { get; set; }
 
-        public PartyMemberInFightMessage(byte reason, ulong memberId, int memberAccountId, string memberName, int fightId, MapCoordinatesExtended fightMap, short timeBeforeFightStart)
+        public PartyMemberInFightMessage(byte reason, ulong memberId, int memberAccountId, string memberName, ushort fightId, MapCoordinatesExtended fightMap, short timeBeforeFightStart)
         {
             Reason = reason;
             MemberId = memberId;
@@ -35,7 +35,7 @@
             writer.WriteVarUhLong(MemberId);
             writer.WriteInt(MemberAccountId);
             writer.WriteUTF(MemberName);
-            writer.WriteInt(FightId);
+            writer.WriteVarUhShort(FightId);
             FightMap.Serialize(writer);
             writer.WriteVarShort(TimeBeforeFightStart);
         }
@@ -47,7 +47,7 @@
             MemberId = reader.ReadVarUhLong();
             MemberAccountId = reader.ReadInt();
             MemberName = reader.ReadUTF();
-            FightId = reader.ReadInt();
+            FightId = reader.ReadVarUhShort();
             FightMap = new MapCoordinatesExtended();
             FightMap.Deserialize(reader);
             TimeBeforeFightStart = reader.ReadVarShort();

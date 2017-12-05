@@ -1,17 +1,25 @@
-﻿using System.Collections.Generic;
-using Cookie.API.Protocol.Network.Types.Game.Character.Status;
-using Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Party.Companion;
-using Cookie.API.Protocol.Network.Types.Game.Look;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Party
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Party
 {
+    using Types.Game.Character.Status;
+    using Types.Game.Context.Roleplay.Party.Companion;
+    using Types.Game.Look;
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class PartyGuestInformations : NetworkType
     {
         public const ushort ProtocolId = 374;
+        public override ushort TypeID => ProtocolId;
+        public ulong GuestId { get; set; }
+        public ulong HostId { get; set; }
+        public string Name { get; set; }
+        public EntityLook GuestLook { get; set; }
+        public sbyte Breed { get; set; }
+        public bool Sex { get; set; }
+        public PlayerStatus Status { get; set; }
+        public List<PartyCompanionBaseInformations> Companions { get; set; }
 
-        public PartyGuestInformations(ulong guestId, ulong hostId, string name, EntityLook guestLook, sbyte breed,
-            bool sex, PlayerStatus status, List<PartyCompanionBaseInformations> companions)
+        public PartyGuestInformations(ulong guestId, ulong hostId, string name, EntityLook guestLook, sbyte breed, bool sex, PlayerStatus status, List<PartyCompanionBaseInformations> companions)
         {
             GuestId = guestId;
             HostId = hostId;
@@ -23,19 +31,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Party
             Companions = companions;
         }
 
-        public PartyGuestInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ulong GuestId { get; set; }
-        public ulong HostId { get; set; }
-        public string Name { get; set; }
-        public EntityLook GuestLook { get; set; }
-        public sbyte Breed { get; set; }
-        public bool Sex { get; set; }
-        public PlayerStatus Status { get; set; }
-        public List<PartyCompanionBaseInformations> Companions { get; set; }
+        public PartyGuestInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -47,7 +43,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Party
             writer.WriteBoolean(Sex);
             writer.WriteUShort(Status.TypeID);
             Status.Serialize(writer);
-            writer.WriteShort((short) Companions.Count);
+            writer.WriteShort((short)Companions.Count);
             for (var companionsIndex = 0; companionsIndex < Companions.Count; companionsIndex++)
             {
                 var objectToSend = Companions[companionsIndex];
@@ -75,5 +71,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Party
                 Companions.Add(objectToAdd);
             }
         }
+
     }
 }

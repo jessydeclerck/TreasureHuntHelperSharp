@@ -1,13 +1,18 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Social
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Social
 {
+    using Types.Game.Guild;
+    using Utils.IO;
+
     public class GuildInsiderFactSheetInformations : GuildFactSheetInformations
     {
         public new const ushort ProtocolId = 423;
+        public override ushort TypeID => ProtocolId;
+        public string LeaderName { get; set; }
+        public ushort NbConnectedMembers { get; set; }
+        public byte NbTaxCollectors { get; set; }
+        public int LastActivity { get; set; }
 
-        public GuildInsiderFactSheetInformations(string leaderName, ushort nbConnectedMembers, byte nbTaxCollectors,
-            int lastActivity)
+        public GuildInsiderFactSheetInformations(string leaderName, ushort nbConnectedMembers, byte nbTaxCollectors, int lastActivity)
         {
             LeaderName = leaderName;
             NbConnectedMembers = nbConnectedMembers;
@@ -15,15 +20,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Social
             LastActivity = lastActivity;
         }
 
-        public GuildInsiderFactSheetInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public string LeaderName { get; set; }
-        public ushort NbConnectedMembers { get; set; }
-        public byte NbTaxCollectors { get; set; }
-        public int LastActivity { get; set; }
+        public GuildInsiderFactSheetInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -42,5 +39,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Social
             NbTaxCollectors = reader.ReadByte();
             LastActivity = reader.ReadInt();
         }
+
     }
 }

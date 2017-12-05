@@ -1,22 +1,19 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Approach
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Approach
 {
+    using Utils.IO;
+
     public class ServerSessionConstantLong : ServerSessionConstant
     {
         public new const ushort ProtocolId = 429;
+        public override ushort TypeID => ProtocolId;
+        public double Value { get; set; }
 
         public ServerSessionConstantLong(double value)
         {
             Value = value;
         }
 
-        public ServerSessionConstantLong()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public double Value { get; set; }
+        public ServerSessionConstantLong() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -29,5 +26,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Approach
             base.Deserialize(reader);
             Value = reader.ReadDouble();
         }
+
     }
 }

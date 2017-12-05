@@ -1,10 +1,13 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Interactive
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Interactive
 {
+    using Utils.IO;
+
     public class InteractiveElementSkill : NetworkType
     {
         public const ushort ProtocolId = 219;
+        public override ushort TypeID => ProtocolId;
+        public uint SkillId { get; set; }
+        public int SkillInstanceUid { get; set; }
 
         public InteractiveElementSkill(uint skillId, int skillInstanceUid)
         {
@@ -12,13 +15,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Interactive
             SkillInstanceUid = skillInstanceUid;
         }
 
-        public InteractiveElementSkill()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public uint SkillId { get; set; }
-        public int SkillInstanceUid { get; set; }
+        public InteractiveElementSkill() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -31,5 +28,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Interactive
             SkillId = reader.ReadVarUhInt();
             SkillInstanceUid = reader.ReadInt();
         }
+
     }
 }

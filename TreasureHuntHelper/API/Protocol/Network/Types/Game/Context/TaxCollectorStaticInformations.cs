@@ -1,11 +1,15 @@
-﻿using Cookie.API.Protocol.Network.Types.Game.Context.Roleplay;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context
 {
+    using Types.Game.Context.Roleplay;
+    using Utils.IO;
+
     public class TaxCollectorStaticInformations : NetworkType
     {
         public const ushort ProtocolId = 147;
+        public override ushort TypeID => ProtocolId;
+        public ushort FirstNameId { get; set; }
+        public ushort LastNameId { get; set; }
+        public GuildInformations GuildIdentity { get; set; }
 
         public TaxCollectorStaticInformations(ushort firstNameId, ushort lastNameId, GuildInformations guildIdentity)
         {
@@ -14,14 +18,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context
             GuildIdentity = guildIdentity;
         }
 
-        public TaxCollectorStaticInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ushort FirstNameId { get; set; }
-        public ushort LastNameId { get; set; }
-        public GuildInformations GuildIdentity { get; set; }
+        public TaxCollectorStaticInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -37,5 +34,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context
             GuildIdentity = new GuildInformations();
             GuildIdentity.Deserialize(reader);
         }
+
     }
 }

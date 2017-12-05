@@ -1,13 +1,14 @@
-﻿using Cookie.API.Protocol.Network.Messages.Debug;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Messages.Wtf
+﻿namespace Cookie.API.Protocol.Network.Messages.Wtf
 {
+    using Messages.Debug;
+    using Utils.IO;
+
     public class ClientYouAreDrunkMessage : DebugInClientMessage
     {
         public new const ushort ProtocolId = 6594;
-
         public override ushort MessageID => ProtocolId;
+
+        public ClientYouAreDrunkMessage() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -18,5 +19,6 @@ namespace Cookie.API.Protocol.Network.Messages.Wtf
         {
             base.Deserialize(reader);
         }
+
     }
 }

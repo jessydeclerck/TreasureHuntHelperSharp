@@ -1,10 +1,16 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Job
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Job
 {
+    using Utils.IO;
+
     public class JobExperience : NetworkType
     {
         public const ushort ProtocolId = 98;
+        public override ushort TypeID => ProtocolId;
+        public byte JobId { get; set; }
+        public byte JobLevel { get; set; }
+        public ulong JobXP { get; set; }
+        public ulong JobXpLevelFloor { get; set; }
+        public ulong JobXpNextLevelFloor { get; set; }
 
         public JobExperience(byte jobId, byte jobLevel, ulong jobXP, ulong jobXpLevelFloor, ulong jobXpNextLevelFloor)
         {
@@ -15,16 +21,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Job
             JobXpNextLevelFloor = jobXpNextLevelFloor;
         }
 
-        public JobExperience()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public byte JobId { get; set; }
-        public byte JobLevel { get; set; }
-        public ulong JobXP { get; set; }
-        public ulong JobXpLevelFloor { get; set; }
-        public ulong JobXpNextLevelFloor { get; set; }
+        public JobExperience() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -43,5 +40,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Job
             JobXpLevelFloor = reader.ReadVarUhLong();
             JobXpNextLevelFloor = reader.ReadVarUhLong();
         }
+
     }
 }

@@ -6,11 +6,11 @@
     {
         public const ushort ProtocolId = 711;
         public override ushort MessageID => ProtocolId;
-        public short FightId { get; set; }
+        public ushort FightId { get; set; }
         public byte TeamId { get; set; }
         public double CharId { get; set; }
 
-        public GameFightRemoveTeamMemberMessage(short fightId, byte teamId, double charId)
+        public GameFightRemoveTeamMemberMessage(ushort fightId, byte teamId, double charId)
         {
             FightId = fightId;
             TeamId = teamId;
@@ -21,14 +21,14 @@
 
         public override void Serialize(IDataWriter writer)
         {
-            writer.WriteShort(FightId);
+            writer.WriteVarUhShort(FightId);
             writer.WriteByte(TeamId);
             writer.WriteDouble(CharId);
         }
 
         public override void Deserialize(IDataReader reader)
         {
-            FightId = reader.ReadShort();
+            FightId = reader.ReadVarUhShort();
             TeamId = reader.ReadByte();
             CharId = reader.ReadDouble();
         }

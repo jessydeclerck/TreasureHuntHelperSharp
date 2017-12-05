@@ -1,28 +1,24 @@
-﻿using Cookie.API.Protocol.Network.Types.Game.Look;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context
 {
+    using Types.Game.Look;
+    using Utils.IO;
+
     public class GameContextActorInformations : NetworkType
     {
         public const ushort ProtocolId = 150;
+        public override ushort TypeID => ProtocolId;
+        public double ContextualId { get; set; }
+        public EntityLook Look { get; set; }
+        public EntityDispositionInformations Disposition { get; set; }
 
-        public GameContextActorInformations(double contextualId, EntityLook look,
-            EntityDispositionInformations disposition)
+        public GameContextActorInformations(double contextualId, EntityLook look, EntityDispositionInformations disposition)
         {
             ContextualId = contextualId;
             Look = look;
             Disposition = disposition;
         }
 
-        public GameContextActorInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public double ContextualId { get; set; }
-        public EntityLook Look { get; set; }
-        public EntityDispositionInformations Disposition { get; set; }
+        public GameContextActorInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -40,5 +36,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context
             Disposition = ProtocolTypeManager.GetInstance<EntityDispositionInformations>(reader.ReadUShort());
             Disposition.Deserialize(reader);
         }
+
     }
 }

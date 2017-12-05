@@ -1,17 +1,29 @@
-﻿using Cookie.API.Protocol.Network.Types.Game.Character;
-using Cookie.API.Protocol.Network.Types.Game.Character.Status;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Guild
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Guild
 {
+    using Types.Game.Character;
+    using Types.Game.Character.Status;
+    using Utils.IO;
+
     public class GuildMember : CharacterMinimalInformations
     {
         public new const ushort ProtocolId = 88;
+        public override ushort TypeID => ProtocolId;
+        public bool Sex { get; set; }
+        public bool HavenBagShared { get; set; }
+        public sbyte Breed { get; set; }
+        public ushort Rank { get; set; }
+        public ulong GivenExperience { get; set; }
+        public byte ExperienceGivenPercent { get; set; }
+        public uint Rights { get; set; }
+        public byte Connected { get; set; }
+        public sbyte AlignmentSide { get; set; }
+        public ushort HoursSinceLastConnection { get; set; }
+        public ushort MoodSmileyId { get; set; }
+        public int AccountId { get; set; }
+        public int AchievementPoints { get; set; }
+        public PlayerStatus Status { get; set; }
 
-        public GuildMember(bool sex, bool havenBagShared, sbyte breed, ushort rank, ulong givenExperience,
-            byte experienceGivenPercent, uint rights, byte connected, sbyte alignmentSide,
-            ushort hoursSinceLastConnection, ushort moodSmileyId, int accountId, int achievementPoints,
-            PlayerStatus status)
+        public GuildMember(bool sex, bool havenBagShared, sbyte breed, ushort rank, ulong givenExperience, byte experienceGivenPercent, uint rights, byte connected, sbyte alignmentSide, ushort hoursSinceLastConnection, ushort moodSmileyId, int accountId, int achievementPoints, PlayerStatus status)
         {
             Sex = sex;
             HavenBagShared = havenBagShared;
@@ -29,25 +41,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Guild
             Status = status;
         }
 
-        public GuildMember()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public bool Sex { get; set; }
-        public bool HavenBagShared { get; set; }
-        public sbyte Breed { get; set; }
-        public ushort Rank { get; set; }
-        public ulong GivenExperience { get; set; }
-        public byte ExperienceGivenPercent { get; set; }
-        public uint Rights { get; set; }
-        public byte Connected { get; set; }
-        public sbyte AlignmentSide { get; set; }
-        public ushort HoursSinceLastConnection { get; set; }
-        public ushort MoodSmileyId { get; set; }
-        public int AccountId { get; set; }
-        public int AchievementPoints { get; set; }
-        public PlayerStatus Status { get; set; }
+        public GuildMember() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -91,5 +85,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Guild
             Status = ProtocolTypeManager.GetInstance<PlayerStatus>(reader.ReadUShort());
             Status.Deserialize(reader);
         }
+
     }
 }

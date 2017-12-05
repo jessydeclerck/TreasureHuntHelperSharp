@@ -1,10 +1,14 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
 {
+    using Utils.IO;
+
     public class MonsterBoosts : NetworkType
     {
         public const ushort ProtocolId = 497;
+        public override ushort TypeID => ProtocolId;
+        public uint ObjectId { get; set; }
+        public ushort XpBoost { get; set; }
+        public ushort DropBoost { get; set; }
 
         public MonsterBoosts(uint objectId, ushort xpBoost, ushort dropBoost)
         {
@@ -13,14 +17,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             DropBoost = dropBoost;
         }
 
-        public MonsterBoosts()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public uint ObjectId { get; set; }
-        public ushort XpBoost { get; set; }
-        public ushort DropBoost { get; set; }
+        public MonsterBoosts() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -35,5 +32,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             XpBoost = reader.ReadVarUhShort();
             DropBoost = reader.ReadVarUhShort();
         }
+
     }
 }

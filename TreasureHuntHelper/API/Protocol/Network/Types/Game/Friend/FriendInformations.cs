@@ -1,10 +1,14 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Friend
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Friend
 {
+    using Utils.IO;
+
     public class FriendInformations : AbstractContactInformations
     {
         public new const ushort ProtocolId = 78;
+        public override ushort TypeID => ProtocolId;
+        public byte PlayerState { get; set; }
+        public ushort LastConnection { get; set; }
+        public int AchievementPoints { get; set; }
 
         public FriendInformations(byte playerState, ushort lastConnection, int achievementPoints)
         {
@@ -13,14 +17,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Friend
             AchievementPoints = achievementPoints;
         }
 
-        public FriendInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public byte PlayerState { get; set; }
-        public ushort LastConnection { get; set; }
-        public int AchievementPoints { get; set; }
+        public FriendInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -37,5 +34,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Friend
             LastConnection = reader.ReadVarUhShort();
             AchievementPoints = reader.ReadInt();
         }
+
     }
 }

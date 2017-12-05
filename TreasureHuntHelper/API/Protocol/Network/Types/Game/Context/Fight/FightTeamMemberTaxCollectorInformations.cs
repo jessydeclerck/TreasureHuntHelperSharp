@@ -1,13 +1,18 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
 {
+    using Utils.IO;
+
     public class FightTeamMemberTaxCollectorInformations : FightTeamMemberInformations
     {
         public new const ushort ProtocolId = 177;
+        public override ushort TypeID => ProtocolId;
+        public ushort FirstNameId { get; set; }
+        public ushort LastNameId { get; set; }
+        public byte Level { get; set; }
+        public uint GuildId { get; set; }
+        public double Uid { get; set; }
 
-        public FightTeamMemberTaxCollectorInformations(ushort firstNameId, ushort lastNameId, byte level, uint guildId,
-            double uid)
+        public FightTeamMemberTaxCollectorInformations(ushort firstNameId, ushort lastNameId, byte level, uint guildId, double uid)
         {
             FirstNameId = firstNameId;
             LastNameId = lastNameId;
@@ -16,16 +21,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             Uid = uid;
         }
 
-        public FightTeamMemberTaxCollectorInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ushort FirstNameId { get; set; }
-        public ushort LastNameId { get; set; }
-        public byte Level { get; set; }
-        public uint GuildId { get; set; }
-        public double Uid { get; set; }
+        public FightTeamMemberTaxCollectorInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -46,5 +42,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             GuildId = reader.ReadVarUhInt();
             Uid = reader.ReadDouble();
         }
+
     }
 }

@@ -1,10 +1,13 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Finishmoves
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Finishmoves
 {
+    using Utils.IO;
+
     public class FinishMoveInformations : NetworkType
     {
         public const ushort ProtocolId = 506;
+        public override ushort TypeID => ProtocolId;
+        public int FinishMoveId { get; set; }
+        public bool FinishMoveState { get; set; }
 
         public FinishMoveInformations(int finishMoveId, bool finishMoveState)
         {
@@ -12,13 +15,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Finishmoves
             FinishMoveState = finishMoveState;
         }
 
-        public FinishMoveInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public int FinishMoveId { get; set; }
-        public bool FinishMoveState { get; set; }
+        public FinishMoveInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -31,5 +28,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Finishmoves
             FinishMoveId = reader.ReadInt();
             FinishMoveState = reader.ReadBoolean();
         }
+
     }
 }

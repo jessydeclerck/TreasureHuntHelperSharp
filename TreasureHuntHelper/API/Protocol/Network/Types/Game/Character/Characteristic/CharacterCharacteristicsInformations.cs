@@ -1,58 +1,100 @@
-﻿using System.Collections.Generic;
-using Cookie.API.Protocol.Network.Types.Game.Character.Alignment;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Character.Characteristic
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Character.Characteristic
 {
+    using Types.Game.Character.Alignment;
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class CharacterCharacteristicsInformations : NetworkType
     {
         public const ushort ProtocolId = 8;
+        public override ushort TypeID => ProtocolId;
+        public ulong Experience { get; set; }
+        public ulong ExperienceLevelFloor { get; set; }
+        public ulong ExperienceNextLevelFloor { get; set; }
+        public ulong ExperienceBonusLimit { get; set; }
+        public ulong Kamas { get; set; }
+        public ushort StatsPoints { get; set; }
+        public ushort AdditionnalPoints { get; set; }
+        public ushort SpellsPoints { get; set; }
+        public ActorExtendedAlignmentInformations AlignmentInfos { get; set; }
+        public uint LifePoints { get; set; }
+        public uint MaxLifePoints { get; set; }
+        public ushort EnergyPoints { get; set; }
+        public ushort MaxEnergyPoints { get; set; }
+        public short ActionPointsCurrent { get; set; }
+        public short MovementPointsCurrent { get; set; }
+        public CharacterBaseCharacteristic Initiative { get; set; }
+        public CharacterBaseCharacteristic Prospecting { get; set; }
+        public CharacterBaseCharacteristic ActionPoints { get; set; }
+        public CharacterBaseCharacteristic MovementPoints { get; set; }
+        public CharacterBaseCharacteristic Strength { get; set; }
+        public CharacterBaseCharacteristic Vitality { get; set; }
+        public CharacterBaseCharacteristic Wisdom { get; set; }
+        public CharacterBaseCharacteristic Chance { get; set; }
+        public CharacterBaseCharacteristic Agility { get; set; }
+        public CharacterBaseCharacteristic Intelligence { get; set; }
+        public CharacterBaseCharacteristic Range { get; set; }
+        public CharacterBaseCharacteristic SummonableCreaturesBoost { get; set; }
+        public CharacterBaseCharacteristic Reflect { get; set; }
+        public CharacterBaseCharacteristic CriticalHit { get; set; }
+        public ushort CriticalHitWeapon { get; set; }
+        public CharacterBaseCharacteristic CriticalMiss { get; set; }
+        public CharacterBaseCharacteristic HealBonus { get; set; }
+        public CharacterBaseCharacteristic AllDamagesBonus { get; set; }
+        public CharacterBaseCharacteristic WeaponDamagesBonusPercent { get; set; }
+        public CharacterBaseCharacteristic DamagesBonusPercent { get; set; }
+        public CharacterBaseCharacteristic TrapBonus { get; set; }
+        public CharacterBaseCharacteristic TrapBonusPercent { get; set; }
+        public CharacterBaseCharacteristic GlyphBonusPercent { get; set; }
+        public CharacterBaseCharacteristic RuneBonusPercent { get; set; }
+        public CharacterBaseCharacteristic PermanentDamagePercent { get; set; }
+        public CharacterBaseCharacteristic TackleBlock { get; set; }
+        public CharacterBaseCharacteristic TackleEvade { get; set; }
+        public CharacterBaseCharacteristic PAAttack { get; set; }
+        public CharacterBaseCharacteristic PMAttack { get; set; }
+        public CharacterBaseCharacteristic PushDamageBonus { get; set; }
+        public CharacterBaseCharacteristic CriticalDamageBonus { get; set; }
+        public CharacterBaseCharacteristic NeutralDamageBonus { get; set; }
+        public CharacterBaseCharacteristic EarthDamageBonus { get; set; }
+        public CharacterBaseCharacteristic WaterDamageBonus { get; set; }
+        public CharacterBaseCharacteristic AirDamageBonus { get; set; }
+        public CharacterBaseCharacteristic FireDamageBonus { get; set; }
+        public CharacterBaseCharacteristic DodgePALostProbability { get; set; }
+        public CharacterBaseCharacteristic DodgePMLostProbability { get; set; }
+        public CharacterBaseCharacteristic NeutralElementResistPercent { get; set; }
+        public CharacterBaseCharacteristic EarthElementResistPercent { get; set; }
+        public CharacterBaseCharacteristic WaterElementResistPercent { get; set; }
+        public CharacterBaseCharacteristic AirElementResistPercent { get; set; }
+        public CharacterBaseCharacteristic FireElementResistPercent { get; set; }
+        public CharacterBaseCharacteristic NeutralElementReduction { get; set; }
+        public CharacterBaseCharacteristic EarthElementReduction { get; set; }
+        public CharacterBaseCharacteristic WaterElementReduction { get; set; }
+        public CharacterBaseCharacteristic AirElementReduction { get; set; }
+        public CharacterBaseCharacteristic FireElementReduction { get; set; }
+        public CharacterBaseCharacteristic PushDamageReduction { get; set; }
+        public CharacterBaseCharacteristic CriticalDamageReduction { get; set; }
+        public CharacterBaseCharacteristic PvpNeutralElementResistPercent { get; set; }
+        public CharacterBaseCharacteristic PvpEarthElementResistPercent { get; set; }
+        public CharacterBaseCharacteristic PvpWaterElementResistPercent { get; set; }
+        public CharacterBaseCharacteristic PvpAirElementResistPercent { get; set; }
+        public CharacterBaseCharacteristic PvpFireElementResistPercent { get; set; }
+        public CharacterBaseCharacteristic PvpNeutralElementReduction { get; set; }
+        public CharacterBaseCharacteristic PvpEarthElementReduction { get; set; }
+        public CharacterBaseCharacteristic PvpWaterElementReduction { get; set; }
+        public CharacterBaseCharacteristic PvpAirElementReduction { get; set; }
+        public CharacterBaseCharacteristic PvpFireElementReduction { get; set; }
+        public CharacterBaseCharacteristic MeleeDamageDonePercent { get; set; }
+        public CharacterBaseCharacteristic MeleeDamageReceivedPercent { get; set; }
+        public CharacterBaseCharacteristic RangedDamageDonePercent { get; set; }
+        public CharacterBaseCharacteristic RangedDamageReceivedPercent { get; set; }
+        public CharacterBaseCharacteristic WeaponDamageDonePercent { get; set; }
+        public CharacterBaseCharacteristic WeaponDamageReceivedPercent { get; set; }
+        public CharacterBaseCharacteristic SpellDamageDonePercent { get; set; }
+        public CharacterBaseCharacteristic SpellDamageReceivedPercent { get; set; }
+        public List<CharacterSpellModification> SpellModifications { get; set; }
+        public int ProbationTime { get; set; }
 
-        public CharacterCharacteristicsInformations(ulong experience, ulong experienceLevelFloor,
-            ulong experienceNextLevelFloor, ulong experienceBonusLimit, ulong kamas, ushort statsPoints,
-            ushort additionnalPoints, ushort spellsPoints, ActorExtendedAlignmentInformations alignmentInfos,
-            uint lifePoints, uint maxLifePoints, ushort energyPoints, ushort maxEnergyPoints, short actionPointsCurrent,
-            short movementPointsCurrent, CharacterBaseCharacteristic initiative,
-            CharacterBaseCharacteristic prospecting, CharacterBaseCharacteristic actionPoints,
-            CharacterBaseCharacteristic movementPoints, CharacterBaseCharacteristic strength,
-            CharacterBaseCharacteristic vitality, CharacterBaseCharacteristic wisdom,
-            CharacterBaseCharacteristic chance, CharacterBaseCharacteristic agility,
-            CharacterBaseCharacteristic intelligence, CharacterBaseCharacteristic range,
-            CharacterBaseCharacteristic summonableCreaturesBoost, CharacterBaseCharacteristic reflect,
-            CharacterBaseCharacteristic criticalHit, ushort criticalHitWeapon, CharacterBaseCharacteristic criticalMiss,
-            CharacterBaseCharacteristic healBonus, CharacterBaseCharacteristic allDamagesBonus,
-            CharacterBaseCharacteristic weaponDamagesBonusPercent, CharacterBaseCharacteristic damagesBonusPercent,
-            CharacterBaseCharacteristic trapBonus, CharacterBaseCharacteristic trapBonusPercent,
-            CharacterBaseCharacteristic glyphBonusPercent, CharacterBaseCharacteristic runeBonusPercent,
-            CharacterBaseCharacteristic permanentDamagePercent, CharacterBaseCharacteristic tackleBlock,
-            CharacterBaseCharacteristic tackleEvade, CharacterBaseCharacteristic pAAttack,
-            CharacterBaseCharacteristic pMAttack, CharacterBaseCharacteristic pushDamageBonus,
-            CharacterBaseCharacteristic criticalDamageBonus, CharacterBaseCharacteristic neutralDamageBonus,
-            CharacterBaseCharacteristic earthDamageBonus, CharacterBaseCharacteristic waterDamageBonus,
-            CharacterBaseCharacteristic airDamageBonus, CharacterBaseCharacteristic fireDamageBonus,
-            CharacterBaseCharacteristic dodgePALostProbability, CharacterBaseCharacteristic dodgePMLostProbability,
-            CharacterBaseCharacteristic neutralElementResistPercent,
-            CharacterBaseCharacteristic earthElementResistPercent,
-            CharacterBaseCharacteristic waterElementResistPercent, CharacterBaseCharacteristic airElementResistPercent,
-            CharacterBaseCharacteristic fireElementResistPercent, CharacterBaseCharacteristic neutralElementReduction,
-            CharacterBaseCharacteristic earthElementReduction, CharacterBaseCharacteristic waterElementReduction,
-            CharacterBaseCharacteristic airElementReduction, CharacterBaseCharacteristic fireElementReduction,
-            CharacterBaseCharacteristic pushDamageReduction, CharacterBaseCharacteristic criticalDamageReduction,
-            CharacterBaseCharacteristic pvpNeutralElementResistPercent,
-            CharacterBaseCharacteristic pvpEarthElementResistPercent,
-            CharacterBaseCharacteristic pvpWaterElementResistPercent,
-            CharacterBaseCharacteristic pvpAirElementResistPercent,
-            CharacterBaseCharacteristic pvpFireElementResistPercent,
-            CharacterBaseCharacteristic pvpNeutralElementReduction,
-            CharacterBaseCharacteristic pvpEarthElementReduction, CharacterBaseCharacteristic pvpWaterElementReduction,
-            CharacterBaseCharacteristic pvpAirElementReduction, CharacterBaseCharacteristic pvpFireElementReduction,
-            CharacterBaseCharacteristic meleeDamageDonePercent, CharacterBaseCharacteristic meleeDamageReceivedPercent,
-            CharacterBaseCharacteristic rangedDamageDonePercent,
-            CharacterBaseCharacteristic rangedDamageReceivedPercent,
-            CharacterBaseCharacteristic weaponDamageDonePercent,
-            CharacterBaseCharacteristic weaponDamageReceivedPercent, CharacterBaseCharacteristic spellDamageDonePercent,
-            CharacterBaseCharacteristic spellDamageReceivedPercent, List<CharacterSpellModification> spellModifications,
-            int probationTime)
+        public CharacterCharacteristicsInformations(ulong experience, ulong experienceLevelFloor, ulong experienceNextLevelFloor, ulong experienceBonusLimit, ulong kamas, ushort statsPoints, ushort additionnalPoints, ushort spellsPoints, ActorExtendedAlignmentInformations alignmentInfos, uint lifePoints, uint maxLifePoints, ushort energyPoints, ushort maxEnergyPoints, short actionPointsCurrent, short movementPointsCurrent, CharacterBaseCharacteristic initiative, CharacterBaseCharacteristic prospecting, CharacterBaseCharacteristic actionPoints, CharacterBaseCharacteristic movementPoints, CharacterBaseCharacteristic strength, CharacterBaseCharacteristic vitality, CharacterBaseCharacteristic wisdom, CharacterBaseCharacteristic chance, CharacterBaseCharacteristic agility, CharacterBaseCharacteristic intelligence, CharacterBaseCharacteristic range, CharacterBaseCharacteristic summonableCreaturesBoost, CharacterBaseCharacteristic reflect, CharacterBaseCharacteristic criticalHit, ushort criticalHitWeapon, CharacterBaseCharacteristic criticalMiss, CharacterBaseCharacteristic healBonus, CharacterBaseCharacteristic allDamagesBonus, CharacterBaseCharacteristic weaponDamagesBonusPercent, CharacterBaseCharacteristic damagesBonusPercent, CharacterBaseCharacteristic trapBonus, CharacterBaseCharacteristic trapBonusPercent, CharacterBaseCharacteristic glyphBonusPercent, CharacterBaseCharacteristic runeBonusPercent, CharacterBaseCharacteristic permanentDamagePercent, CharacterBaseCharacteristic tackleBlock, CharacterBaseCharacteristic tackleEvade, CharacterBaseCharacteristic pAAttack, CharacterBaseCharacteristic pMAttack, CharacterBaseCharacteristic pushDamageBonus, CharacterBaseCharacteristic criticalDamageBonus, CharacterBaseCharacteristic neutralDamageBonus, CharacterBaseCharacteristic earthDamageBonus, CharacterBaseCharacteristic waterDamageBonus, CharacterBaseCharacteristic airDamageBonus, CharacterBaseCharacteristic fireDamageBonus, CharacterBaseCharacteristic dodgePALostProbability, CharacterBaseCharacteristic dodgePMLostProbability, CharacterBaseCharacteristic neutralElementResistPercent, CharacterBaseCharacteristic earthElementResistPercent, CharacterBaseCharacteristic waterElementResistPercent, CharacterBaseCharacteristic airElementResistPercent, CharacterBaseCharacteristic fireElementResistPercent, CharacterBaseCharacteristic neutralElementReduction, CharacterBaseCharacteristic earthElementReduction, CharacterBaseCharacteristic waterElementReduction, CharacterBaseCharacteristic airElementReduction, CharacterBaseCharacteristic fireElementReduction, CharacterBaseCharacteristic pushDamageReduction, CharacterBaseCharacteristic criticalDamageReduction, CharacterBaseCharacteristic pvpNeutralElementResistPercent, CharacterBaseCharacteristic pvpEarthElementResistPercent, CharacterBaseCharacteristic pvpWaterElementResistPercent, CharacterBaseCharacteristic pvpAirElementResistPercent, CharacterBaseCharacteristic pvpFireElementResistPercent, CharacterBaseCharacteristic pvpNeutralElementReduction, CharacterBaseCharacteristic pvpEarthElementReduction, CharacterBaseCharacteristic pvpWaterElementReduction, CharacterBaseCharacteristic pvpAirElementReduction, CharacterBaseCharacteristic pvpFireElementReduction, CharacterBaseCharacteristic meleeDamageDonePercent, CharacterBaseCharacteristic meleeDamageReceivedPercent, CharacterBaseCharacteristic rangedDamageDonePercent, CharacterBaseCharacteristic rangedDamageReceivedPercent, CharacterBaseCharacteristic weaponDamageDonePercent, CharacterBaseCharacteristic weaponDamageReceivedPercent, CharacterBaseCharacteristic spellDamageDonePercent, CharacterBaseCharacteristic spellDamageReceivedPercent, List<CharacterSpellModification> spellModifications, int probationTime)
         {
             Experience = experience;
             ExperienceLevelFloor = experienceLevelFloor;
@@ -141,96 +183,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Character.Characteristic
             ProbationTime = probationTime;
         }
 
-        public CharacterCharacteristicsInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ulong Experience { get; set; }
-        public ulong ExperienceLevelFloor { get; set; }
-        public ulong ExperienceNextLevelFloor { get; set; }
-        public ulong ExperienceBonusLimit { get; set; }
-        public ulong Kamas { get; set; }
-        public ushort StatsPoints { get; set; }
-        public ushort AdditionnalPoints { get; set; }
-        public ushort SpellsPoints { get; set; }
-        public ActorExtendedAlignmentInformations AlignmentInfos { get; set; }
-        public uint LifePoints { get; set; }
-        public uint MaxLifePoints { get; set; }
-        public ushort EnergyPoints { get; set; }
-        public ushort MaxEnergyPoints { get; set; }
-        public short ActionPointsCurrent { get; set; }
-        public short MovementPointsCurrent { get; set; }
-        public CharacterBaseCharacteristic Initiative { get; set; }
-        public CharacterBaseCharacteristic Prospecting { get; set; }
-        public CharacterBaseCharacteristic ActionPoints { get; set; }
-        public CharacterBaseCharacteristic MovementPoints { get; set; }
-        public CharacterBaseCharacteristic Strength { get; set; }
-        public CharacterBaseCharacteristic Vitality { get; set; }
-        public CharacterBaseCharacteristic Wisdom { get; set; }
-        public CharacterBaseCharacteristic Chance { get; set; }
-        public CharacterBaseCharacteristic Agility { get; set; }
-        public CharacterBaseCharacteristic Intelligence { get; set; }
-        public CharacterBaseCharacteristic Range { get; set; }
-        public CharacterBaseCharacteristic SummonableCreaturesBoost { get; set; }
-        public CharacterBaseCharacteristic Reflect { get; set; }
-        public CharacterBaseCharacteristic CriticalHit { get; set; }
-        public ushort CriticalHitWeapon { get; set; }
-        public CharacterBaseCharacteristic CriticalMiss { get; set; }
-        public CharacterBaseCharacteristic HealBonus { get; set; }
-        public CharacterBaseCharacteristic AllDamagesBonus { get; set; }
-        public CharacterBaseCharacteristic WeaponDamagesBonusPercent { get; set; }
-        public CharacterBaseCharacteristic DamagesBonusPercent { get; set; }
-        public CharacterBaseCharacteristic TrapBonus { get; set; }
-        public CharacterBaseCharacteristic TrapBonusPercent { get; set; }
-        public CharacterBaseCharacteristic GlyphBonusPercent { get; set; }
-        public CharacterBaseCharacteristic RuneBonusPercent { get; set; }
-        public CharacterBaseCharacteristic PermanentDamagePercent { get; set; }
-        public CharacterBaseCharacteristic TackleBlock { get; set; }
-        public CharacterBaseCharacteristic TackleEvade { get; set; }
-        public CharacterBaseCharacteristic PAAttack { get; set; }
-        public CharacterBaseCharacteristic PMAttack { get; set; }
-        public CharacterBaseCharacteristic PushDamageBonus { get; set; }
-        public CharacterBaseCharacteristic CriticalDamageBonus { get; set; }
-        public CharacterBaseCharacteristic NeutralDamageBonus { get; set; }
-        public CharacterBaseCharacteristic EarthDamageBonus { get; set; }
-        public CharacterBaseCharacteristic WaterDamageBonus { get; set; }
-        public CharacterBaseCharacteristic AirDamageBonus { get; set; }
-        public CharacterBaseCharacteristic FireDamageBonus { get; set; }
-        public CharacterBaseCharacteristic DodgePALostProbability { get; set; }
-        public CharacterBaseCharacteristic DodgePMLostProbability { get; set; }
-        public CharacterBaseCharacteristic NeutralElementResistPercent { get; set; }
-        public CharacterBaseCharacteristic EarthElementResistPercent { get; set; }
-        public CharacterBaseCharacteristic WaterElementResistPercent { get; set; }
-        public CharacterBaseCharacteristic AirElementResistPercent { get; set; }
-        public CharacterBaseCharacteristic FireElementResistPercent { get; set; }
-        public CharacterBaseCharacteristic NeutralElementReduction { get; set; }
-        public CharacterBaseCharacteristic EarthElementReduction { get; set; }
-        public CharacterBaseCharacteristic WaterElementReduction { get; set; }
-        public CharacterBaseCharacteristic AirElementReduction { get; set; }
-        public CharacterBaseCharacteristic FireElementReduction { get; set; }
-        public CharacterBaseCharacteristic PushDamageReduction { get; set; }
-        public CharacterBaseCharacteristic CriticalDamageReduction { get; set; }
-        public CharacterBaseCharacteristic PvpNeutralElementResistPercent { get; set; }
-        public CharacterBaseCharacteristic PvpEarthElementResistPercent { get; set; }
-        public CharacterBaseCharacteristic PvpWaterElementResistPercent { get; set; }
-        public CharacterBaseCharacteristic PvpAirElementResistPercent { get; set; }
-        public CharacterBaseCharacteristic PvpFireElementResistPercent { get; set; }
-        public CharacterBaseCharacteristic PvpNeutralElementReduction { get; set; }
-        public CharacterBaseCharacteristic PvpEarthElementReduction { get; set; }
-        public CharacterBaseCharacteristic PvpWaterElementReduction { get; set; }
-        public CharacterBaseCharacteristic PvpAirElementReduction { get; set; }
-        public CharacterBaseCharacteristic PvpFireElementReduction { get; set; }
-        public CharacterBaseCharacteristic MeleeDamageDonePercent { get; set; }
-        public CharacterBaseCharacteristic MeleeDamageReceivedPercent { get; set; }
-        public CharacterBaseCharacteristic RangedDamageDonePercent { get; set; }
-        public CharacterBaseCharacteristic RangedDamageReceivedPercent { get; set; }
-        public CharacterBaseCharacteristic WeaponDamageDonePercent { get; set; }
-        public CharacterBaseCharacteristic WeaponDamageReceivedPercent { get; set; }
-        public CharacterBaseCharacteristic SpellDamageDonePercent { get; set; }
-        public CharacterBaseCharacteristic SpellDamageReceivedPercent { get; set; }
-        public List<CharacterSpellModification> SpellModifications { get; set; }
-        public int ProbationTime { get; set; }
+        public CharacterCharacteristicsInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -317,10 +270,8 @@ namespace Cookie.API.Protocol.Network.Types.Game.Character.Characteristic
             WeaponDamageReceivedPercent.Serialize(writer);
             SpellDamageDonePercent.Serialize(writer);
             SpellDamageReceivedPercent.Serialize(writer);
-            writer.WriteShort((short) SpellModifications.Count);
-            for (var spellModificationsIndex = 0;
-                spellModificationsIndex < SpellModifications.Count;
-                spellModificationsIndex++)
+            writer.WriteShort((short)SpellModifications.Count);
+            for (var spellModificationsIndex = 0; spellModificationsIndex < SpellModifications.Count; spellModificationsIndex++)
             {
                 var objectToSend = SpellModifications[spellModificationsIndex];
                 objectToSend.Serialize(writer);
@@ -483,9 +434,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Character.Characteristic
             SpellDamageReceivedPercent.Deserialize(reader);
             var spellModificationsCount = reader.ReadUShort();
             SpellModifications = new List<CharacterSpellModification>();
-            for (var spellModificationsIndex = 0;
-                spellModificationsIndex < spellModificationsCount;
-                spellModificationsIndex++)
+            for (var spellModificationsIndex = 0; spellModificationsIndex < spellModificationsCount; spellModificationsIndex++)
             {
                 var objectToAdd = new CharacterSpellModification();
                 objectToAdd.Deserialize(reader);
@@ -493,5 +442,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Character.Characteristic
             }
             ProbationTime = reader.ReadInt();
         }
+
     }
 }

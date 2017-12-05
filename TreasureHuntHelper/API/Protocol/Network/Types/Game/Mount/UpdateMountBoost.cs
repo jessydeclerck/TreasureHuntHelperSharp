@@ -1,22 +1,19 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Mount
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Mount
 {
+    using Utils.IO;
+
     public class UpdateMountBoost : NetworkType
     {
         public const ushort ProtocolId = 356;
+        public override ushort TypeID => ProtocolId;
+        public byte Type { get; set; }
 
         public UpdateMountBoost(byte type)
         {
             Type = type;
         }
 
-        public UpdateMountBoost()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public byte Type { get; set; }
+        public UpdateMountBoost() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -27,5 +24,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Mount
         {
             Type = reader.ReadByte();
         }
+
     }
 }

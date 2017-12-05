@@ -1,10 +1,13 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Party
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Party
 {
+    using Utils.IO;
+
     public class NamedPartyTeamWithOutcome : NetworkType
     {
         public const ushort ProtocolId = 470;
+        public override ushort TypeID => ProtocolId;
+        public NamedPartyTeam Team { get; set; }
+        public ushort Outcome { get; set; }
 
         public NamedPartyTeamWithOutcome(NamedPartyTeam team, ushort outcome)
         {
@@ -12,13 +15,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Party
             Outcome = outcome;
         }
 
-        public NamedPartyTeamWithOutcome()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public NamedPartyTeam Team { get; set; }
-        public ushort Outcome { get; set; }
+        public NamedPartyTeamWithOutcome() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -32,5 +29,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Party
             Team.Deserialize(reader);
             Outcome = reader.ReadVarUhShort();
         }
+
     }
 }

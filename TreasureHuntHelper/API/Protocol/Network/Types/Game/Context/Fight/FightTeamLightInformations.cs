@@ -1,13 +1,20 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
 {
+    using Utils.IO;
+
     public class FightTeamLightInformations : AbstractFightTeamInformations
     {
         public new const ushort ProtocolId = 115;
+        public override ushort TypeID => ProtocolId;
+        public bool HasFriend { get; set; }
+        public bool HasGuildMember { get; set; }
+        public bool HasAllianceMember { get; set; }
+        public bool HasGroupMember { get; set; }
+        public bool HasMyTaxCollector { get; set; }
+        public byte TeamMembersCount { get; set; }
+        public uint MeanLevel { get; set; }
 
-        public FightTeamLightInformations(bool hasFriend, bool hasGuildMember, bool hasAllianceMember,
-            bool hasGroupMember, bool hasMyTaxCollector, byte teamMembersCount, uint meanLevel)
+        public FightTeamLightInformations(bool hasFriend, bool hasGuildMember, bool hasAllianceMember, bool hasGroupMember, bool hasMyTaxCollector, byte teamMembersCount, uint meanLevel)
         {
             HasFriend = hasFriend;
             HasGuildMember = hasGuildMember;
@@ -18,18 +25,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             MeanLevel = meanLevel;
         }
 
-        public FightTeamLightInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public bool HasFriend { get; set; }
-        public bool HasGuildMember { get; set; }
-        public bool HasAllianceMember { get; set; }
-        public bool HasGroupMember { get; set; }
-        public bool HasMyTaxCollector { get; set; }
-        public byte TeamMembersCount { get; set; }
-        public uint MeanLevel { get; set; }
+        public FightTeamLightInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -57,5 +53,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             TeamMembersCount = reader.ReadByte();
             MeanLevel = reader.ReadVarUhInt();
         }
+
     }
 }

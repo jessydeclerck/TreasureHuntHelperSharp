@@ -1,11 +1,15 @@
-﻿using System.Collections.Generic;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Inventory.Preset
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Inventory.Preset
 {
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class IdolsPreset : NetworkType
     {
         public const ushort ProtocolId = 491;
+        public override ushort TypeID => ProtocolId;
+        public byte PresetId { get; set; }
+        public byte SymbolId { get; set; }
+        public List<ushort> IdolId { get; set; }
 
         public IdolsPreset(byte presetId, byte symbolId, List<ushort> idolId)
         {
@@ -14,22 +18,17 @@ namespace Cookie.API.Protocol.Network.Types.Game.Inventory.Preset
             IdolId = idolId;
         }
 
-        public IdolsPreset()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public byte PresetId { get; set; }
-        public byte SymbolId { get; set; }
-        public List<ushort> IdolId { get; set; }
+        public IdolsPreset() { }
 
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteByte(PresetId);
             writer.WriteByte(SymbolId);
-            writer.WriteShort((short) IdolId.Count);
+            writer.WriteShort((short)IdolId.Count);
             for (var idolIdIndex = 0; idolIdIndex < IdolId.Count; idolIdIndex++)
+            {
                 writer.WriteVarUhShort(IdolId[idolIdIndex]);
+            }
         }
 
         public override void Deserialize(IDataReader reader)
@@ -39,7 +38,10 @@ namespace Cookie.API.Protocol.Network.Types.Game.Inventory.Preset
             var idolIdCount = reader.ReadUShort();
             IdolId = new List<ushort>();
             for (var idolIdIndex = 0; idolIdIndex < idolIdCount; idolIdIndex++)
+            {
                 IdolId.Add(reader.ReadVarUhShort());
+            }
         }
+
     }
 }

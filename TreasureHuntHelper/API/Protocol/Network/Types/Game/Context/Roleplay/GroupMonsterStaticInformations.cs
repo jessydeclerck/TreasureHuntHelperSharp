@@ -1,31 +1,27 @@
-﻿using System.Collections.Generic;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
 {
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class GroupMonsterStaticInformations : NetworkType
     {
         public const ushort ProtocolId = 140;
+        public override ushort TypeID => ProtocolId;
+        public MonsterInGroupLightInformations MainCreatureLightInfos { get; set; }
+        public List<MonsterInGroupInformations> Underlings { get; set; }
 
-        public GroupMonsterStaticInformations(MonsterInGroupLightInformations mainCreatureLightInfos,
-            List<MonsterInGroupInformations> underlings)
+        public GroupMonsterStaticInformations(MonsterInGroupLightInformations mainCreatureLightInfos, List<MonsterInGroupInformations> underlings)
         {
             MainCreatureLightInfos = mainCreatureLightInfos;
             Underlings = underlings;
         }
 
-        public GroupMonsterStaticInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public MonsterInGroupLightInformations MainCreatureLightInfos { get; set; }
-        public List<MonsterInGroupInformations> Underlings { get; set; }
+        public GroupMonsterStaticInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
             MainCreatureLightInfos.Serialize(writer);
-            writer.WriteShort((short) Underlings.Count);
+            writer.WriteShort((short)Underlings.Count);
             for (var underlingsIndex = 0; underlingsIndex < Underlings.Count; underlingsIndex++)
             {
                 var objectToSend = Underlings[underlingsIndex];
@@ -46,5 +42,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
                 Underlings.Add(objectToAdd);
             }
         }
+
     }
 }

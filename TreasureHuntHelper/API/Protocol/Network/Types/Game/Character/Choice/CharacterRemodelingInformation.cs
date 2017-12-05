@@ -1,11 +1,18 @@
-﻿using System.Collections.Generic;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Character.Choice
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Character.Choice
 {
+    using Types.Game.Character;
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class CharacterRemodelingInformation : AbstractCharacterInformation
     {
         public new const ushort ProtocolId = 479;
+        public override ushort TypeID => ProtocolId;
+        public string Name { get; set; }
+        public sbyte Breed { get; set; }
+        public bool Sex { get; set; }
+        public ushort CosmeticId { get; set; }
+        public List<int> Colors { get; set; }
 
         public CharacterRemodelingInformation(string name, sbyte breed, bool sex, ushort cosmeticId, List<int> colors)
         {
@@ -16,16 +23,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Character.Choice
             Colors = colors;
         }
 
-        public CharacterRemodelingInformation()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public string Name { get; set; }
-        public sbyte Breed { get; set; }
-        public bool Sex { get; set; }
-        public ushort CosmeticId { get; set; }
-        public List<int> Colors { get; set; }
+        public CharacterRemodelingInformation() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -34,9 +32,11 @@ namespace Cookie.API.Protocol.Network.Types.Game.Character.Choice
             writer.WriteSByte(Breed);
             writer.WriteBoolean(Sex);
             writer.WriteVarUhShort(CosmeticId);
-            writer.WriteShort((short) Colors.Count);
+            writer.WriteShort((short)Colors.Count);
             for (var colorsIndex = 0; colorsIndex < Colors.Count; colorsIndex++)
+            {
                 writer.WriteInt(Colors[colorsIndex]);
+            }
         }
 
         public override void Deserialize(IDataReader reader)
@@ -49,7 +49,10 @@ namespace Cookie.API.Protocol.Network.Types.Game.Character.Choice
             var colorsCount = reader.ReadUShort();
             Colors = new List<int>();
             for (var colorsIndex = 0; colorsIndex < colorsCount; colorsIndex++)
+            {
                 Colors.Add(reader.ReadInt());
+            }
         }
+
     }
 }

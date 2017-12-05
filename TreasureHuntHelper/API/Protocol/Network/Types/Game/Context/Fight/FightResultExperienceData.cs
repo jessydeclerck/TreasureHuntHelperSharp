@@ -1,16 +1,27 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
 {
+    using Utils.IO;
+
     public class FightResultExperienceData : FightResultAdditionalData
     {
         public new const ushort ProtocolId = 192;
+        public override ushort TypeID => ProtocolId;
+        public bool ShowExperience { get; set; }
+        public bool ShowExperienceLevelFloor { get; set; }
+        public bool ShowExperienceNextLevelFloor { get; set; }
+        public bool ShowExperienceFightDelta { get; set; }
+        public bool ShowExperienceForGuild { get; set; }
+        public bool ShowExperienceForMount { get; set; }
+        public bool IsIncarnationExperience { get; set; }
+        public ulong Experience { get; set; }
+        public ulong ExperienceLevelFloor { get; set; }
+        public ulong ExperienceNextLevelFloor { get; set; }
+        public ulong ExperienceFightDelta { get; set; }
+        public ulong ExperienceForGuild { get; set; }
+        public ulong ExperienceForMount { get; set; }
+        public byte RerollExperienceMul { get; set; }
 
-        public FightResultExperienceData(bool showExperience, bool showExperienceLevelFloor,
-            bool showExperienceNextLevelFloor, bool showExperienceFightDelta, bool showExperienceForGuild,
-            bool showExperienceForMount, bool isIncarnationExperience, ulong experience, ulong experienceLevelFloor,
-            ulong experienceNextLevelFloor, ulong experienceFightDelta, ulong experienceForGuild,
-            ulong experienceForMount, byte rerollExperienceMul)
+        public FightResultExperienceData(bool showExperience, bool showExperienceLevelFloor, bool showExperienceNextLevelFloor, bool showExperienceFightDelta, bool showExperienceForGuild, bool showExperienceForMount, bool isIncarnationExperience, ulong experience, ulong experienceLevelFloor, ulong experienceNextLevelFloor, ulong experienceFightDelta, ulong experienceForGuild, ulong experienceForMount, byte rerollExperienceMul)
         {
             ShowExperience = showExperience;
             ShowExperienceLevelFloor = showExperienceLevelFloor;
@@ -28,25 +39,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             RerollExperienceMul = rerollExperienceMul;
         }
 
-        public FightResultExperienceData()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public bool ShowExperience { get; set; }
-        public bool ShowExperienceLevelFloor { get; set; }
-        public bool ShowExperienceNextLevelFloor { get; set; }
-        public bool ShowExperienceFightDelta { get; set; }
-        public bool ShowExperienceForGuild { get; set; }
-        public bool ShowExperienceForMount { get; set; }
-        public bool IsIncarnationExperience { get; set; }
-        public ulong Experience { get; set; }
-        public ulong ExperienceLevelFloor { get; set; }
-        public ulong ExperienceNextLevelFloor { get; set; }
-        public ulong ExperienceFightDelta { get; set; }
-        public ulong ExperienceForGuild { get; set; }
-        public ulong ExperienceForMount { get; set; }
-        public byte RerollExperienceMul { get; set; }
+        public FightResultExperienceData() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -88,5 +81,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             ExperienceForMount = reader.ReadVarUhLong();
             RerollExperienceMul = reader.ReadByte();
         }
+
     }
 }

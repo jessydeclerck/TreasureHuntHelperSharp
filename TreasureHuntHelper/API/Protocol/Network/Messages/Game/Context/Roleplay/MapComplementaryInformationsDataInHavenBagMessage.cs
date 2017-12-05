@@ -1,13 +1,13 @@
 ﻿namespace Cookie.API.Protocol.Network.Messages.Game.Context.Roleplay
 {
     using Types.Game.Character;
-    using Types.Game.House;
+    using Types.Game.Context.Fight;
+    using Types.Game.Context.Fight;
     using Types.Game.Context.Roleplay;
+    using Types.Game.House;
     using Types.Game.Interactive;
     using Types.Game.Interactive;
     using Types.Game.Interactive;
-    using Types.Game.Context.Fight;
-    using Types.Game.Context.Fight;
     using System.Collections.Generic;
     using Utils.IO;
 

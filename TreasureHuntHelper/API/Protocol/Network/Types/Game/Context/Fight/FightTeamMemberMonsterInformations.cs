@@ -1,10 +1,13 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
 {
+    using Utils.IO;
+
     public class FightTeamMemberMonsterInformations : FightTeamMemberInformations
     {
         public new const ushort ProtocolId = 6;
+        public override ushort TypeID => ProtocolId;
+        public int MonsterId { get; set; }
+        public byte Grade { get; set; }
 
         public FightTeamMemberMonsterInformations(int monsterId, byte grade)
         {
@@ -12,13 +15,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             Grade = grade;
         }
 
-        public FightTeamMemberMonsterInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public int MonsterId { get; set; }
-        public byte Grade { get; set; }
+        public FightTeamMemberMonsterInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -33,5 +30,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             MonsterId = reader.ReadInt();
             Grade = reader.ReadByte();
         }
+
     }
 }

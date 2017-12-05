@@ -1,13 +1,21 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Connection
+﻿namespace Cookie.API.Protocol.Network.Types.Connection
 {
+    using Utils.IO;
+
     public class GameServerInformations : NetworkType
     {
         public const ushort ProtocolId = 25;
+        public override ushort TypeID => ProtocolId;
+        public ushort ObjectId { get; set; }
+        public sbyte Type { get; set; }
+        public byte Status { get; set; }
+        public byte Completion { get; set; }
+        public bool IsSelectable { get; set; }
+        public byte CharactersCount { get; set; }
+        public byte CharactersSlots { get; set; }
+        public double Date { get; set; }
 
-        public GameServerInformations(ushort objectId, sbyte type, byte status, byte completion, bool isSelectable,
-            byte charactersCount, byte charactersSlots, double date)
+        public GameServerInformations(ushort objectId, sbyte type, byte status, byte completion, bool isSelectable, byte charactersCount, byte charactersSlots, double date)
         {
             ObjectId = objectId;
             Type = type;
@@ -19,19 +27,7 @@ namespace Cookie.API.Protocol.Network.Types.Connection
             Date = date;
         }
 
-        public GameServerInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ushort ObjectId { get; set; }
-        public sbyte Type { get; set; }
-        public byte Status { get; set; }
-        public byte Completion { get; set; }
-        public bool IsSelectable { get; set; }
-        public byte CharactersCount { get; set; }
-        public byte CharactersSlots { get; set; }
-        public double Date { get; set; }
+        public GameServerInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -56,5 +52,6 @@ namespace Cookie.API.Protocol.Network.Types.Connection
             CharactersSlots = reader.ReadByte();
             Date = reader.ReadDouble();
         }
+
     }
 }

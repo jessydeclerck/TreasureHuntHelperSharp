@@ -1,10 +1,14 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Character.Characteristic
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Character.Characteristic
 {
+    using Utils.IO;
+
     public class CharacterSpellModification : NetworkType
     {
         public const ushort ProtocolId = 215;
+        public override ushort TypeID => ProtocolId;
+        public byte ModificationType { get; set; }
+        public ushort SpellId { get; set; }
+        public CharacterBaseCharacteristic Value { get; set; }
 
         public CharacterSpellModification(byte modificationType, ushort spellId, CharacterBaseCharacteristic value)
         {
@@ -13,14 +17,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Character.Characteristic
             Value = value;
         }
 
-        public CharacterSpellModification()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public byte ModificationType { get; set; }
-        public ushort SpellId { get; set; }
-        public CharacterBaseCharacteristic Value { get; set; }
+        public CharacterSpellModification() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -36,5 +33,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Character.Characteristic
             Value = new CharacterBaseCharacteristic();
             Value.Deserialize(reader);
         }
+
     }
 }

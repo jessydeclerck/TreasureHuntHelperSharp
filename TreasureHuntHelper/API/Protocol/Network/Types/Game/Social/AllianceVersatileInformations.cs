@@ -1,10 +1,15 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Social
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Social
 {
+    using Utils.IO;
+
     public class AllianceVersatileInformations : NetworkType
     {
         public const ushort ProtocolId = 432;
+        public override ushort TypeID => ProtocolId;
+        public uint AllianceId { get; set; }
+        public ushort NbGuilds { get; set; }
+        public ushort NbMembers { get; set; }
+        public ushort NbSubarea { get; set; }
 
         public AllianceVersatileInformations(uint allianceId, ushort nbGuilds, ushort nbMembers, ushort nbSubarea)
         {
@@ -14,15 +19,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Social
             NbSubarea = nbSubarea;
         }
 
-        public AllianceVersatileInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public uint AllianceId { get; set; }
-        public ushort NbGuilds { get; set; }
-        public ushort NbMembers { get; set; }
-        public ushort NbSubarea { get; set; }
+        public AllianceVersatileInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -39,5 +36,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Social
             NbMembers = reader.ReadVarUhShort();
             NbSubarea = reader.ReadVarUhShort();
         }
+
     }
 }

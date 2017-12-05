@@ -1,10 +1,13 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
 {
+    using Utils.IO;
+
     public class HumanOptionTitle : HumanOption
     {
         public new const ushort ProtocolId = 408;
+        public override ushort TypeID => ProtocolId;
+        public ushort TitleId { get; set; }
+        public string TitleParam { get; set; }
 
         public HumanOptionTitle(ushort titleId, string titleParam)
         {
@@ -12,13 +15,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             TitleParam = titleParam;
         }
 
-        public HumanOptionTitle()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ushort TitleId { get; set; }
-        public string TitleParam { get; set; }
+        public HumanOptionTitle() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -33,5 +30,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             TitleId = reader.ReadVarUhShort();
             TitleParam = reader.ReadUTF();
         }
+
     }
 }

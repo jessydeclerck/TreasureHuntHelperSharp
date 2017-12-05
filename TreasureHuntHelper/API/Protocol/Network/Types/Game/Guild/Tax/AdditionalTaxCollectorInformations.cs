@@ -1,10 +1,13 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Guild.Tax
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Guild.Tax
 {
+    using Utils.IO;
+
     public class AdditionalTaxCollectorInformations : NetworkType
     {
         public const ushort ProtocolId = 165;
+        public override ushort TypeID => ProtocolId;
+        public string CollectorCallerName { get; set; }
+        public int Date { get; set; }
 
         public AdditionalTaxCollectorInformations(string collectorCallerName, int date)
         {
@@ -12,13 +15,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Guild.Tax
             Date = date;
         }
 
-        public AdditionalTaxCollectorInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public string CollectorCallerName { get; set; }
-        public int Date { get; set; }
+        public AdditionalTaxCollectorInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -31,5 +28,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Guild.Tax
             CollectorCallerName = reader.ReadUTF();
             Date = reader.ReadInt();
         }
+
     }
 }

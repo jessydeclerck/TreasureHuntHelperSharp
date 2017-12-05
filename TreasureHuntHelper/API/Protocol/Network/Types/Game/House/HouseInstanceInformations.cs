@@ -1,13 +1,19 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.House
+﻿namespace Cookie.API.Protocol.Network.Types.Game.House
 {
+    using Utils.IO;
+
     public class HouseInstanceInformations : NetworkType
     {
         public const ushort ProtocolId = 511;
+        public override ushort TypeID => ProtocolId;
+        public bool SecondHand { get; set; }
+        public bool IsLocked { get; set; }
+        public bool IsSaleLocked { get; set; }
+        public int InstanceId { get; set; }
+        public string OwnerName { get; set; }
+        public long Price { get; set; }
 
-        public HouseInstanceInformations(bool secondHand, bool isLocked, bool isSaleLocked, int instanceId,
-            string ownerName, long price)
+        public HouseInstanceInformations(bool secondHand, bool isLocked, bool isSaleLocked, int instanceId, string ownerName, long price)
         {
             SecondHand = secondHand;
             IsLocked = isLocked;
@@ -17,17 +23,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.House
             Price = price;
         }
 
-        public HouseInstanceInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public bool SecondHand { get; set; }
-        public bool IsLocked { get; set; }
-        public bool IsSaleLocked { get; set; }
-        public int InstanceId { get; set; }
-        public string OwnerName { get; set; }
-        public long Price { get; set; }
+        public HouseInstanceInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -51,5 +47,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.House
             OwnerName = reader.ReadUTF();
             Price = reader.ReadVarLong();
         }
+
     }
 }

@@ -1,17 +1,20 @@
-﻿using System.Collections.Generic;
-using Cookie.API.Protocol.Network.Types.Game.Character;
-using Cookie.API.Protocol.Network.Types.Game.Fight;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Prism
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Prism
 {
+    using Types.Game.Character;
+    using Types.Game.Fight;
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class PrismFightersInformation : NetworkType
     {
         public const ushort ProtocolId = 443;
+        public override ushort TypeID => ProtocolId;
+        public ushort SubAreaId { get; set; }
+        public ProtectedEntityWaitingForHelpInfo WaitingForHelpInfo { get; set; }
+        public List<CharacterMinimalPlusLookInformations> AllyCharactersInformations { get; set; }
+        public List<CharacterMinimalPlusLookInformations> EnemyCharactersInformations { get; set; }
 
-        public PrismFightersInformation(ushort subAreaId, ProtectedEntityWaitingForHelpInfo waitingForHelpInfo,
-            List<CharacterMinimalPlusLookInformations> allyCharactersInformations,
-            List<CharacterMinimalPlusLookInformations> enemyCharactersInformations)
+        public PrismFightersInformation(ushort subAreaId, ProtectedEntityWaitingForHelpInfo waitingForHelpInfo, List<CharacterMinimalPlusLookInformations> allyCharactersInformations, List<CharacterMinimalPlusLookInformations> enemyCharactersInformations)
         {
             SubAreaId = subAreaId;
             WaitingForHelpInfo = waitingForHelpInfo;
@@ -19,33 +22,21 @@ namespace Cookie.API.Protocol.Network.Types.Game.Prism
             EnemyCharactersInformations = enemyCharactersInformations;
         }
 
-        public PrismFightersInformation()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ushort SubAreaId { get; set; }
-        public ProtectedEntityWaitingForHelpInfo WaitingForHelpInfo { get; set; }
-        public List<CharacterMinimalPlusLookInformations> AllyCharactersInformations { get; set; }
-        public List<CharacterMinimalPlusLookInformations> EnemyCharactersInformations { get; set; }
+        public PrismFightersInformation() { }
 
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteVarUhShort(SubAreaId);
             WaitingForHelpInfo.Serialize(writer);
-            writer.WriteShort((short) AllyCharactersInformations.Count);
-            for (var allyCharactersInformationsIndex = 0;
-                allyCharactersInformationsIndex < AllyCharactersInformations.Count;
-                allyCharactersInformationsIndex++)
+            writer.WriteShort((short)AllyCharactersInformations.Count);
+            for (var allyCharactersInformationsIndex = 0; allyCharactersInformationsIndex < AllyCharactersInformations.Count; allyCharactersInformationsIndex++)
             {
                 var objectToSend = AllyCharactersInformations[allyCharactersInformationsIndex];
                 writer.WriteUShort(objectToSend.TypeID);
                 objectToSend.Serialize(writer);
             }
-            writer.WriteShort((short) EnemyCharactersInformations.Count);
-            for (var enemyCharactersInformationsIndex = 0;
-                enemyCharactersInformationsIndex < EnemyCharactersInformations.Count;
-                enemyCharactersInformationsIndex++)
+            writer.WriteShort((short)EnemyCharactersInformations.Count);
+            for (var enemyCharactersInformationsIndex = 0; enemyCharactersInformationsIndex < EnemyCharactersInformations.Count; enemyCharactersInformationsIndex++)
             {
                 var objectToSend = EnemyCharactersInformations[enemyCharactersInformationsIndex];
                 writer.WriteUShort(objectToSend.TypeID);
@@ -60,26 +51,21 @@ namespace Cookie.API.Protocol.Network.Types.Game.Prism
             WaitingForHelpInfo.Deserialize(reader);
             var allyCharactersInformationsCount = reader.ReadUShort();
             AllyCharactersInformations = new List<CharacterMinimalPlusLookInformations>();
-            for (var allyCharactersInformationsIndex = 0;
-                allyCharactersInformationsIndex < allyCharactersInformationsCount;
-                allyCharactersInformationsIndex++)
+            for (var allyCharactersInformationsIndex = 0; allyCharactersInformationsIndex < allyCharactersInformationsCount; allyCharactersInformationsIndex++)
             {
-                var objectToAdd =
-                    ProtocolTypeManager.GetInstance<CharacterMinimalPlusLookInformations>(reader.ReadUShort());
+                var objectToAdd = ProtocolTypeManager.GetInstance<CharacterMinimalPlusLookInformations>(reader.ReadUShort());
                 objectToAdd.Deserialize(reader);
                 AllyCharactersInformations.Add(objectToAdd);
             }
             var enemyCharactersInformationsCount = reader.ReadUShort();
             EnemyCharactersInformations = new List<CharacterMinimalPlusLookInformations>();
-            for (var enemyCharactersInformationsIndex = 0;
-                enemyCharactersInformationsIndex < enemyCharactersInformationsCount;
-                enemyCharactersInformationsIndex++)
+            for (var enemyCharactersInformationsIndex = 0; enemyCharactersInformationsIndex < enemyCharactersInformationsCount; enemyCharactersInformationsIndex++)
             {
-                var objectToAdd =
-                    ProtocolTypeManager.GetInstance<CharacterMinimalPlusLookInformations>(reader.ReadUShort());
+                var objectToAdd = ProtocolTypeManager.GetInstance<CharacterMinimalPlusLookInformations>(reader.ReadUShort());
                 objectToAdd.Deserialize(reader);
                 EnemyCharactersInformations.Add(objectToAdd);
             }
         }
+
     }
 }

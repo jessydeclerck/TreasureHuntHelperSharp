@@ -1,22 +1,19 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Character
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Character
 {
+    using Utils.IO;
+
     public class CharacterBasicMinimalInformations : AbstractCharacterInformation
     {
         public new const ushort ProtocolId = 503;
+        public override ushort TypeID => ProtocolId;
+        public string Name { get; set; }
 
         public CharacterBasicMinimalInformations(string name)
         {
             Name = name;
         }
 
-        public CharacterBasicMinimalInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public string Name { get; set; }
+        public CharacterBasicMinimalInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -29,5 +26,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Character
             base.Deserialize(reader);
             Name = reader.ReadUTF();
         }
+
     }
 }

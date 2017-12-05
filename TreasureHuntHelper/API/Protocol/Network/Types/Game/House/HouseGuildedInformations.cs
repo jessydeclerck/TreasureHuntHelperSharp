@@ -1,23 +1,20 @@
-﻿using Cookie.API.Protocol.Network.Types.Game.Context.Roleplay;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.House
+﻿namespace Cookie.API.Protocol.Network.Types.Game.House
 {
+    using Types.Game.Context.Roleplay;
+    using Utils.IO;
+
     public class HouseGuildedInformations : HouseInstanceInformations
     {
         public new const ushort ProtocolId = 512;
+        public override ushort TypeID => ProtocolId;
+        public GuildInformations GuildInfo { get; set; }
 
         public HouseGuildedInformations(GuildInformations guildInfo)
         {
             GuildInfo = guildInfo;
         }
 
-        public HouseGuildedInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public GuildInformations GuildInfo { get; set; }
+        public HouseGuildedInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -31,5 +28,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.House
             GuildInfo = new GuildInformations();
             GuildInfo.Deserialize(reader);
         }
+
     }
 }

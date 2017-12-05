@@ -1,14 +1,18 @@
-﻿using System.Collections.Generic;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
 {
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class GameFightResumeSlaveInfo : NetworkType
     {
         public const ushort ProtocolId = 364;
+        public override ushort TypeID => ProtocolId;
+        public double SlaveId { get; set; }
+        public List<GameFightSpellCooldown> SpellCooldowns { get; set; }
+        public byte SummonCount { get; set; }
+        public byte BombCount { get; set; }
 
-        public GameFightResumeSlaveInfo(double slaveId, List<GameFightSpellCooldown> spellCooldowns, byte summonCount,
-            byte bombCount)
+        public GameFightResumeSlaveInfo(double slaveId, List<GameFightSpellCooldown> spellCooldowns, byte summonCount, byte bombCount)
         {
             SlaveId = slaveId;
             SpellCooldowns = spellCooldowns;
@@ -16,20 +20,12 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             BombCount = bombCount;
         }
 
-        public GameFightResumeSlaveInfo()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public double SlaveId { get; set; }
-        public List<GameFightSpellCooldown> SpellCooldowns { get; set; }
-        public byte SummonCount { get; set; }
-        public byte BombCount { get; set; }
+        public GameFightResumeSlaveInfo() { }
 
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteDouble(SlaveId);
-            writer.WriteShort((short) SpellCooldowns.Count);
+            writer.WriteShort((short)SpellCooldowns.Count);
             for (var spellCooldownsIndex = 0; spellCooldownsIndex < SpellCooldowns.Count; spellCooldownsIndex++)
             {
                 var objectToSend = SpellCooldowns[spellCooldownsIndex];
@@ -53,5 +49,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             SummonCount = reader.ReadByte();
             BombCount = reader.ReadByte();
         }
+
     }
 }

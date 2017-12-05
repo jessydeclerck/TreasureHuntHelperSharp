@@ -1,23 +1,22 @@
-﻿using Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.TreasureHunt;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
 {
+    using Types.Game.Context;
+    using Types.Game.Context.Roleplay.TreasureHunt;
+    using Types.Game.Look;
+    using Utils.IO;
+
     public class GameRolePlayPortalInformations : GameRolePlayActorInformations
     {
         public new const ushort ProtocolId = 467;
+        public override ushort TypeID => ProtocolId;
+        public PortalInformation Portal { get; set; }
 
         public GameRolePlayPortalInformations(PortalInformation portal)
         {
             Portal = portal;
         }
 
-        public GameRolePlayPortalInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public PortalInformation Portal { get; set; }
+        public GameRolePlayPortalInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -32,5 +31,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             Portal = ProtocolTypeManager.GetInstance<PortalInformation>(reader.ReadUShort());
             Portal.Deserialize(reader);
         }
+
     }
 }

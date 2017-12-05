@@ -1,23 +1,20 @@
-﻿using Cookie.API.Protocol.Network.Types.Game.Context.Roleplay;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Prism
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Prism
 {
+    using Types.Game.Context.Roleplay;
+    using Utils.IO;
+
     public class AlliancePrismInformation : PrismInformation
     {
         public new const ushort ProtocolId = 427;
+        public override ushort TypeID => ProtocolId;
+        public AllianceInformations Alliance { get; set; }
 
         public AlliancePrismInformation(AllianceInformations alliance)
         {
             Alliance = alliance;
         }
 
-        public AlliancePrismInformation()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public AllianceInformations Alliance { get; set; }
+        public AlliancePrismInformation() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -31,5 +28,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Prism
             Alliance = new AllianceInformations();
             Alliance.Deserialize(reader);
         }
+
     }
 }

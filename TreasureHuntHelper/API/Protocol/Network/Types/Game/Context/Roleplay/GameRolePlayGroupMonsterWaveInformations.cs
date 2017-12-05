@@ -1,11 +1,16 @@
-﻿using System.Collections.Generic;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
 {
+    using Types.Game.Context;
+    using Types.Game.Look;
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class GameRolePlayGroupMonsterWaveInformations : GameRolePlayGroupMonsterInformations
     {
         public new const ushort ProtocolId = 464;
+        public override ushort TypeID => ProtocolId;
+        public byte NbWaves { get; set; }
+        public List<GroupMonsterStaticInformations> Alternatives { get; set; }
 
         public GameRolePlayGroupMonsterWaveInformations(byte nbWaves, List<GroupMonsterStaticInformations> alternatives)
         {
@@ -13,19 +18,13 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             Alternatives = alternatives;
         }
 
-        public GameRolePlayGroupMonsterWaveInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public byte NbWaves { get; set; }
-        public List<GroupMonsterStaticInformations> Alternatives { get; set; }
+        public GameRolePlayGroupMonsterWaveInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
             writer.WriteByte(NbWaves);
-            writer.WriteShort((short) Alternatives.Count);
+            writer.WriteShort((short)Alternatives.Count);
             for (var alternativesIndex = 0; alternativesIndex < Alternatives.Count; alternativesIndex++)
             {
                 var objectToSend = Alternatives[alternativesIndex];
@@ -47,5 +46,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
                 Alternatives.Add(objectToAdd);
             }
         }
+
     }
 }

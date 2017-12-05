@@ -1,14 +1,21 @@
-﻿using System.Collections.Generic;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Paddock
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Paddock
 {
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class PaddockContentInformations : PaddockInformations
     {
         public new const ushort ProtocolId = 183;
+        public override ushort TypeID => ProtocolId;
+        public double PaddockId { get; set; }
+        public short WorldX { get; set; }
+        public short WorldY { get; set; }
+        public double MapId { get; set; }
+        public ushort SubAreaId { get; set; }
+        public bool Abandonned { get; set; }
+        public List<MountInformationsForPaddock> MountsInformations { get; set; }
 
-        public PaddockContentInformations(double paddockId, short worldX, short worldY, double mapId, ushort subAreaId,
-            bool abandonned, List<MountInformationsForPaddock> mountsInformations)
+        public PaddockContentInformations(double paddockId, short worldX, short worldY, double mapId, ushort subAreaId, bool abandonned, List<MountInformationsForPaddock> mountsInformations)
         {
             PaddockId = paddockId;
             WorldX = worldX;
@@ -19,18 +26,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Paddock
             MountsInformations = mountsInformations;
         }
 
-        public PaddockContentInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public double PaddockId { get; set; }
-        public short WorldX { get; set; }
-        public short WorldY { get; set; }
-        public double MapId { get; set; }
-        public ushort SubAreaId { get; set; }
-        public bool Abandonned { get; set; }
-        public List<MountInformationsForPaddock> MountsInformations { get; set; }
+        public PaddockContentInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -41,10 +37,8 @@ namespace Cookie.API.Protocol.Network.Types.Game.Paddock
             writer.WriteDouble(MapId);
             writer.WriteVarUhShort(SubAreaId);
             writer.WriteBoolean(Abandonned);
-            writer.WriteShort((short) MountsInformations.Count);
-            for (var mountsInformationsIndex = 0;
-                mountsInformationsIndex < MountsInformations.Count;
-                mountsInformationsIndex++)
+            writer.WriteShort((short)MountsInformations.Count);
+            for (var mountsInformationsIndex = 0; mountsInformationsIndex < MountsInformations.Count; mountsInformationsIndex++)
             {
                 var objectToSend = MountsInformations[mountsInformationsIndex];
                 objectToSend.Serialize(writer);
@@ -62,14 +56,13 @@ namespace Cookie.API.Protocol.Network.Types.Game.Paddock
             Abandonned = reader.ReadBoolean();
             var mountsInformationsCount = reader.ReadUShort();
             MountsInformations = new List<MountInformationsForPaddock>();
-            for (var mountsInformationsIndex = 0;
-                mountsInformationsIndex < mountsInformationsCount;
-                mountsInformationsIndex++)
+            for (var mountsInformationsIndex = 0; mountsInformationsIndex < mountsInformationsCount; mountsInformationsIndex++)
             {
                 var objectToAdd = new MountInformationsForPaddock();
                 objectToAdd.Deserialize(reader);
                 MountsInformations.Add(objectToAdd);
             }
         }
+
     }
 }

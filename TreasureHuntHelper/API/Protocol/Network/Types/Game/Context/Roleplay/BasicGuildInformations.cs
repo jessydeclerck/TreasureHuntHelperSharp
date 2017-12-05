@@ -1,11 +1,15 @@
-﻿using Cookie.API.Protocol.Network.Types.Game.Social;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
 {
+    using Types.Game.Social;
+    using Utils.IO;
+
     public class BasicGuildInformations : AbstractSocialGroupInfos
     {
         public new const ushort ProtocolId = 365;
+        public override ushort TypeID => ProtocolId;
+        public uint GuildId { get; set; }
+        public string GuildName { get; set; }
+        public byte GuildLevel { get; set; }
 
         public BasicGuildInformations(uint guildId, string guildName, byte guildLevel)
         {
@@ -14,14 +18,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             GuildLevel = guildLevel;
         }
 
-        public BasicGuildInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public uint GuildId { get; set; }
-        public string GuildName { get; set; }
-        public byte GuildLevel { get; set; }
+        public BasicGuildInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -38,5 +35,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             GuildName = reader.ReadUTF();
             GuildLevel = reader.ReadByte();
         }
+
     }
 }

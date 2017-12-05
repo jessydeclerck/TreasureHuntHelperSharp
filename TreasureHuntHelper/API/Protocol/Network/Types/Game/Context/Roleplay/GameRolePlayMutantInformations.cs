@@ -1,10 +1,15 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
 {
+    using Types.Game.Context;
+    using Types.Game.Look;
+    using Utils.IO;
+
     public class GameRolePlayMutantInformations : GameRolePlayHumanoidInformations
     {
         public new const ushort ProtocolId = 3;
+        public override ushort TypeID => ProtocolId;
+        public ushort MonsterId { get; set; }
+        public sbyte PowerLevel { get; set; }
 
         public GameRolePlayMutantInformations(ushort monsterId, sbyte powerLevel)
         {
@@ -12,13 +17,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             PowerLevel = powerLevel;
         }
 
-        public GameRolePlayMutantInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ushort MonsterId { get; set; }
-        public sbyte PowerLevel { get; set; }
+        public GameRolePlayMutantInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -33,5 +32,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             MonsterId = reader.ReadVarUhShort();
             PowerLevel = reader.ReadSByte();
         }
+
     }
 }

@@ -1,22 +1,19 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Interactive.Skill
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Interactive.Skill
 {
+    using Utils.IO;
+
     public class SkillActionDescriptionTimed : SkillActionDescription
     {
         public new const ushort ProtocolId = 103;
+        public override ushort TypeID => ProtocolId;
+        public byte Time { get; set; }
 
         public SkillActionDescriptionTimed(byte time)
         {
             Time = time;
         }
 
-        public SkillActionDescriptionTimed()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public byte Time { get; set; }
+        public SkillActionDescriptionTimed() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -29,5 +26,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Interactive.Skill
             base.Deserialize(reader);
             Time = reader.ReadByte();
         }
+
     }
 }

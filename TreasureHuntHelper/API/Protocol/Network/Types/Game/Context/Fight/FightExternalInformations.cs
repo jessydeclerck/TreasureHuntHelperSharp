@@ -1,12 +1,18 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
 {
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class FightExternalInformations : NetworkType
     {
         public const ushort ProtocolId = 117;
+        public override ushort TypeID => ProtocolId;
+        public ushort FightId { get; set; }
+        public byte FightType { get; set; }
+        public int FightStart { get; set; }
+        public bool FightSpectatorLocked { get; set; }
 
-        public FightExternalInformations(int fightId, byte fightType, int fightStart, bool fightSpectatorLocked)
+        public FightExternalInformations(ushort fightId, byte fightType, int fightStart, bool fightSpectatorLocked)
         {
             FightId = fightId;
             FightType = fightType;
@@ -14,19 +20,11 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             FightSpectatorLocked = fightSpectatorLocked;
         }
 
-        public FightExternalInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public int FightId { get; set; }
-        public byte FightType { get; set; }
-        public int FightStart { get; set; }
-        public bool FightSpectatorLocked { get; set; }
+        public FightExternalInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
-            writer.WriteInt(FightId);
+            writer.WriteVarUhShort(FightId);
             writer.WriteByte(FightType);
             writer.WriteInt(FightStart);
             writer.WriteBoolean(FightSpectatorLocked);
@@ -34,10 +32,11 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
 
         public override void Deserialize(IDataReader reader)
         {
-            FightId = reader.ReadInt();
+            FightId = reader.ReadVarUhShort();
             FightType = reader.ReadByte();
             FightStart = reader.ReadInt();
             FightSpectatorLocked = reader.ReadBoolean();
         }
+
     }
 }

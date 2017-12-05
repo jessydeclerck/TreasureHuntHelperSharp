@@ -1,22 +1,20 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Character
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Character
 {
+    using Types.Game.Look;
+    using Utils.IO;
+
     public class CharacterMinimalPlusLookAndGradeInformations : CharacterMinimalPlusLookInformations
     {
         public new const ushort ProtocolId = 193;
+        public override ushort TypeID => ProtocolId;
+        public uint Grade { get; set; }
 
         public CharacterMinimalPlusLookAndGradeInformations(uint grade)
         {
             Grade = grade;
         }
 
-        public CharacterMinimalPlusLookAndGradeInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public uint Grade { get; set; }
+        public CharacterMinimalPlusLookAndGradeInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -29,5 +27,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Character
             base.Deserialize(reader);
             Grade = reader.ReadVarUhInt();
         }
+
     }
 }

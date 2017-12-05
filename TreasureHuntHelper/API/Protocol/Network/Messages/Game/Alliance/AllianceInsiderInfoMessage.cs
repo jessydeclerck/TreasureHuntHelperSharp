@@ -1,8 +1,8 @@
 ﻿namespace Cookie.API.Protocol.Network.Messages.Game.Alliance
 {
-    using Types.Game.Social;
-    using Types.Game.Social;
     using Types.Game.Prism;
+    using Types.Game.Social;
+    using Types.Game.Social;
     using System.Collections.Generic;
     using Utils.IO;
 

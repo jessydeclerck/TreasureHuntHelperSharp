@@ -1,10 +1,15 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Interactive
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Interactive
 {
+    using Utils.IO;
+
     public class StatedElement : NetworkType
     {
         public const ushort ProtocolId = 108;
+        public override ushort TypeID => ProtocolId;
+        public int ElementId { get; set; }
+        public ushort ElementCellId { get; set; }
+        public uint ElementState { get; set; }
+        public bool OnCurrentMap { get; set; }
 
         public StatedElement(int elementId, ushort elementCellId, uint elementState, bool onCurrentMap)
         {
@@ -14,15 +19,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Interactive
             OnCurrentMap = onCurrentMap;
         }
 
-        public StatedElement()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public int ElementId { get; set; }
-        public ushort ElementCellId { get; set; }
-        public uint ElementState { get; set; }
-        public bool OnCurrentMap { get; set; }
+        public StatedElement() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -39,5 +36,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Interactive
             ElementState = reader.ReadVarUhInt();
             OnCurrentMap = reader.ReadBoolean();
         }
+
     }
 }

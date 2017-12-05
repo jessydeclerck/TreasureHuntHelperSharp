@@ -1,10 +1,15 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
 {
+    using Types.Game.Context;
+    using Types.Game.Look;
+    using Utils.IO;
+
     public class GameRolePlayMountInformations : GameRolePlayNamedActorInformations
     {
         public new const ushort ProtocolId = 180;
+        public override ushort TypeID => ProtocolId;
+        public string OwnerName { get; set; }
+        public byte Level { get; set; }
 
         public GameRolePlayMountInformations(string ownerName, byte level)
         {
@@ -12,13 +17,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             Level = level;
         }
 
-        public GameRolePlayMountInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public string OwnerName { get; set; }
-        public byte Level { get; set; }
+        public GameRolePlayMountInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -33,5 +32,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             OwnerName = reader.ReadUTF();
             Level = reader.ReadByte();
         }
+
     }
 }

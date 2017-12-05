@@ -1,10 +1,13 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
 {
+    using Utils.IO;
+
     public class HumanOptionAlliance : HumanOption
     {
         public new const ushort ProtocolId = 425;
+        public override ushort TypeID => ProtocolId;
+        public AllianceInformations AllianceInformations { get; set; }
+        public byte Aggressable { get; set; }
 
         public HumanOptionAlliance(AllianceInformations allianceInformations, byte aggressable)
         {
@@ -12,13 +15,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             Aggressable = aggressable;
         }
 
-        public HumanOptionAlliance()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public AllianceInformations AllianceInformations { get; set; }
-        public byte Aggressable { get; set; }
+        public HumanOptionAlliance() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -34,5 +31,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             AllianceInformations.Deserialize(reader);
             Aggressable = reader.ReadByte();
         }
+
     }
 }

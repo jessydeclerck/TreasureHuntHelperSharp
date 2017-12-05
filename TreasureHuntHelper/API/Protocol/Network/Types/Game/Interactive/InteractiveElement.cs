@@ -1,14 +1,19 @@
-﻿using System.Collections.Generic;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Interactive
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Interactive
 {
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class InteractiveElement : NetworkType
     {
         public const ushort ProtocolId = 80;
+        public override ushort TypeID => ProtocolId;
+        public int ElementId { get; set; }
+        public int ElementTypeId { get; set; }
+        public List<InteractiveElementSkill> EnabledSkills { get; set; }
+        public List<InteractiveElementSkill> DisabledSkills { get; set; }
+        public bool OnCurrentMap { get; set; }
 
-        public InteractiveElement(int elementId, int elementTypeId, List<InteractiveElementSkill> enabledSkills,
-            List<InteractiveElementSkill> disabledSkills, bool onCurrentMap)
+        public InteractiveElement(int elementId, int elementTypeId, List<InteractiveElementSkill> enabledSkills, List<InteractiveElementSkill> disabledSkills, bool onCurrentMap)
         {
             ElementId = elementId;
             ElementTypeId = elementTypeId;
@@ -17,29 +22,20 @@ namespace Cookie.API.Protocol.Network.Types.Game.Interactive
             OnCurrentMap = onCurrentMap;
         }
 
-        public InteractiveElement()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public int ElementId { get; set; }
-        public int ElementTypeId { get; set; }
-        public List<InteractiveElementSkill> EnabledSkills { get; set; }
-        public List<InteractiveElementSkill> DisabledSkills { get; set; }
-        public bool OnCurrentMap { get; set; }
+        public InteractiveElement() { }
 
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteInt(ElementId);
             writer.WriteInt(ElementTypeId);
-            writer.WriteShort((short) EnabledSkills.Count);
+            writer.WriteShort((short)EnabledSkills.Count);
             for (var enabledSkillsIndex = 0; enabledSkillsIndex < EnabledSkills.Count; enabledSkillsIndex++)
             {
                 var objectToSend = EnabledSkills[enabledSkillsIndex];
                 writer.WriteUShort(objectToSend.TypeID);
                 objectToSend.Serialize(writer);
             }
-            writer.WriteShort((short) DisabledSkills.Count);
+            writer.WriteShort((short)DisabledSkills.Count);
             for (var disabledSkillsIndex = 0; disabledSkillsIndex < DisabledSkills.Count; disabledSkillsIndex++)
             {
                 var objectToSend = DisabledSkills[disabledSkillsIndex];
@@ -71,5 +67,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Interactive
             }
             OnCurrentMap = reader.ReadBoolean();
         }
+
     }
 }

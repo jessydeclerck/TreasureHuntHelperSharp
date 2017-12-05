@@ -1,10 +1,13 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.TreasureHunt
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.TreasureHunt
 {
+    using Utils.IO;
+
     public class PortalInformation : NetworkType
     {
         public const ushort ProtocolId = 466;
+        public override ushort TypeID => ProtocolId;
+        public int PortalId { get; set; }
+        public short AreaId { get; set; }
 
         public PortalInformation(int portalId, short areaId)
         {
@@ -12,13 +15,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.TreasureHunt
             AreaId = areaId;
         }
 
-        public PortalInformation()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public int PortalId { get; set; }
-        public short AreaId { get; set; }
+        public PortalInformation() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -31,5 +28,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.TreasureHunt
             PortalId = reader.ReadInt();
             AreaId = reader.ReadShort();
         }
+
     }
 }

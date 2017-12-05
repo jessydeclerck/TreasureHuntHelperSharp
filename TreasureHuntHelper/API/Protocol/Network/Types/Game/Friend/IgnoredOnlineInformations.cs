@@ -1,10 +1,16 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Friend
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Friend
 {
+    using Enums;
+    using Utils.IO;
+
     public class IgnoredOnlineInformations : IgnoredInformations
     {
         public new const ushort ProtocolId = 105;
+        public override ushort TypeID => ProtocolId;
+        public ulong PlayerId { get; set; }
+        public string PlayerName { get; set; }
+        public sbyte Breed { get; set; }
+        public bool Sex { get; set; }
 
         public IgnoredOnlineInformations(ulong playerId, string playerName, sbyte breed, bool sex)
         {
@@ -14,15 +20,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Friend
             Sex = sex;
         }
 
-        public IgnoredOnlineInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ulong PlayerId { get; set; }
-        public string PlayerName { get; set; }
-        public sbyte Breed { get; set; }
-        public bool Sex { get; set; }
+        public IgnoredOnlineInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -41,5 +39,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Friend
             Breed = reader.ReadSByte();
             Sex = reader.ReadBoolean();
         }
+
     }
 }

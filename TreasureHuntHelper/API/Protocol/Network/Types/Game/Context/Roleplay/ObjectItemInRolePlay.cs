@@ -1,10 +1,13 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
 {
+    using Utils.IO;
+
     public class ObjectItemInRolePlay : NetworkType
     {
         public const ushort ProtocolId = 198;
+        public override ushort TypeID => ProtocolId;
+        public ushort CellId { get; set; }
+        public ushort ObjectGID { get; set; }
 
         public ObjectItemInRolePlay(ushort cellId, ushort objectGID)
         {
@@ -12,13 +15,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             ObjectGID = objectGID;
         }
 
-        public ObjectItemInRolePlay()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ushort CellId { get; set; }
-        public ushort ObjectGID { get; set; }
+        public ObjectItemInRolePlay() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -31,5 +28,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             CellId = reader.ReadVarUhShort();
             ObjectGID = reader.ReadVarUhShort();
         }
+
     }
 }

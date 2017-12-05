@@ -1,23 +1,22 @@
-﻿using Cookie.API.Protocol.Network.Types.Game.Character.Alignment;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
 {
+    using Types.Game.Character.Alignment;
+    using Types.Game.Context;
+    using Types.Game.Look;
+    using Utils.IO;
+
     public class GameRolePlayCharacterInformations : GameRolePlayHumanoidInformations
     {
         public new const ushort ProtocolId = 36;
+        public override ushort TypeID => ProtocolId;
+        public ActorAlignmentInformations AlignmentInfos { get; set; }
 
         public GameRolePlayCharacterInformations(ActorAlignmentInformations alignmentInfos)
         {
             AlignmentInfos = alignmentInfos;
         }
 
-        public GameRolePlayCharacterInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ActorAlignmentInformations AlignmentInfos { get; set; }
+        public GameRolePlayCharacterInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -31,5 +30,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             AlignmentInfos = new ActorAlignmentInformations();
             AlignmentInfos.Deserialize(reader);
         }
+
     }
 }

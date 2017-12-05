@@ -1,22 +1,19 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
 {
+    using Utils.IO;
+
     public class HumanOptionGuild : HumanOption
     {
         public new const ushort ProtocolId = 409;
+        public override ushort TypeID => ProtocolId;
+        public GuildInformations GuildInformations { get; set; }
 
         public HumanOptionGuild(GuildInformations guildInformations)
         {
             GuildInformations = guildInformations;
         }
 
-        public HumanOptionGuild()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public GuildInformations GuildInformations { get; set; }
+        public HumanOptionGuild() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -30,5 +27,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             GuildInformations = new GuildInformations();
             GuildInformations.Deserialize(reader);
         }
+
     }
 }

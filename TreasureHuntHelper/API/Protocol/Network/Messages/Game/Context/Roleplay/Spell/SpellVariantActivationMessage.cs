@@ -6,31 +6,27 @@
     {
         public const ushort ProtocolId = 6705;
         public override ushort MessageID => ProtocolId;
+        public ushort SpellId { get; set; }
         public bool Result { get; set; }
-        public ushort ActivatedSpellId { get; set; }
-        public ushort DeactivatedSpellId { get; set; }
 
-        public SpellVariantActivationMessage(bool result, ushort activatedSpellId, ushort deactivatedSpellId)
+        public SpellVariantActivationMessage(ushort spellId, bool result)
         {
+            SpellId = spellId;
             Result = result;
-            ActivatedSpellId = activatedSpellId;
-            DeactivatedSpellId = deactivatedSpellId;
         }
 
         public SpellVariantActivationMessage() { }
 
         public override void Serialize(IDataWriter writer)
         {
+            writer.WriteVarUhShort(SpellId);
             writer.WriteBoolean(Result);
-            writer.WriteVarUhShort(ActivatedSpellId);
-            writer.WriteVarUhShort(DeactivatedSpellId);
         }
 
         public override void Deserialize(IDataReader reader)
         {
+            SpellId = reader.ReadVarUhShort();
             Result = reader.ReadBoolean();
-            ActivatedSpellId = reader.ReadVarUhShort();
-            DeactivatedSpellId = reader.ReadVarUhShort();
         }
 
     }

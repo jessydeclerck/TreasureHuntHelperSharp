@@ -1,11 +1,16 @@
-﻿using System.Collections.Generic;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Inventory.Preset
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Inventory.Preset
 {
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class Preset : NetworkType
     {
         public const ushort ProtocolId = 355;
+        public override ushort TypeID => ProtocolId;
+        public byte PresetId { get; set; }
+        public byte SymbolId { get; set; }
+        public bool Mount { get; set; }
+        public List<PresetItem> Objects { get; set; }
 
         public Preset(byte presetId, byte symbolId, bool mount, List<PresetItem> objects)
         {
@@ -15,22 +20,14 @@ namespace Cookie.API.Protocol.Network.Types.Game.Inventory.Preset
             Objects = objects;
         }
 
-        public Preset()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public byte PresetId { get; set; }
-        public byte SymbolId { get; set; }
-        public bool Mount { get; set; }
-        public List<PresetItem> Objects { get; set; }
+        public Preset() { }
 
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteByte(PresetId);
             writer.WriteByte(SymbolId);
             writer.WriteBoolean(Mount);
-            writer.WriteShort((short) Objects.Count);
+            writer.WriteShort((short)Objects.Count);
             for (var objectsIndex = 0; objectsIndex < Objects.Count; objectsIndex++)
             {
                 var objectToSend = Objects[objectsIndex];
@@ -52,5 +49,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Inventory.Preset
                 Objects.Add(objectToAdd);
             }
         }
+
     }
 }

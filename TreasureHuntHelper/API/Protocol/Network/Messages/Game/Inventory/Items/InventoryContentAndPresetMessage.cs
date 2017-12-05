@@ -1,8 +1,8 @@
 ﻿namespace Cookie.API.Protocol.Network.Messages.Game.Inventory.Items
 {
-    using Types.Game.Inventory.Preset;
-    using Types.Game.Inventory.Preset;
     using Types.Game.Data.Items;
+    using Types.Game.Inventory.Preset;
+    using Types.Game.Inventory.Preset;
     using System.Collections.Generic;
     using Utils.IO;
 

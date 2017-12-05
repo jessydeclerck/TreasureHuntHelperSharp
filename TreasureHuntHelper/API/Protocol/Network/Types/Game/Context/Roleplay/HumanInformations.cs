@@ -1,12 +1,16 @@
-﻿using System.Collections.Generic;
-using Cookie.API.Protocol.Network.Types.Game.Character.Restriction;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
 {
+    using Types.Game.Character.Restriction;
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class HumanInformations : NetworkType
     {
         public const ushort ProtocolId = 157;
+        public override ushort TypeID => ProtocolId;
+        public ActorRestrictionsInformations Restrictions { get; set; }
+        public bool Sex { get; set; }
+        public List<HumanOption> Options { get; set; }
 
         public HumanInformations(ActorRestrictionsInformations restrictions, bool sex, List<HumanOption> options)
         {
@@ -15,20 +19,13 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             Options = options;
         }
 
-        public HumanInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ActorRestrictionsInformations Restrictions { get; set; }
-        public bool Sex { get; set; }
-        public List<HumanOption> Options { get; set; }
+        public HumanInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
             Restrictions.Serialize(writer);
             writer.WriteBoolean(Sex);
-            writer.WriteShort((short) Options.Count);
+            writer.WriteShort((short)Options.Count);
             for (var optionsIndex = 0; optionsIndex < Options.Count; optionsIndex++)
             {
                 var objectToSend = Options[optionsIndex];
@@ -51,5 +48,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
                 Options.Add(objectToAdd);
             }
         }
+
     }
 }

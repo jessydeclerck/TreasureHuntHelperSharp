@@ -1,10 +1,14 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Job
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Job
 {
+    using Utils.IO;
+
     public class JobCrafterDirectorySettings : NetworkType
     {
         public const ushort ProtocolId = 97;
+        public override ushort TypeID => ProtocolId;
+        public byte JobId { get; set; }
+        public byte MinLevel { get; set; }
+        public bool Free { get; set; }
 
         public JobCrafterDirectorySettings(byte jobId, byte minLevel, bool free)
         {
@@ -13,14 +17,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Job
             Free = free;
         }
 
-        public JobCrafterDirectorySettings()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public byte JobId { get; set; }
-        public byte MinLevel { get; set; }
-        public bool Free { get; set; }
+        public JobCrafterDirectorySettings() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -35,5 +32,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Job
             MinLevel = reader.ReadByte();
             Free = reader.ReadBoolean();
         }
+
     }
 }

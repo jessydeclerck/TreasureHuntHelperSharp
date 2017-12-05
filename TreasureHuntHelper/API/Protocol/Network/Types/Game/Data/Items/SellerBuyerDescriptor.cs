@@ -1,15 +1,22 @@
-﻿using System.Collections.Generic;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Data.Items
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Data.Items
 {
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class SellerBuyerDescriptor : NetworkType
     {
         public const ushort ProtocolId = 121;
+        public override ushort TypeID => ProtocolId;
+        public List<uint> Quantities { get; set; }
+        public List<uint> Types { get; set; }
+        public float TaxPercentage { get; set; }
+        public float TaxModificationPercentage { get; set; }
+        public byte MaxItemLevel { get; set; }
+        public uint MaxItemPerAccount { get; set; }
+        public int NpcContextualId { get; set; }
+        public ushort UnsoldDelay { get; set; }
 
-        public SellerBuyerDescriptor(List<uint> quantities, List<uint> types, float taxPercentage,
-            float taxModificationPercentage, byte maxItemLevel, uint maxItemPerAccount, int npcContextualId,
-            ushort unsoldDelay)
+        public SellerBuyerDescriptor(List<uint> quantities, List<uint> types, float taxPercentage, float taxModificationPercentage, byte maxItemLevel, uint maxItemPerAccount, int npcContextualId, ushort unsoldDelay)
         {
             Quantities = quantities;
             Types = types;
@@ -21,28 +28,20 @@ namespace Cookie.API.Protocol.Network.Types.Game.Data.Items
             UnsoldDelay = unsoldDelay;
         }
 
-        public SellerBuyerDescriptor()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public List<uint> Quantities { get; set; }
-        public List<uint> Types { get; set; }
-        public float TaxPercentage { get; set; }
-        public float TaxModificationPercentage { get; set; }
-        public byte MaxItemLevel { get; set; }
-        public uint MaxItemPerAccount { get; set; }
-        public int NpcContextualId { get; set; }
-        public ushort UnsoldDelay { get; set; }
+        public SellerBuyerDescriptor() { }
 
         public override void Serialize(IDataWriter writer)
         {
-            writer.WriteShort((short) Quantities.Count);
+            writer.WriteShort((short)Quantities.Count);
             for (var quantitiesIndex = 0; quantitiesIndex < Quantities.Count; quantitiesIndex++)
+            {
                 writer.WriteVarUhInt(Quantities[quantitiesIndex]);
-            writer.WriteShort((short) Types.Count);
+            }
+            writer.WriteShort((short)Types.Count);
             for (var typesIndex = 0; typesIndex < Types.Count; typesIndex++)
+            {
                 writer.WriteVarUhInt(Types[typesIndex]);
+            }
             writer.WriteFloat(TaxPercentage);
             writer.WriteFloat(TaxModificationPercentage);
             writer.WriteByte(MaxItemLevel);
@@ -56,11 +55,15 @@ namespace Cookie.API.Protocol.Network.Types.Game.Data.Items
             var quantitiesCount = reader.ReadUShort();
             Quantities = new List<uint>();
             for (var quantitiesIndex = 0; quantitiesIndex < quantitiesCount; quantitiesIndex++)
+            {
                 Quantities.Add(reader.ReadVarUhInt());
+            }
             var typesCount = reader.ReadUShort();
             Types = new List<uint>();
             for (var typesIndex = 0; typesIndex < typesCount; typesIndex++)
+            {
                 Types.Add(reader.ReadVarUhInt());
+            }
             TaxPercentage = reader.ReadFloat();
             TaxModificationPercentage = reader.ReadFloat();
             MaxItemLevel = reader.ReadByte();
@@ -68,5 +71,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Data.Items
             NpcContextualId = reader.ReadInt();
             UnsoldDelay = reader.ReadVarUhShort();
         }
+
     }
 }

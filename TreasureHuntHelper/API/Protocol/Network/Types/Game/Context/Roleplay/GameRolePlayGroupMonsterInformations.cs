@@ -1,14 +1,23 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
 {
+    using Types.Game.Context;
+    using Types.Game.Look;
+    using Utils.IO;
+
     public class GameRolePlayGroupMonsterInformations : GameRolePlayActorInformations
     {
         public new const ushort ProtocolId = 160;
+        public override ushort TypeID => ProtocolId;
+        public bool KeyRingBonus { get; set; }
+        public bool HasHardcoreDrop { get; set; }
+        public bool HasAVARewardToken { get; set; }
+        public GroupMonsterStaticInformations StaticInfos { get; set; }
+        public double CreationTime { get; set; }
+        public int AgeBonusRate { get; set; }
+        public sbyte LootShare { get; set; }
+        public sbyte AlignmentSide { get; set; }
 
-        public GameRolePlayGroupMonsterInformations(bool keyRingBonus, bool hasHardcoreDrop, bool hasAVARewardToken,
-            GroupMonsterStaticInformations staticInfos, double creationTime, int ageBonusRate, sbyte lootShare,
-            sbyte alignmentSide)
+        public GameRolePlayGroupMonsterInformations(bool keyRingBonus, bool hasHardcoreDrop, bool hasAVARewardToken, GroupMonsterStaticInformations staticInfos, double creationTime, int ageBonusRate, sbyte lootShare, sbyte alignmentSide)
         {
             KeyRingBonus = keyRingBonus;
             HasHardcoreDrop = hasHardcoreDrop;
@@ -20,19 +29,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             AlignmentSide = alignmentSide;
         }
 
-        public GameRolePlayGroupMonsterInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public bool KeyRingBonus { get; set; }
-        public bool HasHardcoreDrop { get; set; }
-        public bool HasAVARewardToken { get; set; }
-        public GroupMonsterStaticInformations StaticInfos { get; set; }
-        public double CreationTime { get; set; }
-        public int AgeBonusRate { get; set; }
-        public sbyte LootShare { get; set; }
-        public sbyte AlignmentSide { get; set; }
+        public GameRolePlayGroupMonsterInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -64,5 +61,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             LootShare = reader.ReadSByte();
             AlignmentSide = reader.ReadSByte();
         }
+
     }
 }

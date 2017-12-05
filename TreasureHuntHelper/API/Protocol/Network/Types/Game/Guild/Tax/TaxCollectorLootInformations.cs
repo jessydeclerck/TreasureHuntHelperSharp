@@ -1,10 +1,15 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Guild.Tax
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Guild.Tax
 {
+    using Utils.IO;
+
     public class TaxCollectorLootInformations : TaxCollectorComplementaryInformations
     {
         public new const ushort ProtocolId = 372;
+        public override ushort TypeID => ProtocolId;
+        public ulong Kamas { get; set; }
+        public ulong Experience { get; set; }
+        public uint Pods { get; set; }
+        public ulong ItemsValue { get; set; }
 
         public TaxCollectorLootInformations(ulong kamas, ulong experience, uint pods, ulong itemsValue)
         {
@@ -14,15 +19,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Guild.Tax
             ItemsValue = itemsValue;
         }
 
-        public TaxCollectorLootInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ulong Kamas { get; set; }
-        public ulong Experience { get; set; }
-        public uint Pods { get; set; }
-        public ulong ItemsValue { get; set; }
+        public TaxCollectorLootInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -41,5 +38,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Guild.Tax
             Pods = reader.ReadVarUhInt();
             ItemsValue = reader.ReadVarUhLong();
         }
+
     }
 }

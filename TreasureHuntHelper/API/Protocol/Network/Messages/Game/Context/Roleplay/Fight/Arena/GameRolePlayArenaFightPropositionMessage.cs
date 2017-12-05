@@ -7,11 +7,11 @@
     {
         public const ushort ProtocolId = 6276;
         public override ushort MessageID => ProtocolId;
-        public int FightId { get; set; }
+        public ushort FightId { get; set; }
         public List<double> AlliesId { get; set; }
         public ushort Duration { get; set; }
 
-        public GameRolePlayArenaFightPropositionMessage(int fightId, List<double> alliesId, ushort duration)
+        public GameRolePlayArenaFightPropositionMessage(ushort fightId, List<double> alliesId, ushort duration)
         {
             FightId = fightId;
             AlliesId = alliesId;
@@ -22,7 +22,7 @@
 
         public override void Serialize(IDataWriter writer)
         {
-            writer.WriteInt(FightId);
+            writer.WriteVarUhShort(FightId);
             writer.WriteShort((short)AlliesId.Count);
             for (var alliesIdIndex = 0; alliesIdIndex < AlliesId.Count; alliesIdIndex++)
             {
@@ -33,7 +33,7 @@
 
         public override void Deserialize(IDataReader reader)
         {
-            FightId = reader.ReadInt();
+            FightId = reader.ReadVarUhShort();
             var alliesIdCount = reader.ReadUShort();
             AlliesId = new List<double>();
             for (var alliesIdIndex = 0; alliesIdIndex < alliesIdCount; alliesIdIndex++)

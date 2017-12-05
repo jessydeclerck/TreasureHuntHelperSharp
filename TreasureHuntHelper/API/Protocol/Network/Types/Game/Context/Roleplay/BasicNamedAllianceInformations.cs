@@ -1,22 +1,19 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
 {
+    using Utils.IO;
+
     public class BasicNamedAllianceInformations : BasicAllianceInformations
     {
         public new const ushort ProtocolId = 418;
+        public override ushort TypeID => ProtocolId;
+        public string AllianceName { get; set; }
 
         public BasicNamedAllianceInformations(string allianceName)
         {
             AllianceName = allianceName;
         }
 
-        public BasicNamedAllianceInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public string AllianceName { get; set; }
+        public BasicNamedAllianceInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -29,5 +26,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             base.Deserialize(reader);
             AllianceName = reader.ReadUTF();
         }
+
     }
 }

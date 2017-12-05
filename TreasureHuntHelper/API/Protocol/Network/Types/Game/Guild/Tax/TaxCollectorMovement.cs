@@ -1,13 +1,17 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Guild.Tax
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Guild.Tax
 {
+    using Utils.IO;
+
     public class TaxCollectorMovement : NetworkType
     {
         public const ushort ProtocolId = 493;
+        public override ushort TypeID => ProtocolId;
+        public byte MovementType { get; set; }
+        public TaxCollectorBasicInformations BasicInfos { get; set; }
+        public ulong PlayerId { get; set; }
+        public string PlayerName { get; set; }
 
-        public TaxCollectorMovement(byte movementType, TaxCollectorBasicInformations basicInfos, ulong playerId,
-            string playerName)
+        public TaxCollectorMovement(byte movementType, TaxCollectorBasicInformations basicInfos, ulong playerId, string playerName)
         {
             MovementType = movementType;
             BasicInfos = basicInfos;
@@ -15,15 +19,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Guild.Tax
             PlayerName = playerName;
         }
 
-        public TaxCollectorMovement()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public byte MovementType { get; set; }
-        public TaxCollectorBasicInformations BasicInfos { get; set; }
-        public ulong PlayerId { get; set; }
-        public string PlayerName { get; set; }
+        public TaxCollectorMovement() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -41,5 +37,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Guild.Tax
             PlayerId = reader.ReadVarUhLong();
             PlayerName = reader.ReadUTF();
         }
+
     }
 }

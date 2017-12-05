@@ -1,25 +1,56 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
 {
+    using Utils.IO;
+
     public class GameFightMinimalStats : NetworkType
     {
         public const ushort ProtocolId = 31;
+        public override ushort TypeID => ProtocolId;
+        public uint LifePoints { get; set; }
+        public uint MaxLifePoints { get; set; }
+        public uint BaseMaxLifePoints { get; set; }
+        public uint PermanentDamagePercent { get; set; }
+        public uint ShieldPoints { get; set; }
+        public short ActionPoints { get; set; }
+        public short MaxActionPoints { get; set; }
+        public short MovementPoints { get; set; }
+        public short MaxMovementPoints { get; set; }
+        public double Summoner { get; set; }
+        public bool Summoned { get; set; }
+        public short NeutralElementResistPercent { get; set; }
+        public short EarthElementResistPercent { get; set; }
+        public short WaterElementResistPercent { get; set; }
+        public short AirElementResistPercent { get; set; }
+        public short FireElementResistPercent { get; set; }
+        public short NeutralElementReduction { get; set; }
+        public short EarthElementReduction { get; set; }
+        public short WaterElementReduction { get; set; }
+        public short AirElementReduction { get; set; }
+        public short FireElementReduction { get; set; }
+        public short CriticalDamageFixedResist { get; set; }
+        public short PushDamageFixedResist { get; set; }
+        public short PvpNeutralElementResistPercent { get; set; }
+        public short PvpEarthElementResistPercent { get; set; }
+        public short PvpWaterElementResistPercent { get; set; }
+        public short PvpAirElementResistPercent { get; set; }
+        public short PvpFireElementResistPercent { get; set; }
+        public short PvpNeutralElementReduction { get; set; }
+        public short PvpEarthElementReduction { get; set; }
+        public short PvpWaterElementReduction { get; set; }
+        public short PvpAirElementReduction { get; set; }
+        public short PvpFireElementReduction { get; set; }
+        public ushort DodgePALostProbability { get; set; }
+        public ushort DodgePMLostProbability { get; set; }
+        public short TackleBlock { get; set; }
+        public short TackleEvade { get; set; }
+        public short FixedDamageReflection { get; set; }
+        public byte InvisibilityState { get; set; }
+        public ushort MeleeDamageReceivedPercent { get; set; }
+        public ushort RangedDamageReceivedPercent { get; set; }
+        public ushort WeaponDamageReceivedPercent { get; set; }
+        public ushort SpellDamageReceivedPercent { get; set; }
 
-        public GameFightMinimalStats(uint lifePoints, uint maxLifePoints, uint baseMaxLifePoints,
-            uint permanentDamagePercent, uint shieldPoints, short actionPoints, short maxActionPoints,
-            short movementPoints, short maxMovementPoints, double summoner, bool summoned,
-            short neutralElementResistPercent, short earthElementResistPercent, short waterElementResistPercent,
-            short airElementResistPercent, short fireElementResistPercent, short neutralElementReduction,
-            short earthElementReduction, short waterElementReduction, short airElementReduction,
-            short fireElementReduction, short criticalDamageFixedResist, short pushDamageFixedResist,
-            short pvpNeutralElementResistPercent, short pvpEarthElementResistPercent,
-            short pvpWaterElementResistPercent, short pvpAirElementResistPercent, short pvpFireElementResistPercent,
-            short pvpNeutralElementReduction, short pvpEarthElementReduction, short pvpWaterElementReduction,
-            short pvpAirElementReduction, short pvpFireElementReduction, ushort dodgePALostProbability,
-            ushort dodgePMLostProbability, short tackleBlock, short tackleEvade, short fixedDamageReflection,
-            byte invisibilityState, ushort meleeDamageReceivedPercent, ushort rangedDamageReceivedPercent,
-            ushort weaponDamageReceivedPercent, ushort spellDamageReceivedPercent)
+        public GameFightMinimalStats(uint lifePoints, uint maxLifePoints, uint baseMaxLifePoints, uint permanentDamagePercent, uint shieldPoints, short actionPoints, short maxActionPoints, short movementPoints, short maxMovementPoints, double summoner, bool summoned, short neutralElementResistPercent, short earthElementResistPercent, short waterElementResistPercent, short airElementResistPercent, short fireElementResistPercent, short neutralElementReduction, short earthElementReduction, short waterElementReduction, short airElementReduction, short fireElementReduction, short criticalDamageFixedResist, short pushDamageFixedResist, short pvpNeutralElementResistPercent, short pvpEarthElementResistPercent, short pvpWaterElementResistPercent, short pvpAirElementResistPercent, short pvpFireElementResistPercent, short pvpNeutralElementReduction, short pvpEarthElementReduction, short pvpWaterElementReduction, short pvpAirElementReduction, short pvpFireElementReduction, ushort dodgePALostProbability, ushort dodgePMLostProbability, short tackleBlock, short tackleEvade, short fixedDamageReflection, byte invisibilityState, ushort meleeDamageReceivedPercent, ushort rangedDamageReceivedPercent, ushort weaponDamageReceivedPercent, ushort spellDamageReceivedPercent)
         {
             LifePoints = lifePoints;
             MaxLifePoints = maxLifePoints;
@@ -66,54 +97,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             SpellDamageReceivedPercent = spellDamageReceivedPercent;
         }
 
-        public GameFightMinimalStats()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public uint LifePoints { get; set; }
-        public uint MaxLifePoints { get; set; }
-        public uint BaseMaxLifePoints { get; set; }
-        public uint PermanentDamagePercent { get; set; }
-        public uint ShieldPoints { get; set; }
-        public short ActionPoints { get; set; }
-        public short MaxActionPoints { get; set; }
-        public short MovementPoints { get; set; }
-        public short MaxMovementPoints { get; set; }
-        public double Summoner { get; set; }
-        public bool Summoned { get; set; }
-        public short NeutralElementResistPercent { get; set; }
-        public short EarthElementResistPercent { get; set; }
-        public short WaterElementResistPercent { get; set; }
-        public short AirElementResistPercent { get; set; }
-        public short FireElementResistPercent { get; set; }
-        public short NeutralElementReduction { get; set; }
-        public short EarthElementReduction { get; set; }
-        public short WaterElementReduction { get; set; }
-        public short AirElementReduction { get; set; }
-        public short FireElementReduction { get; set; }
-        public short CriticalDamageFixedResist { get; set; }
-        public short PushDamageFixedResist { get; set; }
-        public short PvpNeutralElementResistPercent { get; set; }
-        public short PvpEarthElementResistPercent { get; set; }
-        public short PvpWaterElementResistPercent { get; set; }
-        public short PvpAirElementResistPercent { get; set; }
-        public short PvpFireElementResistPercent { get; set; }
-        public short PvpNeutralElementReduction { get; set; }
-        public short PvpEarthElementReduction { get; set; }
-        public short PvpWaterElementReduction { get; set; }
-        public short PvpAirElementReduction { get; set; }
-        public short PvpFireElementReduction { get; set; }
-        public ushort DodgePALostProbability { get; set; }
-        public ushort DodgePMLostProbability { get; set; }
-        public short TackleBlock { get; set; }
-        public short TackleEvade { get; set; }
-        public short FixedDamageReflection { get; set; }
-        public byte InvisibilityState { get; set; }
-        public ushort MeleeDamageReceivedPercent { get; set; }
-        public ushort RangedDamageReceivedPercent { get; set; }
-        public ushort WeaponDamageReceivedPercent { get; set; }
-        public ushort SpellDamageReceivedPercent { get; set; }
+        public GameFightMinimalStats() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -208,5 +192,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             WeaponDamageReceivedPercent = reader.ReadVarUhShort();
             SpellDamageReceivedPercent = reader.ReadVarUhShort();
         }
+
     }
 }

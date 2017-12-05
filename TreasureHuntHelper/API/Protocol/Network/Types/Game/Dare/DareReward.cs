@@ -1,10 +1,15 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Dare
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Dare
 {
+    using Utils.IO;
+
     public class DareReward : NetworkType
     {
         public const ushort ProtocolId = 505;
+        public override ushort TypeID => ProtocolId;
+        public byte Type { get; set; }
+        public ushort MonsterId { get; set; }
+        public ulong Kamas { get; set; }
+        public double DareId { get; set; }
 
         public DareReward(byte type, ushort monsterId, ulong kamas, double dareId)
         {
@@ -14,15 +19,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Dare
             DareId = dareId;
         }
 
-        public DareReward()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public byte Type { get; set; }
-        public ushort MonsterId { get; set; }
-        public ulong Kamas { get; set; }
-        public double DareId { get; set; }
+        public DareReward() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -39,5 +36,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Dare
             Kamas = reader.ReadVarUhLong();
             DareId = reader.ReadDouble();
         }
+
     }
 }

@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Dare
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Dare
 {
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class DareCriteria : NetworkType
     {
         public const ushort ProtocolId = 501;
+        public override ushort TypeID => ProtocolId;
+        public byte Type { get; set; }
+        public List<int> Params { get; set; }
 
         public DareCriteria(byte type, List<int> @params)
         {
@@ -13,20 +16,16 @@ namespace Cookie.API.Protocol.Network.Types.Game.Dare
             Params = @params;
         }
 
-        public DareCriteria()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public byte Type { get; set; }
-        public List<int> Params { get; set; }
+        public DareCriteria() { }
 
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteByte(Type);
-            writer.WriteShort((short) Params.Count);
+            writer.WriteShort((short)Params.Count);
             for (var paramsIndex = 0; paramsIndex < Params.Count; paramsIndex++)
+            {
                 writer.WriteInt(Params[paramsIndex]);
+            }
         }
 
         public override void Deserialize(IDataReader reader)
@@ -35,7 +34,10 @@ namespace Cookie.API.Protocol.Network.Types.Game.Dare
             var paramsCount = reader.ReadUShort();
             Params = new List<int>();
             for (var paramsIndex = 0; paramsIndex < paramsCount; paramsIndex++)
+            {
                 Params.Add(reader.ReadInt());
+            }
         }
+
     }
 }

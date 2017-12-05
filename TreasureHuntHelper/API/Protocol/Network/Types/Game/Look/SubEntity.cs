@@ -1,10 +1,14 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Look
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Look
 {
+    using Utils.IO;
+
     public class SubEntity : NetworkType
     {
         public const ushort ProtocolId = 54;
+        public override ushort TypeID => ProtocolId;
+        public byte BindingPointCategory { get; set; }
+        public byte BindingPointIndex { get; set; }
+        public EntityLook SubEntityLook { get; set; }
 
         public SubEntity(byte bindingPointCategory, byte bindingPointIndex, EntityLook subEntityLook)
         {
@@ -13,14 +17,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Look
             SubEntityLook = subEntityLook;
         }
 
-        public SubEntity()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public byte BindingPointCategory { get; set; }
-        public byte BindingPointIndex { get; set; }
-        public EntityLook SubEntityLook { get; set; }
+        public SubEntity() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -36,5 +33,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Look
             SubEntityLook = new EntityLook();
             SubEntityLook.Deserialize(reader);
         }
+
     }
 }

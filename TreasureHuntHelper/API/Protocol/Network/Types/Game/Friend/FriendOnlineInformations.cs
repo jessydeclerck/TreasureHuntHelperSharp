@@ -1,15 +1,26 @@
-﻿using Cookie.API.Protocol.Network.Types.Game.Character.Status;
-using Cookie.API.Protocol.Network.Types.Game.Context.Roleplay;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Friend
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Friend
 {
+    using Enums;
+    using Types.Game.Character.Status;
+    using Types.Game.Context.Roleplay;
+    using Utils.IO;
+
     public class FriendOnlineInformations : FriendInformations
     {
         public new const ushort ProtocolId = 92;
+        public override ushort TypeID => ProtocolId;
+        public bool Sex { get; set; }
+        public bool HavenBagShared { get; set; }
+        public ulong PlayerId { get; set; }
+        public string PlayerName { get; set; }
+        public ushort Level { get; set; }
+        public sbyte AlignmentSide { get; set; }
+        public sbyte Breed { get; set; }
+        public GuildInformations GuildInfo { get; set; }
+        public ushort MoodSmileyId { get; set; }
+        public PlayerStatus Status { get; set; }
 
-        public FriendOnlineInformations(bool sex, bool havenBagShared, ulong playerId, string playerName, byte level,
-            sbyte alignmentSide, sbyte breed, GuildInformations guildInfo, ushort moodSmileyId, PlayerStatus status)
+        public FriendOnlineInformations(bool sex, bool havenBagShared, ulong playerId, string playerName, ushort level, sbyte alignmentSide, sbyte breed, GuildInformations guildInfo, ushort moodSmileyId, PlayerStatus status)
         {
             Sex = sex;
             HavenBagShared = havenBagShared;
@@ -23,21 +34,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Friend
             Status = status;
         }
 
-        public FriendOnlineInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public bool Sex { get; set; }
-        public bool HavenBagShared { get; set; }
-        public ulong PlayerId { get; set; }
-        public string PlayerName { get; set; }
-        public byte Level { get; set; }
-        public sbyte AlignmentSide { get; set; }
-        public sbyte Breed { get; set; }
-        public GuildInformations GuildInfo { get; set; }
-        public ushort MoodSmileyId { get; set; }
-        public PlayerStatus Status { get; set; }
+        public FriendOnlineInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -48,7 +45,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Friend
             writer.WriteByte(flag);
             writer.WriteVarUhLong(PlayerId);
             writer.WriteUTF(PlayerName);
-            writer.WriteByte(Level);
+            writer.WriteVarUhShort(Level);
             writer.WriteSByte(AlignmentSide);
             writer.WriteSByte(Breed);
             GuildInfo.Serialize(writer);
@@ -65,7 +62,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Friend
             HavenBagShared = BooleanByteWrapper.GetFlag(flag, 1);
             PlayerId = reader.ReadVarUhLong();
             PlayerName = reader.ReadUTF();
-            Level = reader.ReadByte();
+            Level = reader.ReadVarUhShort();
             AlignmentSide = reader.ReadSByte();
             Breed = reader.ReadSByte();
             GuildInfo = new GuildInformations();
@@ -74,5 +71,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Friend
             Status = ProtocolTypeManager.GetInstance<PlayerStatus>(reader.ReadUShort());
             Status.Deserialize(reader);
         }
+
     }
 }

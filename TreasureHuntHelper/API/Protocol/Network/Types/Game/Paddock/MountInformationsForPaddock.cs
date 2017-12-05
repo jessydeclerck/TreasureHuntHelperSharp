@@ -1,10 +1,14 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Paddock
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Paddock
 {
+    using Utils.IO;
+
     public class MountInformationsForPaddock : NetworkType
     {
         public const ushort ProtocolId = 184;
+        public override ushort TypeID => ProtocolId;
+        public ushort ModelId { get; set; }
+        public string Name { get; set; }
+        public string OwnerName { get; set; }
 
         public MountInformationsForPaddock(ushort modelId, string name, string ownerName)
         {
@@ -13,14 +17,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Paddock
             OwnerName = ownerName;
         }
 
-        public MountInformationsForPaddock()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ushort ModelId { get; set; }
-        public string Name { get; set; }
-        public string OwnerName { get; set; }
+        public MountInformationsForPaddock() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -35,5 +32,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Paddock
             Name = reader.ReadUTF();
             OwnerName = reader.ReadUTF();
         }
+
     }
 }

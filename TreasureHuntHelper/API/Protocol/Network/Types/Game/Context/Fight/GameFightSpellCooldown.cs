@@ -1,10 +1,13 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
 {
+    using Utils.IO;
+
     public class GameFightSpellCooldown : NetworkType
     {
         public const ushort ProtocolId = 205;
+        public override ushort TypeID => ProtocolId;
+        public int SpellId { get; set; }
+        public byte Cooldown { get; set; }
 
         public GameFightSpellCooldown(int spellId, byte cooldown)
         {
@@ -12,13 +15,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             Cooldown = cooldown;
         }
 
-        public GameFightSpellCooldown()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public int SpellId { get; set; }
-        public byte Cooldown { get; set; }
+        public GameFightSpellCooldown() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -31,5 +28,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             SpellId = reader.ReadInt();
             Cooldown = reader.ReadByte();
         }
+
     }
 }

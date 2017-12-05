@@ -1,10 +1,17 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
 {
+    using Types.Game.Context;
+    using Types.Game.Look;
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class GameFightTaxCollectorInformations : GameFightAIInformations
     {
         public new const ushort ProtocolId = 48;
+        public override ushort TypeID => ProtocolId;
+        public ushort FirstNameId { get; set; }
+        public ushort LastNameId { get; set; }
+        public byte Level { get; set; }
 
         public GameFightTaxCollectorInformations(ushort firstNameId, ushort lastNameId, byte level)
         {
@@ -13,14 +20,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             Level = level;
         }
 
-        public GameFightTaxCollectorInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ushort FirstNameId { get; set; }
-        public ushort LastNameId { get; set; }
-        public byte Level { get; set; }
+        public GameFightTaxCollectorInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -37,5 +37,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             LastNameId = reader.ReadVarUhShort();
             Level = reader.ReadByte();
         }
+
     }
 }

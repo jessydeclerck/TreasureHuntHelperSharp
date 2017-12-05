@@ -1,22 +1,19 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Shortcut
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Shortcut
 {
+    using Utils.IO;
+
     public class ShortcutSmiley : Shortcut
     {
         public new const ushort ProtocolId = 388;
+        public override ushort TypeID => ProtocolId;
+        public ushort SmileyId { get; set; }
 
         public ShortcutSmiley(ushort smileyId)
         {
             SmileyId = smileyId;
         }
 
-        public ShortcutSmiley()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ushort SmileyId { get; set; }
+        public ShortcutSmiley() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -29,5 +26,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Shortcut
             base.Deserialize(reader);
             SmileyId = reader.ReadVarUhShort();
         }
+
     }
 }

@@ -1,7 +1,7 @@
 ﻿namespace Cookie.API.Protocol.Network.Messages.Game.Guild.Tax
 {
-    using Types.Game.Guild.Tax;
     using Types.Game.Context.Roleplay;
+    using Types.Game.Guild.Tax;
     using Utils.IO;
 
     public class TaxCollectorAttackedResultMessage : NetworkMessage

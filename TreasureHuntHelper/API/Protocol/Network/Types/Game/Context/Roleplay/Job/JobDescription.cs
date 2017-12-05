@@ -1,12 +1,15 @@
-﻿using System.Collections.Generic;
-using Cookie.API.Protocol.Network.Types.Game.Interactive.Skill;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Job
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Job
 {
+    using Types.Game.Interactive.Skill;
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class JobDescription : NetworkType
     {
         public const ushort ProtocolId = 101;
+        public override ushort TypeID => ProtocolId;
+        public byte JobId { get; set; }
+        public List<SkillActionDescription> Skills { get; set; }
 
         public JobDescription(byte jobId, List<SkillActionDescription> skills)
         {
@@ -14,18 +17,12 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Job
             Skills = skills;
         }
 
-        public JobDescription()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public byte JobId { get; set; }
-        public List<SkillActionDescription> Skills { get; set; }
+        public JobDescription() { }
 
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteByte(JobId);
-            writer.WriteShort((short) Skills.Count);
+            writer.WriteShort((short)Skills.Count);
             for (var skillsIndex = 0; skillsIndex < Skills.Count; skillsIndex++)
             {
                 var objectToSend = Skills[skillsIndex];
@@ -46,5 +43,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Job
                 Skills.Add(objectToAdd);
             }
         }
+
     }
 }

@@ -1,10 +1,13 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Friend
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Friend
 {
+    using Utils.IO;
+
     public class AbstractContactInformations : NetworkType
     {
         public const ushort ProtocolId = 380;
+        public override ushort TypeID => ProtocolId;
+        public int AccountId { get; set; }
+        public string AccountName { get; set; }
 
         public AbstractContactInformations(int accountId, string accountName)
         {
@@ -12,13 +15,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Friend
             AccountName = accountName;
         }
 
-        public AbstractContactInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public int AccountId { get; set; }
-        public string AccountName { get; set; }
+        public AbstractContactInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -31,5 +28,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Friend
             AccountId = reader.ReadInt();
             AccountName = reader.ReadUTF();
         }
+
     }
 }

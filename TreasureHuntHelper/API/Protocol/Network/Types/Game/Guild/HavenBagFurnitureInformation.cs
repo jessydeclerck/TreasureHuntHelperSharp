@@ -1,10 +1,14 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Guild
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Guild
 {
+    using Utils.IO;
+
     public class HavenBagFurnitureInformation : NetworkType
     {
         public const ushort ProtocolId = 498;
+        public override ushort TypeID => ProtocolId;
+        public ushort CellId { get; set; }
+        public int FunitureId { get; set; }
+        public byte Orientation { get; set; }
 
         public HavenBagFurnitureInformation(ushort cellId, int funitureId, byte orientation)
         {
@@ -13,14 +17,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Guild
             Orientation = orientation;
         }
 
-        public HavenBagFurnitureInformation()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ushort CellId { get; set; }
-        public int FunitureId { get; set; }
-        public byte Orientation { get; set; }
+        public HavenBagFurnitureInformation() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -35,5 +32,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Guild
             FunitureId = reader.ReadInt();
             Orientation = reader.ReadByte();
         }
+
     }
 }

@@ -1,22 +1,19 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Shortcut
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Shortcut
 {
+    using Utils.IO;
+
     public class ShortcutObjectIdolsPreset : ShortcutObject
     {
         public new const ushort ProtocolId = 492;
+        public override ushort TypeID => ProtocolId;
+        public byte PresetId { get; set; }
 
         public ShortcutObjectIdolsPreset(byte presetId)
         {
             PresetId = presetId;
         }
 
-        public ShortcutObjectIdolsPreset()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public byte PresetId { get; set; }
+        public ShortcutObjectIdolsPreset() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -29,5 +26,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Shortcut
             base.Deserialize(reader);
             PresetId = reader.ReadByte();
         }
+
     }
 }

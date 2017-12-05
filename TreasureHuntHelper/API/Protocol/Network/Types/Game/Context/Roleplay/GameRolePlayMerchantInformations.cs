@@ -1,11 +1,16 @@
-﻿using System.Collections.Generic;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
 {
+    using Types.Game.Context;
+    using Types.Game.Look;
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class GameRolePlayMerchantInformations : GameRolePlayNamedActorInformations
     {
         public new const ushort ProtocolId = 129;
+        public override ushort TypeID => ProtocolId;
+        public byte SellType { get; set; }
+        public List<HumanOption> Options { get; set; }
 
         public GameRolePlayMerchantInformations(byte sellType, List<HumanOption> options)
         {
@@ -13,19 +18,13 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             Options = options;
         }
 
-        public GameRolePlayMerchantInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public byte SellType { get; set; }
-        public List<HumanOption> Options { get; set; }
+        public GameRolePlayMerchantInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
             base.Serialize(writer);
             writer.WriteByte(SellType);
-            writer.WriteShort((short) Options.Count);
+            writer.WriteShort((short)Options.Count);
             for (var optionsIndex = 0; optionsIndex < Options.Count; optionsIndex++)
             {
                 var objectToSend = Options[optionsIndex];
@@ -47,5 +46,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
                 Options.Add(objectToAdd);
             }
         }
+
     }
 }

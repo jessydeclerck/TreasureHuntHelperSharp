@@ -1,32 +1,30 @@
 ﻿namespace Cookie.API.Protocol.Network.Messages.Game.Achievement
 {
+    using Types.Game.Achievement;
     using Utils.IO;
 
     public class AchievementFinishedMessage : NetworkMessage
     {
         public const ushort ProtocolId = 6208;
         public override ushort MessageID => ProtocolId;
-        public ushort ObjectId { get; set; }
-        public byte Finishedlevel { get; set; }
+        public AchievementAchievedRewardable Achievement { get; set; }
 
-        public AchievementFinishedMessage(ushort objectId, byte finishedlevel)
+        public AchievementFinishedMessage(AchievementAchievedRewardable achievement)
         {
-            ObjectId = objectId;
-            Finishedlevel = finishedlevel;
+            Achievement = achievement;
         }
 
         public AchievementFinishedMessage() { }
 
         public override void Serialize(IDataWriter writer)
         {
-            writer.WriteVarUhShort(ObjectId);
-            writer.WriteByte(Finishedlevel);
+            Achievement.Serialize(writer);
         }
 
         public override void Deserialize(IDataReader reader)
         {
-            ObjectId = reader.ReadVarUhShort();
-            Finishedlevel = reader.ReadByte();
+            Achievement = new AchievementAchievedRewardable();
+            Achievement.Deserialize(reader);
         }
 
     }

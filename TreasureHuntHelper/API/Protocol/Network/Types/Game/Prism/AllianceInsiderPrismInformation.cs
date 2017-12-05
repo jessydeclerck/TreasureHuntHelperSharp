@@ -1,16 +1,20 @@
-﻿using System.Collections.Generic;
-using Cookie.API.Protocol.Network.Types.Game.Data.Items;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Prism
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Prism
 {
+    using Types.Game.Data.Items;
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class AllianceInsiderPrismInformation : PrismInformation
     {
         public new const ushort ProtocolId = 431;
+        public override ushort TypeID => ProtocolId;
+        public int LastTimeSlotModificationDate { get; set; }
+        public uint LastTimeSlotModificationAuthorGuildId { get; set; }
+        public ulong LastTimeSlotModificationAuthorId { get; set; }
+        public string LastTimeSlotModificationAuthorName { get; set; }
+        public List<ObjectItem> ModulesObjects { get; set; }
 
-        public AllianceInsiderPrismInformation(int lastTimeSlotModificationDate,
-            uint lastTimeSlotModificationAuthorGuildId, ulong lastTimeSlotModificationAuthorId,
-            string lastTimeSlotModificationAuthorName, List<ObjectItem> modulesObjects)
+        public AllianceInsiderPrismInformation(int lastTimeSlotModificationDate, uint lastTimeSlotModificationAuthorGuildId, ulong lastTimeSlotModificationAuthorId, string lastTimeSlotModificationAuthorName, List<ObjectItem> modulesObjects)
         {
             LastTimeSlotModificationDate = lastTimeSlotModificationDate;
             LastTimeSlotModificationAuthorGuildId = lastTimeSlotModificationAuthorGuildId;
@@ -19,16 +23,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Prism
             ModulesObjects = modulesObjects;
         }
 
-        public AllianceInsiderPrismInformation()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public int LastTimeSlotModificationDate { get; set; }
-        public uint LastTimeSlotModificationAuthorGuildId { get; set; }
-        public ulong LastTimeSlotModificationAuthorId { get; set; }
-        public string LastTimeSlotModificationAuthorName { get; set; }
-        public List<ObjectItem> ModulesObjects { get; set; }
+        public AllianceInsiderPrismInformation() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -37,7 +32,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Prism
             writer.WriteVarUhInt(LastTimeSlotModificationAuthorGuildId);
             writer.WriteVarUhLong(LastTimeSlotModificationAuthorId);
             writer.WriteUTF(LastTimeSlotModificationAuthorName);
-            writer.WriteShort((short) ModulesObjects.Count);
+            writer.WriteShort((short)ModulesObjects.Count);
             for (var modulesObjectsIndex = 0; modulesObjectsIndex < ModulesObjects.Count; modulesObjectsIndex++)
             {
                 var objectToSend = ModulesObjects[modulesObjectsIndex];
@@ -61,5 +56,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Prism
                 ModulesObjects.Add(objectToAdd);
             }
         }
+
     }
 }

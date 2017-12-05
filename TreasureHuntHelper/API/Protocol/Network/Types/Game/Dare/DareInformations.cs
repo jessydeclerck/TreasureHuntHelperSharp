@@ -1,16 +1,26 @@
-﻿using System.Collections.Generic;
-using Cookie.API.Protocol.Network.Types.Game.Character;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Dare
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Dare
 {
+    using Types.Game.Character;
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class DareInformations : NetworkType
     {
         public const ushort ProtocolId = 502;
+        public override ushort TypeID => ProtocolId;
+        public double DareId { get; set; }
+        public CharacterBasicMinimalInformations Creator { get; set; }
+        public ulong SubscriptionFee { get; set; }
+        public ulong Jackpot { get; set; }
+        public ushort MaxCountWinners { get; set; }
+        public double EndDate { get; set; }
+        public bool IsPrivate { get; set; }
+        public uint GuildId { get; set; }
+        public uint AllianceId { get; set; }
+        public List<DareCriteria> Criterions { get; set; }
+        public double StartDate { get; set; }
 
-        public DareInformations(double dareId, CharacterBasicMinimalInformations creator, ulong subscriptionFee,
-            ulong jackpot, ushort maxCountWinners, double endDate, bool isPrivate, uint guildId, uint allianceId,
-            List<DareCriteria> criterions, double startDate)
+        public DareInformations(double dareId, CharacterBasicMinimalInformations creator, ulong subscriptionFee, ulong jackpot, ushort maxCountWinners, double endDate, bool isPrivate, uint guildId, uint allianceId, List<DareCriteria> criterions, double startDate)
         {
             DareId = dareId;
             Creator = creator;
@@ -25,22 +35,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Dare
             StartDate = startDate;
         }
 
-        public DareInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public double DareId { get; set; }
-        public CharacterBasicMinimalInformations Creator { get; set; }
-        public ulong SubscriptionFee { get; set; }
-        public ulong Jackpot { get; set; }
-        public ushort MaxCountWinners { get; set; }
-        public double EndDate { get; set; }
-        public bool IsPrivate { get; set; }
-        public uint GuildId { get; set; }
-        public uint AllianceId { get; set; }
-        public List<DareCriteria> Criterions { get; set; }
-        public double StartDate { get; set; }
+        public DareInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -53,7 +48,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Dare
             writer.WriteBoolean(IsPrivate);
             writer.WriteVarUhInt(GuildId);
             writer.WriteVarUhInt(AllianceId);
-            writer.WriteShort((short) Criterions.Count);
+            writer.WriteShort((short)Criterions.Count);
             for (var criterionsIndex = 0; criterionsIndex < Criterions.Count; criterionsIndex++)
             {
                 var objectToSend = Criterions[criterionsIndex];
@@ -84,5 +79,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Dare
             }
             StartDate = reader.ReadDouble();
         }
+
     }
 }

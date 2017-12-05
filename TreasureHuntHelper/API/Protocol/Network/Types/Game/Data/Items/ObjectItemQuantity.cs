@@ -1,10 +1,13 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Data.Items
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Data.Items
 {
+    using Utils.IO;
+
     public class ObjectItemQuantity : Item
     {
         public new const ushort ProtocolId = 119;
+        public override ushort TypeID => ProtocolId;
+        public uint ObjectUID { get; set; }
+        public uint Quantity { get; set; }
 
         public ObjectItemQuantity(uint objectUID, uint quantity)
         {
@@ -12,13 +15,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Data.Items
             Quantity = quantity;
         }
 
-        public ObjectItemQuantity()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public uint ObjectUID { get; set; }
-        public uint Quantity { get; set; }
+        public ObjectItemQuantity() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -33,5 +30,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Data.Items
             ObjectUID = reader.ReadVarUhInt();
             Quantity = reader.ReadVarUhInt();
         }
+
     }
 }

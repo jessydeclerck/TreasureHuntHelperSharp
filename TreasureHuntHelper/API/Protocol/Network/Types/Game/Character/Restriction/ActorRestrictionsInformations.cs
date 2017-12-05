@@ -1,16 +1,34 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Character.Restriction
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Character.Restriction
 {
+    using Utils.IO;
+
     public class ActorRestrictionsInformations : NetworkType
     {
         public const ushort ProtocolId = 204;
+        public override ushort TypeID => ProtocolId;
+        public bool CantBeAggressed { get; set; }
+        public bool CantBeChallenged { get; set; }
+        public bool CantTrade { get; set; }
+        public bool CantBeAttackedByMutant { get; set; }
+        public bool CantRun { get; set; }
+        public bool ForceSlowWalk { get; set; }
+        public bool CantMinimize { get; set; }
+        public bool CantMove { get; set; }
+        public bool CantAggress { get; set; }
+        public bool CantChallenge { get; set; }
+        public bool CantExchange { get; set; }
+        public bool CantAttack { get; set; }
+        public bool CantChat { get; set; }
+        public bool CantBeMerchant { get; set; }
+        public bool CantUseObject { get; set; }
+        public bool CantUseTaxCollector { get; set; }
+        public bool CantUseInteractive { get; set; }
+        public bool CantSpeakToNPC { get; set; }
+        public bool CantChangeZone { get; set; }
+        public bool CantAttackMonster { get; set; }
+        public bool CantWalk8Directions { get; set; }
 
-        public ActorRestrictionsInformations(bool cantBeAggressed, bool cantBeChallenged, bool cantTrade,
-            bool cantBeAttackedByMutant, bool cantRun, bool forceSlowWalk, bool cantMinimize, bool cantMove,
-            bool cantAggress, bool cantChallenge, bool cantExchange, bool cantAttack, bool cantChat,
-            bool cantBeMerchant, bool cantUseObject, bool cantUseTaxCollector, bool cantUseInteractive,
-            bool cantSpeakToNPC, bool cantChangeZone, bool cantAttackMonster, bool cantWalk8Directions)
+        public ActorRestrictionsInformations(bool cantBeAggressed, bool cantBeChallenged, bool cantTrade, bool cantBeAttackedByMutant, bool cantRun, bool forceSlowWalk, bool cantMinimize, bool cantMove, bool cantAggress, bool cantChallenge, bool cantExchange, bool cantAttack, bool cantChat, bool cantBeMerchant, bool cantUseObject, bool cantUseTaxCollector, bool cantUseInteractive, bool cantSpeakToNPC, bool cantChangeZone, bool cantAttackMonster, bool cantWalk8Directions)
         {
             CantBeAggressed = cantBeAggressed;
             CantBeChallenged = cantBeChallenged;
@@ -35,32 +53,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Character.Restriction
             CantWalk8Directions = cantWalk8Directions;
         }
 
-        public ActorRestrictionsInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public bool CantBeAggressed { get; set; }
-        public bool CantBeChallenged { get; set; }
-        public bool CantTrade { get; set; }
-        public bool CantBeAttackedByMutant { get; set; }
-        public bool CantRun { get; set; }
-        public bool ForceSlowWalk { get; set; }
-        public bool CantMinimize { get; set; }
-        public bool CantMove { get; set; }
-        public bool CantAggress { get; set; }
-        public bool CantChallenge { get; set; }
-        public bool CantExchange { get; set; }
-        public bool CantAttack { get; set; }
-        public bool CantChat { get; set; }
-        public bool CantBeMerchant { get; set; }
-        public bool CantUseObject { get; set; }
-        public bool CantUseTaxCollector { get; set; }
-        public bool CantUseInteractive { get; set; }
-        public bool CantSpeakToNPC { get; set; }
-        public bool CantChangeZone { get; set; }
-        public bool CantAttackMonster { get; set; }
-        public bool CantWalk8Directions { get; set; }
+        public ActorRestrictionsInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -118,5 +111,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Character.Restriction
             CantAttackMonster = BooleanByteWrapper.GetFlag(flag, 3);
             CantWalk8Directions = BooleanByteWrapper.GetFlag(flag, 4);
         }
+
     }
 }

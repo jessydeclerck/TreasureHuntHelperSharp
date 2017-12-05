@@ -1,13 +1,19 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
 {
+    using Utils.IO;
+
     public class GameFightFighterLightInformations : NetworkType
     {
         public const ushort ProtocolId = 413;
+        public override ushort TypeID => ProtocolId;
+        public bool Sex { get; set; }
+        public bool Alive { get; set; }
+        public double ObjectId { get; set; }
+        public byte Wave { get; set; }
+        public ushort Level { get; set; }
+        public sbyte Breed { get; set; }
 
-        public GameFightFighterLightInformations(bool sex, bool alive, double objectId, byte wave, ushort level,
-            sbyte breed)
+        public GameFightFighterLightInformations(bool sex, bool alive, double objectId, byte wave, ushort level, sbyte breed)
         {
             Sex = sex;
             Alive = alive;
@@ -17,17 +23,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             Breed = breed;
         }
 
-        public GameFightFighterLightInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public bool Sex { get; set; }
-        public bool Alive { get; set; }
-        public double ObjectId { get; set; }
-        public byte Wave { get; set; }
-        public ushort Level { get; set; }
-        public sbyte Breed { get; set; }
+        public GameFightFighterLightInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -51,5 +47,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             Level = reader.ReadVarUhShort();
             Breed = reader.ReadSByte();
         }
+
     }
 }

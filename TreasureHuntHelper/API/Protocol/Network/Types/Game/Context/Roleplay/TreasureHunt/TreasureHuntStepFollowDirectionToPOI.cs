@@ -1,10 +1,13 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.TreasureHunt
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.TreasureHunt
 {
+    using Utils.IO;
+
     public class TreasureHuntStepFollowDirectionToPOI : TreasureHuntStep
     {
         public new const ushort ProtocolId = 461;
+        public override ushort TypeID => ProtocolId;
+        public byte Direction { get; set; }
+        public ushort PoiLabelId { get; set; }
 
         public TreasureHuntStepFollowDirectionToPOI(byte direction, ushort poiLabelId)
         {
@@ -12,13 +15,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.TreasureHunt
             PoiLabelId = poiLabelId;
         }
 
-        public TreasureHuntStepFollowDirectionToPOI()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public byte Direction { get; set; }
-        public ushort PoiLabelId { get; set; }
+        public TreasureHuntStepFollowDirectionToPOI() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -33,5 +30,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.TreasureHunt
             Direction = reader.ReadByte();
             PoiLabelId = reader.ReadVarUhShort();
         }
+
     }
 }

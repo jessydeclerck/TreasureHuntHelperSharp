@@ -1,22 +1,19 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
 {
+    using Utils.IO;
+
     public class GameFightFighterNamedLightInformations : GameFightFighterLightInformations
     {
         public new const ushort ProtocolId = 456;
+        public override ushort TypeID => ProtocolId;
+        public string Name { get; set; }
 
         public GameFightFighterNamedLightInformations(string name)
         {
             Name = name;
         }
 
-        public GameFightFighterNamedLightInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public string Name { get; set; }
+        public GameFightFighterNamedLightInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -29,5 +26,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             base.Deserialize(reader);
             Name = reader.ReadUTF();
         }
+
     }
 }

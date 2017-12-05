@@ -1,10 +1,14 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
 {
+    using Utils.IO;
+
     public class HumanOptionSkillUse : HumanOption
     {
         public new const ushort ProtocolId = 495;
+        public override ushort TypeID => ProtocolId;
+        public uint ElementId { get; set; }
+        public ushort SkillId { get; set; }
+        public double SkillEndTime { get; set; }
 
         public HumanOptionSkillUse(uint elementId, ushort skillId, double skillEndTime)
         {
@@ -13,14 +17,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             SkillEndTime = skillEndTime;
         }
 
-        public HumanOptionSkillUse()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public uint ElementId { get; set; }
-        public ushort SkillId { get; set; }
-        public double SkillEndTime { get; set; }
+        public HumanOptionSkillUse() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -37,5 +34,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             SkillId = reader.ReadVarUhShort();
             SkillEndTime = reader.ReadDouble();
         }
+
     }
 }

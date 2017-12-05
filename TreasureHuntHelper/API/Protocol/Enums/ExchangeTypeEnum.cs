@@ -19,7 +19,7 @@
         MOUNT = 15,
         MOUNT_STABLE = 16,
         NPC_RESURECT_PET = 17,
-        NPC_TRADE_RIDE = 18,
+        NPC_TRADE_DRAGOTURKEY = 18,
         REALESTATE_HOUSE = 19,
         REALESTATE_FARM = 20,
         RUNES_TRADE = 21,
@@ -28,6 +28,6 @@
         TRASHBIN = 24,
         ALLIANCE_PRISM = 25,
         HAVENBAG = 26,
-        NPC_TRADE_MULDO = 27
+        NPC_TRADE_SEEMYOOL = 27
     }
 }

@@ -1,10 +1,13 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context
 {
+    using Utils.IO;
+
     public class MapCoordinates : NetworkType
     {
         public const ushort ProtocolId = 174;
+        public override ushort TypeID => ProtocolId;
+        public short WorldX { get; set; }
+        public short WorldY { get; set; }
 
         public MapCoordinates(short worldX, short worldY)
         {
@@ -12,13 +15,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context
             WorldY = worldY;
         }
 
-        public MapCoordinates()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public short WorldX { get; set; }
-        public short WorldY { get; set; }
+        public MapCoordinates() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -31,5 +28,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context
             WorldX = reader.ReadShort();
             WorldY = reader.ReadShort();
         }
+
     }
 }

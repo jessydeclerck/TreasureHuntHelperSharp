@@ -1,10 +1,13 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Data.Items.Effects
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Data.Items.Effects
 {
+    using Utils.IO;
+
     public class ObjectEffectMinMax : ObjectEffect
     {
         public new const ushort ProtocolId = 82;
+        public override ushort TypeID => ProtocolId;
+        public uint Min { get; set; }
+        public uint Max { get; set; }
 
         public ObjectEffectMinMax(uint min, uint max)
         {
@@ -12,13 +15,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Data.Items.Effects
             Max = max;
         }
 
-        public ObjectEffectMinMax()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public uint Min { get; set; }
-        public uint Max { get; set; }
+        public ObjectEffectMinMax() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -33,5 +30,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Data.Items.Effects
             Min = reader.ReadVarUhInt();
             Max = reader.ReadVarUhInt();
         }
+
     }
 }

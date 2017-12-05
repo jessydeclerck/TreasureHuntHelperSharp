@@ -1,10 +1,13 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Prism
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Prism
 {
+    using Utils.IO;
+
     public class PrismSubareaEmptyInfo : NetworkType
     {
         public const ushort ProtocolId = 438;
+        public override ushort TypeID => ProtocolId;
+        public ushort SubAreaId { get; set; }
+        public uint AllianceId { get; set; }
 
         public PrismSubareaEmptyInfo(ushort subAreaId, uint allianceId)
         {
@@ -12,13 +15,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Prism
             AllianceId = allianceId;
         }
 
-        public PrismSubareaEmptyInfo()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ushort SubAreaId { get; set; }
-        public uint AllianceId { get; set; }
+        public PrismSubareaEmptyInfo() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -31,5 +28,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Prism
             SubAreaId = reader.ReadVarUhShort();
             AllianceId = reader.ReadVarUhInt();
         }
+
     }
 }

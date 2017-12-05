@@ -1,15 +1,21 @@
-﻿using System.Collections.Generic;
-using Cookie.API.Protocol.Network.Types.Game.Data.Items;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Startup
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Startup
 {
+    using Types.Game.Data.Items;
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class StartupActionAddObject : NetworkType
     {
         public const ushort ProtocolId = 52;
+        public override ushort TypeID => ProtocolId;
+        public int Uid { get; set; }
+        public string Title { get; set; }
+        public string Text { get; set; }
+        public string DescUrl { get; set; }
+        public string PictureUrl { get; set; }
+        public List<ObjectItemInformationWithQuantity> Items { get; set; }
 
-        public StartupActionAddObject(int uid, string title, string text, string descUrl, string pictureUrl,
-            List<ObjectItemInformationWithQuantity> items)
+        public StartupActionAddObject(int uid, string title, string text, string descUrl, string pictureUrl, List<ObjectItemInformationWithQuantity> items)
         {
             Uid = uid;
             Title = title;
@@ -19,17 +25,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Startup
             Items = items;
         }
 
-        public StartupActionAddObject()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public int Uid { get; set; }
-        public string Title { get; set; }
-        public string Text { get; set; }
-        public string DescUrl { get; set; }
-        public string PictureUrl { get; set; }
-        public List<ObjectItemInformationWithQuantity> Items { get; set; }
+        public StartupActionAddObject() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -38,7 +34,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Startup
             writer.WriteUTF(Text);
             writer.WriteUTF(DescUrl);
             writer.WriteUTF(PictureUrl);
-            writer.WriteShort((short) Items.Count);
+            writer.WriteShort((short)Items.Count);
             for (var itemsIndex = 0; itemsIndex < Items.Count; itemsIndex++)
             {
                 var objectToSend = Items[itemsIndex];
@@ -62,5 +58,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Startup
                 Items.Add(objectToAdd);
             }
         }
+
     }
 }

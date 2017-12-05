@@ -1,12 +1,13 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.TreasureHunt
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.TreasureHunt
 {
+    using Utils.IO;
+
     public class TreasureHuntStepFight : TreasureHuntStep
     {
         public new const ushort ProtocolId = 462;
-
         public override ushort TypeID => ProtocolId;
+
+        public TreasureHuntStepFight() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -17,5 +18,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.TreasureHunt
         {
             base.Deserialize(reader);
         }
+
     }
 }

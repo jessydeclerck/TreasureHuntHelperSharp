@@ -1,10 +1,13 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context
 {
+    using Utils.IO;
+
     public class ActorOrientation : NetworkType
     {
         public const ushort ProtocolId = 353;
+        public override ushort TypeID => ProtocolId;
+        public double ObjectId { get; set; }
+        public byte Direction { get; set; }
 
         public ActorOrientation(double objectId, byte direction)
         {
@@ -12,13 +15,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context
             Direction = direction;
         }
 
-        public ActorOrientation()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public double ObjectId { get; set; }
-        public byte Direction { get; set; }
+        public ActorOrientation() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -31,5 +28,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context
             ObjectId = reader.ReadDouble();
             Direction = reader.ReadByte();
         }
+
     }
 }

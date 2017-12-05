@@ -1,22 +1,19 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Social
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Social
 {
+    using Utils.IO;
+
     public class GuildInAllianceVersatileInformations : GuildVersatileInformations
     {
         public new const ushort ProtocolId = 437;
+        public override ushort TypeID => ProtocolId;
+        public uint AllianceId { get; set; }
 
         public GuildInAllianceVersatileInformations(uint allianceId)
         {
             AllianceId = allianceId;
         }
 
-        public GuildInAllianceVersatileInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public uint AllianceId { get; set; }
+        public GuildInAllianceVersatileInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -29,5 +26,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Social
             base.Deserialize(reader);
             AllianceId = reader.ReadVarUhInt();
         }
+
     }
 }

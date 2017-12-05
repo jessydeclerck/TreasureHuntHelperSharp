@@ -1,16 +1,22 @@
-﻿using System.Collections.Generic;
-using Cookie.API.Protocol.Network.Types.Game.Character.Choice;
-using Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Party.Companion;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Party
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Party
 {
+    using Types.Game.Character.Choice;
+    using Types.Game.Context.Roleplay.Party.Companion;
+    using Types.Game.Look;
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class PartyInvitationMemberInformations : CharacterBaseInformations
     {
         public new const ushort ProtocolId = 376;
+        public override ushort TypeID => ProtocolId;
+        public short WorldX { get; set; }
+        public short WorldY { get; set; }
+        public double MapId { get; set; }
+        public ushort SubAreaId { get; set; }
+        public List<PartyCompanionBaseInformations> Companions { get; set; }
 
-        public PartyInvitationMemberInformations(short worldX, short worldY, double mapId, ushort subAreaId,
-            List<PartyCompanionBaseInformations> companions)
+        public PartyInvitationMemberInformations(short worldX, short worldY, double mapId, ushort subAreaId, List<PartyCompanionBaseInformations> companions)
         {
             WorldX = worldX;
             WorldY = worldY;
@@ -19,16 +25,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Party
             Companions = companions;
         }
 
-        public PartyInvitationMemberInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public short WorldX { get; set; }
-        public short WorldY { get; set; }
-        public double MapId { get; set; }
-        public ushort SubAreaId { get; set; }
-        public List<PartyCompanionBaseInformations> Companions { get; set; }
+        public PartyInvitationMemberInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -37,7 +34,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Party
             writer.WriteShort(WorldY);
             writer.WriteDouble(MapId);
             writer.WriteVarUhShort(SubAreaId);
-            writer.WriteShort((short) Companions.Count);
+            writer.WriteShort((short)Companions.Count);
             for (var companionsIndex = 0; companionsIndex < Companions.Count; companionsIndex++)
             {
                 var objectToSend = Companions[companionsIndex];
@@ -61,5 +58,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Party
                 Companions.Add(objectToAdd);
             }
         }
+
     }
 }

@@ -12,8 +12,9 @@
         public uint BreedsVisible { get; set; }
         public uint BreedsAvailable { get; set; }
         public sbyte Status { get; set; }
+        public double UnlimitedRestatEndDate { get; set; }
 
-        public AccountCapabilitiesMessage(bool tutorialAvailable, bool canCreateNewCharacter, int accountId, uint breedsVisible, uint breedsAvailable, sbyte status)
+        public AccountCapabilitiesMessage(bool tutorialAvailable, bool canCreateNewCharacter, int accountId, uint breedsVisible, uint breedsAvailable, sbyte status, double unlimitedRestatEndDate)
         {
             TutorialAvailable = tutorialAvailable;
             CanCreateNewCharacter = canCreateNewCharacter;
@@ -21,6 +22,7 @@
             BreedsVisible = breedsVisible;
             BreedsAvailable = breedsAvailable;
             Status = status;
+            UnlimitedRestatEndDate = unlimitedRestatEndDate;
         }
 
         public AccountCapabilitiesMessage() { }
@@ -35,6 +37,7 @@
             writer.WriteVarUhInt(BreedsVisible);
             writer.WriteVarUhInt(BreedsAvailable);
             writer.WriteSByte(Status);
+            writer.WriteDouble(UnlimitedRestatEndDate);
         }
 
         public override void Deserialize(IDataReader reader)
@@ -46,6 +49,7 @@
             BreedsVisible = reader.ReadVarUhInt();
             BreedsAvailable = reader.ReadVarUhInt();
             Status = reader.ReadSByte();
+            UnlimitedRestatEndDate = reader.ReadDouble();
         }
 
     }

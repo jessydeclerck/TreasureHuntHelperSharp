@@ -167,9 +167,16 @@
     <Compile Include="API\Game\Map\MapEvent.cs" />
     <Compile Include="API\Game\Party\IParty.cs" />
     <Compile Include="API\Network\ListenerEntry.cs" />
+    <Compile Include="API\Protocol\Enums\GameServerTypeEnum.cs" />
     <Compile Include="API\Protocol\Network\Messages\Debug\DebugClearHighlightCellsMessage.cs" />
     <Compile Include="API\Protocol\Network\Messages\Debug\DebugHighlightCellsMessage.cs" />
     <Compile Include="API\Protocol\Network\Messages\Debug\DebugInClientMessage.cs" />
+    <Compile Include="API\Protocol\Network\Messages\Game\Context\Roleplay\Fight\GameRolePlayMonsterAngryAtPlayerMessage.cs" />
+    <Compile Include="API\Protocol\Network\Messages\Game\Context\Roleplay\Fight\GameRolePlayMonsterNotAngryAtPlayerMessage.cs" />
+    <Compile Include="API\Protocol\Network\Messages\Game\Inventory\Spells\SpellLevelUpdateMessage.cs" />
+    <Compile Include="API\Protocol\Network\Messages\Subscription\AccountInformationsUpdateMessage.cs" />
+    <Compile Include="API\Protocol\Network\Types\Game\Achievement\AchievementAchieved.cs" />
+    <Compile Include="API\Protocol\Network\Types\Game\Achievement\AchievementAchievedRewardable.cs" />
     <Compile Include="API\Utils\IO\FastBigEndianReader.cs" />
     <Compile Include="API\Utils\IO\LittleEndianReader.cs" />
     <Compile Include="Capture.cs" />

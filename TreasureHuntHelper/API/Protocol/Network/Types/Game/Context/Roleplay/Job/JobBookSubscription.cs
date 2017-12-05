@@ -1,10 +1,13 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Job
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Job
 {
+    using Utils.IO;
+
     public class JobBookSubscription : NetworkType
     {
         public const ushort ProtocolId = 500;
+        public override ushort TypeID => ProtocolId;
+        public byte JobId { get; set; }
+        public bool Subscribed { get; set; }
 
         public JobBookSubscription(byte jobId, bool subscribed)
         {
@@ -12,13 +15,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Job
             Subscribed = subscribed;
         }
 
-        public JobBookSubscription()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public byte JobId { get; set; }
-        public bool Subscribed { get; set; }
+        public JobBookSubscription() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -31,5 +28,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Job
             JobId = reader.ReadByte();
             Subscribed = reader.ReadBoolean();
         }
+
     }
 }

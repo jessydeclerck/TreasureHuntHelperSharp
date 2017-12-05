@@ -1,10 +1,13 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
 {
+    using Utils.IO;
+
     public class FightResultFighterListEntry : FightResultListEntry
     {
         public new const ushort ProtocolId = 189;
+        public override ushort TypeID => ProtocolId;
+        public double ObjectId { get; set; }
+        public bool Alive { get; set; }
 
         public FightResultFighterListEntry(double objectId, bool alive)
         {
@@ -12,13 +15,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             Alive = alive;
         }
 
-        public FightResultFighterListEntry()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public double ObjectId { get; set; }
-        public bool Alive { get; set; }
+        public FightResultFighterListEntry() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -33,5 +30,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Fight
             ObjectId = reader.ReadDouble();
             Alive = reader.ReadBoolean();
         }
+
     }
 }

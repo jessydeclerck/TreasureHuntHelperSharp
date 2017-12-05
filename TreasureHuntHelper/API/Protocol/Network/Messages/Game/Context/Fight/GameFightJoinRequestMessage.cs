@@ -7,9 +7,9 @@
         public const ushort ProtocolId = 701;
         public override ushort MessageID => ProtocolId;
         public double FighterId { get; set; }
-        public int FightId { get; set; }
+        public ushort FightId { get; set; }
 
-        public GameFightJoinRequestMessage(double fighterId, int fightId)
+        public GameFightJoinRequestMessage(double fighterId, ushort fightId)
         {
             FighterId = fighterId;
             FightId = fightId;
@@ -20,13 +20,13 @@
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteDouble(FighterId);
-            writer.WriteInt(FightId);
+            writer.WriteVarUhShort(FightId);
         }
 
         public override void Deserialize(IDataReader reader)
         {
             FighterId = reader.ReadDouble();
-            FightId = reader.ReadInt();
+            FightId = reader.ReadVarUhShort();
         }
 
     }

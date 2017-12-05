@@ -1,10 +1,13 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Look
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Look
 {
+    using Utils.IO;
+
     public class IndexedEntityLook : NetworkType
     {
         public const ushort ProtocolId = 405;
+        public override ushort TypeID => ProtocolId;
+        public EntityLook Look { get; set; }
+        public byte Index { get; set; }
 
         public IndexedEntityLook(EntityLook look, byte index)
         {
@@ -12,13 +15,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Look
             Index = index;
         }
 
-        public IndexedEntityLook()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public EntityLook Look { get; set; }
-        public byte Index { get; set; }
+        public IndexedEntityLook() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -32,5 +29,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Look
             Look.Deserialize(reader);
             Index = reader.ReadByte();
         }
+
     }
 }

@@ -1,13 +1,19 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Guild.Tax
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Guild.Tax
 {
+    using Utils.IO;
+
     public class TaxCollectorBasicInformations : NetworkType
     {
         public const ushort ProtocolId = 96;
+        public override ushort TypeID => ProtocolId;
+        public ushort FirstNameId { get; set; }
+        public ushort LastNameId { get; set; }
+        public short WorldX { get; set; }
+        public short WorldY { get; set; }
+        public double MapId { get; set; }
+        public ushort SubAreaId { get; set; }
 
-        public TaxCollectorBasicInformations(ushort firstNameId, ushort lastNameId, short worldX, short worldY,
-            double mapId, ushort subAreaId)
+        public TaxCollectorBasicInformations(ushort firstNameId, ushort lastNameId, short worldX, short worldY, double mapId, ushort subAreaId)
         {
             FirstNameId = firstNameId;
             LastNameId = lastNameId;
@@ -17,17 +23,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Guild.Tax
             SubAreaId = subAreaId;
         }
 
-        public TaxCollectorBasicInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ushort FirstNameId { get; set; }
-        public ushort LastNameId { get; set; }
-        public short WorldX { get; set; }
-        public short WorldY { get; set; }
-        public double MapId { get; set; }
-        public ushort SubAreaId { get; set; }
+        public TaxCollectorBasicInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -48,5 +44,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Guild.Tax
             MapId = reader.ReadDouble();
             SubAreaId = reader.ReadVarUhShort();
         }
+
     }
 }

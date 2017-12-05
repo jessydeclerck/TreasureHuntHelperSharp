@@ -1,11 +1,15 @@
-﻿using Cookie.API.Protocol.Network.Types.Game.Look;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Party.Companion
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Party.Companion
 {
+    using Types.Game.Look;
+    using Utils.IO;
+
     public class PartyCompanionBaseInformations : NetworkType
     {
         public const ushort ProtocolId = 453;
+        public override ushort TypeID => ProtocolId;
+        public byte IndexId { get; set; }
+        public byte CompanionGenericId { get; set; }
+        public EntityLook EntityLook { get; set; }
 
         public PartyCompanionBaseInformations(byte indexId, byte companionGenericId, EntityLook entityLook)
         {
@@ -14,14 +18,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Party.Companio
             EntityLook = entityLook;
         }
 
-        public PartyCompanionBaseInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public byte IndexId { get; set; }
-        public byte CompanionGenericId { get; set; }
-        public EntityLook EntityLook { get; set; }
+        public PartyCompanionBaseInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -37,5 +34,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Party.Companio
             EntityLook = new EntityLook();
             EntityLook.Deserialize(reader);
         }
+
     }
 }

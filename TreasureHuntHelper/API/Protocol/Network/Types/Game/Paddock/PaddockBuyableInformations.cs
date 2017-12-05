@@ -1,10 +1,13 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Paddock
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Paddock
 {
+    using Utils.IO;
+
     public class PaddockBuyableInformations : NetworkType
     {
         public const ushort ProtocolId = 130;
+        public override ushort TypeID => ProtocolId;
+        public ulong Price { get; set; }
+        public bool Locked { get; set; }
 
         public PaddockBuyableInformations(ulong price, bool locked)
         {
@@ -12,13 +15,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Paddock
             Locked = locked;
         }
 
-        public PaddockBuyableInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ulong Price { get; set; }
-        public bool Locked { get; set; }
+        public PaddockBuyableInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -31,5 +28,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Paddock
             Price = reader.ReadVarUhLong();
             Locked = reader.ReadBoolean();
         }
+
     }
 }

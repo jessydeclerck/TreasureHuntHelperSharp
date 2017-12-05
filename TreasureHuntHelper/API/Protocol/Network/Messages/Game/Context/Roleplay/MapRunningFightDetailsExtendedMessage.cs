@@ -1,7 +1,7 @@
 ﻿namespace Cookie.API.Protocol.Network.Messages.Game.Context.Roleplay
 {
-    using Types.Game.Context.Roleplay.Party;
     using Types.Game.Context.Fight;
+    using Types.Game.Context.Roleplay.Party;
     using System.Collections.Generic;
     using Utils.IO;
 

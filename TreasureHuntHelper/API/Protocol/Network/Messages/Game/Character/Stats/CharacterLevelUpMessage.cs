@@ -6,9 +6,9 @@
     {
         public const ushort ProtocolId = 5670;
         public override ushort MessageID => ProtocolId;
-        public byte NewLevel { get; set; }
+        public ushort NewLevel { get; set; }
 
-        public CharacterLevelUpMessage(byte newLevel)
+        public CharacterLevelUpMessage(ushort newLevel)
         {
             NewLevel = newLevel;
         }
@@ -17,12 +17,12 @@
 
         public override void Serialize(IDataWriter writer)
         {
-            writer.WriteByte(NewLevel);
+            writer.WriteVarUhShort(NewLevel);
         }
 
         public override void Deserialize(IDataReader reader)
         {
-            NewLevel = reader.ReadByte();
+            NewLevel = reader.ReadVarUhShort();
         }
 
     }

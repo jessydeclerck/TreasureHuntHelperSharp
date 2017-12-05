@@ -1,22 +1,20 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Interactive
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Interactive
 {
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class InteractiveElementWithAgeBonus : InteractiveElement
     {
         public new const ushort ProtocolId = 398;
+        public override ushort TypeID => ProtocolId;
+        public short AgeBonus { get; set; }
 
         public InteractiveElementWithAgeBonus(short ageBonus)
         {
             AgeBonus = ageBonus;
         }
 
-        public InteractiveElementWithAgeBonus()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public short AgeBonus { get; set; }
+        public InteractiveElementWithAgeBonus() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -29,5 +27,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Interactive
             base.Deserialize(reader);
             AgeBonus = reader.ReadShort();
         }
+
     }
 }

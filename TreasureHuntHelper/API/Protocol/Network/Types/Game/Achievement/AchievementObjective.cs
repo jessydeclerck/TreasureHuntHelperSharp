@@ -1,10 +1,13 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Achievement
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Achievement
 {
+    using Utils.IO;
+
     public class AchievementObjective : NetworkType
     {
         public const ushort ProtocolId = 404;
+        public override ushort TypeID => ProtocolId;
+        public uint ObjectId { get; set; }
+        public ushort MaxValue { get; set; }
 
         public AchievementObjective(uint objectId, ushort maxValue)
         {
@@ -12,13 +15,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Achievement
             MaxValue = maxValue;
         }
 
-        public AchievementObjective()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public uint ObjectId { get; set; }
-        public ushort MaxValue { get; set; }
+        public AchievementObjective() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -31,5 +28,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Achievement
             ObjectId = reader.ReadVarUhInt();
             MaxValue = reader.ReadVarUhShort();
         }
+
     }
 }

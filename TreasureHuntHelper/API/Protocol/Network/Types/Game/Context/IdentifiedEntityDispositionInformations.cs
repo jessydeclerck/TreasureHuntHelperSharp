@@ -1,22 +1,19 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context
 {
+    using Utils.IO;
+
     public class IdentifiedEntityDispositionInformations : EntityDispositionInformations
     {
         public new const ushort ProtocolId = 107;
+        public override ushort TypeID => ProtocolId;
+        public double ObjectId { get; set; }
 
         public IdentifiedEntityDispositionInformations(double objectId)
         {
             ObjectId = objectId;
         }
 
-        public IdentifiedEntityDispositionInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public double ObjectId { get; set; }
+        public IdentifiedEntityDispositionInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -29,5 +26,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context
             base.Deserialize(reader);
             ObjectId = reader.ReadDouble();
         }
+
     }
 }

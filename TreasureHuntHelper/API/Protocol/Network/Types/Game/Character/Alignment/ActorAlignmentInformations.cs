@@ -1,13 +1,17 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Character.Alignment
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Character.Alignment
 {
+    using Utils.IO;
+
     public class ActorAlignmentInformations : NetworkType
     {
         public const ushort ProtocolId = 201;
+        public override ushort TypeID => ProtocolId;
+        public sbyte AlignmentSide { get; set; }
+        public byte AlignmentValue { get; set; }
+        public byte AlignmentGrade { get; set; }
+        public double CharacterPower { get; set; }
 
-        public ActorAlignmentInformations(sbyte alignmentSide, byte alignmentValue, byte alignmentGrade,
-            double characterPower)
+        public ActorAlignmentInformations(sbyte alignmentSide, byte alignmentValue, byte alignmentGrade, double characterPower)
         {
             AlignmentSide = alignmentSide;
             AlignmentValue = alignmentValue;
@@ -15,15 +19,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Character.Alignment
             CharacterPower = characterPower;
         }
 
-        public ActorAlignmentInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public sbyte AlignmentSide { get; set; }
-        public byte AlignmentValue { get; set; }
-        public byte AlignmentGrade { get; set; }
-        public double CharacterPower { get; set; }
+        public ActorAlignmentInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -40,5 +36,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Character.Alignment
             AlignmentGrade = reader.ReadByte();
             CharacterPower = reader.ReadDouble();
         }
+
     }
 }

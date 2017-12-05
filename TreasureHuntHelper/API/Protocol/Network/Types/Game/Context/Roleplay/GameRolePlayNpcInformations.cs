@@ -1,10 +1,16 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
 {
+    using Types.Game.Context;
+    using Types.Game.Look;
+    using Utils.IO;
+
     public class GameRolePlayNpcInformations : GameRolePlayActorInformations
     {
         public new const ushort ProtocolId = 156;
+        public override ushort TypeID => ProtocolId;
+        public ushort NpcId { get; set; }
+        public bool Sex { get; set; }
+        public ushort SpecialArtworkId { get; set; }
 
         public GameRolePlayNpcInformations(ushort npcId, bool sex, ushort specialArtworkId)
         {
@@ -13,14 +19,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             SpecialArtworkId = specialArtworkId;
         }
 
-        public GameRolePlayNpcInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ushort NpcId { get; set; }
-        public bool Sex { get; set; }
-        public ushort SpecialArtworkId { get; set; }
+        public GameRolePlayNpcInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -37,5 +36,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             Sex = reader.ReadBoolean();
             SpecialArtworkId = reader.ReadVarUhShort();
         }
+
     }
 }

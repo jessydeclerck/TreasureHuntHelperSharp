@@ -1,22 +1,19 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Achievement
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Achievement
 {
+    using Utils.IO;
+
     public class AchievementStartedObjective : AchievementObjective
     {
         public new const ushort ProtocolId = 402;
+        public override ushort TypeID => ProtocolId;
+        public ushort Value { get; set; }
 
         public AchievementStartedObjective(ushort value)
         {
             Value = value;
         }
 
-        public AchievementStartedObjective()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ushort Value { get; set; }
+        public AchievementStartedObjective() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -29,5 +26,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Achievement
             base.Deserialize(reader);
             Value = reader.ReadVarUhShort();
         }
+
     }
 }

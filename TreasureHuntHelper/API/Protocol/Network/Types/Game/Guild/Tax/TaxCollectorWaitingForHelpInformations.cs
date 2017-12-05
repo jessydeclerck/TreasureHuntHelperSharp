@@ -1,23 +1,20 @@
-﻿using Cookie.API.Protocol.Network.Types.Game.Fight;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Guild.Tax
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Guild.Tax
 {
+    using Types.Game.Fight;
+    using Utils.IO;
+
     public class TaxCollectorWaitingForHelpInformations : TaxCollectorComplementaryInformations
     {
         public new const ushort ProtocolId = 447;
+        public override ushort TypeID => ProtocolId;
+        public ProtectedEntityWaitingForHelpInfo WaitingForHelpInfo { get; set; }
 
         public TaxCollectorWaitingForHelpInformations(ProtectedEntityWaitingForHelpInfo waitingForHelpInfo)
         {
             WaitingForHelpInfo = waitingForHelpInfo;
         }
 
-        public TaxCollectorWaitingForHelpInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ProtectedEntityWaitingForHelpInfo WaitingForHelpInfo { get; set; }
+        public TaxCollectorWaitingForHelpInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -31,5 +28,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Guild.Tax
             WaitingForHelpInfo = new ProtectedEntityWaitingForHelpInfo();
             WaitingForHelpInfo.Deserialize(reader);
         }
+
     }
 }

@@ -1,13 +1,20 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Actions.Fight
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Actions.Fight
 {
+    using Utils.IO;
+
     public class AbstractFightDispellableEffect : NetworkType
     {
         public const ushort ProtocolId = 206;
+        public override ushort TypeID => ProtocolId;
+        public uint Uid { get; set; }
+        public double TargetId { get; set; }
+        public short TurnDuration { get; set; }
+        public byte Dispelable { get; set; }
+        public ushort SpellId { get; set; }
+        public uint EffectId { get; set; }
+        public uint ParentBoostUid { get; set; }
 
-        public AbstractFightDispellableEffect(uint uid, double targetId, short turnDuration, byte dispelable,
-            ushort spellId, uint effectId, uint parentBoostUid)
+        public AbstractFightDispellableEffect(uint uid, double targetId, short turnDuration, byte dispelable, ushort spellId, uint effectId, uint parentBoostUid)
         {
             Uid = uid;
             TargetId = targetId;
@@ -18,18 +25,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Actions.Fight
             ParentBoostUid = parentBoostUid;
         }
 
-        public AbstractFightDispellableEffect()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public uint Uid { get; set; }
-        public double TargetId { get; set; }
-        public short TurnDuration { get; set; }
-        public byte Dispelable { get; set; }
-        public ushort SpellId { get; set; }
-        public uint EffectId { get; set; }
-        public uint ParentBoostUid { get; set; }
+        public AbstractFightDispellableEffect() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -52,5 +48,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Actions.Fight
             EffectId = reader.ReadVarUhInt();
             ParentBoostUid = reader.ReadVarUhInt();
         }
+
     }
 }

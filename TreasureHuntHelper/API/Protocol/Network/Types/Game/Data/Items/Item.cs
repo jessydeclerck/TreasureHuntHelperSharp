@@ -1,12 +1,13 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Data.Items
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Data.Items
 {
+    using Utils.IO;
+
     public class Item : NetworkType
     {
         public const ushort ProtocolId = 7;
-
         public override ushort TypeID => ProtocolId;
+
+        public Item() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -15,5 +16,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Data.Items
         public override void Deserialize(IDataReader reader)
         {
         }
+
     }
 }

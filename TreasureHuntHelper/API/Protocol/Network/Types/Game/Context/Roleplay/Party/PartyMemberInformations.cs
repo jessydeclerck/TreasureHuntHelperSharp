@@ -1,18 +1,30 @@
-﻿using System.Collections.Generic;
-using Cookie.API.Protocol.Network.Types.Game.Character.Choice;
-using Cookie.API.Protocol.Network.Types.Game.Character.Status;
-using Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Party.Companion;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Party
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Party
 {
+    using Types.Game.Character.Choice;
+    using Types.Game.Character.Status;
+    using Types.Game.Context.Roleplay.Party.Companion;
+    using Types.Game.Look;
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class PartyMemberInformations : CharacterBaseInformations
     {
         public new const ushort ProtocolId = 90;
+        public override ushort TypeID => ProtocolId;
+        public uint LifePoints { get; set; }
+        public uint MaxLifePoints { get; set; }
+        public ushort Prospecting { get; set; }
+        public byte RegenRate { get; set; }
+        public ushort Initiative { get; set; }
+        public sbyte AlignmentSide { get; set; }
+        public short WorldX { get; set; }
+        public short WorldY { get; set; }
+        public double MapId { get; set; }
+        public ushort SubAreaId { get; set; }
+        public PlayerStatus Status { get; set; }
+        public List<PartyCompanionMemberInformations> Companions { get; set; }
 
-        public PartyMemberInformations(uint lifePoints, uint maxLifePoints, ushort prospecting, byte regenRate,
-            ushort initiative, sbyte alignmentSide, short worldX, short worldY, double mapId, ushort subAreaId,
-            PlayerStatus status, List<PartyCompanionMemberInformations> companions)
+        public PartyMemberInformations(uint lifePoints, uint maxLifePoints, ushort prospecting, byte regenRate, ushort initiative, sbyte alignmentSide, short worldX, short worldY, double mapId, ushort subAreaId, PlayerStatus status, List<PartyCompanionMemberInformations> companions)
         {
             LifePoints = lifePoints;
             MaxLifePoints = maxLifePoints;
@@ -28,23 +40,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Party
             Companions = companions;
         }
 
-        public PartyMemberInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public uint LifePoints { get; set; }
-        public uint MaxLifePoints { get; set; }
-        public ushort Prospecting { get; set; }
-        public byte RegenRate { get; set; }
-        public ushort Initiative { get; set; }
-        public sbyte AlignmentSide { get; set; }
-        public short WorldX { get; set; }
-        public short WorldY { get; set; }
-        public double MapId { get; set; }
-        public ushort SubAreaId { get; set; }
-        public PlayerStatus Status { get; set; }
-        public List<PartyCompanionMemberInformations> Companions { get; set; }
+        public PartyMemberInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -61,7 +57,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Party
             writer.WriteVarUhShort(SubAreaId);
             writer.WriteUShort(Status.TypeID);
             Status.Serialize(writer);
-            writer.WriteShort((short) Companions.Count);
+            writer.WriteShort((short)Companions.Count);
             for (var companionsIndex = 0; companionsIndex < Companions.Count; companionsIndex++)
             {
                 var objectToSend = Companions[companionsIndex];
@@ -93,5 +89,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay.Party
                 Companions.Add(objectToAdd);
             }
         }
+
     }
 }

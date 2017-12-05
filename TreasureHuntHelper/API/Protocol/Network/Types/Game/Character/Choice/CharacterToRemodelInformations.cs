@@ -1,10 +1,14 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Character.Choice
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Character.Choice
 {
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class CharacterToRemodelInformations : CharacterRemodelingInformation
     {
         public new const ushort ProtocolId = 477;
+        public override ushort TypeID => ProtocolId;
+        public byte PossibleChangeMask { get; set; }
+        public byte MandatoryChangeMask { get; set; }
 
         public CharacterToRemodelInformations(byte possibleChangeMask, byte mandatoryChangeMask)
         {
@@ -12,13 +16,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Character.Choice
             MandatoryChangeMask = mandatoryChangeMask;
         }
 
-        public CharacterToRemodelInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public byte PossibleChangeMask { get; set; }
-        public byte MandatoryChangeMask { get; set; }
+        public CharacterToRemodelInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -33,5 +31,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Character.Choice
             PossibleChangeMask = reader.ReadByte();
             MandatoryChangeMask = reader.ReadByte();
         }
+
     }
 }

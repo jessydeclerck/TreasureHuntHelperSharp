@@ -1,22 +1,19 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context
 {
+    using Utils.IO;
+
     public class MapCoordinatesExtended : MapCoordinatesAndId
     {
         public new const ushort ProtocolId = 176;
+        public override ushort TypeID => ProtocolId;
+        public ushort SubAreaId { get; set; }
 
         public MapCoordinatesExtended(ushort subAreaId)
         {
             SubAreaId = subAreaId;
         }
 
-        public MapCoordinatesExtended()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ushort SubAreaId { get; set; }
+        public MapCoordinatesExtended() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -29,5 +26,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context
             base.Deserialize(reader);
             SubAreaId = reader.ReadVarUhShort();
         }
+
     }
 }

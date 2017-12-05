@@ -1,10 +1,14 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
 {
+    using Utils.IO;
+
     public class HumanOptionObjectUse : HumanOption
     {
         public new const ushort ProtocolId = 449;
+        public override ushort TypeID => ProtocolId;
+        public byte DelayTypeId { get; set; }
+        public double DelayEndTime { get; set; }
+        public ushort ObjectGID { get; set; }
 
         public HumanOptionObjectUse(byte delayTypeId, double delayEndTime, ushort objectGID)
         {
@@ -13,14 +17,7 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             ObjectGID = objectGID;
         }
 
-        public HumanOptionObjectUse()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public byte DelayTypeId { get; set; }
-        public double DelayEndTime { get; set; }
-        public ushort ObjectGID { get; set; }
+        public HumanOptionObjectUse() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -37,5 +34,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             DelayEndTime = reader.ReadDouble();
             ObjectGID = reader.ReadVarUhShort();
         }
+
     }
 }

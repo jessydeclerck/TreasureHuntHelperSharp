@@ -1,22 +1,19 @@
-﻿using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Data.Items
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Data.Items
 {
+    using Utils.IO;
+
     public class ObjectItemGenericQuantityPrice : ObjectItemGenericQuantity
     {
         public new const ushort ProtocolId = 494;
+        public override ushort TypeID => ProtocolId;
+        public ulong Price { get; set; }
 
         public ObjectItemGenericQuantityPrice(ulong price)
         {
             Price = price;
         }
 
-        public ObjectItemGenericQuantityPrice()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public ulong Price { get; set; }
+        public ObjectItemGenericQuantityPrice() { }
 
         public override void Serialize(IDataWriter writer)
         {
@@ -29,5 +26,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Data.Items
             base.Deserialize(reader);
             Price = reader.ReadVarUhLong();
         }
+
     }
 }

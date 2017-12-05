@@ -1,11 +1,15 @@
-﻿using System.Collections.Generic;
-using Cookie.API.Utils.IO;
-
-namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
+﻿namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
 {
+    using Types.Game.Context;
+    using System.Collections.Generic;
+    using Utils.IO;
+
     public class AtlasPointsInformations : NetworkType
     {
         public const ushort ProtocolId = 175;
+        public override ushort TypeID => ProtocolId;
+        public byte Type { get; set; }
+        public List<MapCoordinatesExtended> Coords { get; set; }
 
         public AtlasPointsInformations(byte type, List<MapCoordinatesExtended> coords)
         {
@@ -13,18 +17,12 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
             Coords = coords;
         }
 
-        public AtlasPointsInformations()
-        {
-        }
-
-        public override ushort TypeID => ProtocolId;
-        public byte Type { get; set; }
-        public List<MapCoordinatesExtended> Coords { get; set; }
+        public AtlasPointsInformations() { }
 
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteByte(Type);
-            writer.WriteShort((short) Coords.Count);
+            writer.WriteShort((short)Coords.Count);
             for (var coordsIndex = 0; coordsIndex < Coords.Count; coordsIndex++)
             {
                 var objectToSend = Coords[coordsIndex];
@@ -44,5 +42,6 @@ namespace Cookie.API.Protocol.Network.Types.Game.Context.Roleplay
                 Coords.Add(objectToAdd);
             }
         }
+
     }
 }
