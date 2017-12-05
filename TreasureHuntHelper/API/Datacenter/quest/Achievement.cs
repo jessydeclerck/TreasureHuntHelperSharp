@@ -9,6 +9,7 @@ namespace Cookie.API.Datacenter
     public class Achievement : IDataObject
     {
         public const string MODULE = "Achievements";
+		public bool AccountLinked;
         public uint CategoryId;
         public uint DescriptionId;
         public float ExperienceRatio;

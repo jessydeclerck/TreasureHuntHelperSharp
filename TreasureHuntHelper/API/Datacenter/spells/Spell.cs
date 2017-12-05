@@ -21,6 +21,7 @@ namespace Cookie.API.Datacenter
         public string ScriptParamsCritical;
         public List<uint> SpellLevels;
         public uint TypeId;
+        public string Defaultzone;
         public bool UseParamCache = true;
         public bool UseSpellLevelScaling;
         public List<int> Variants;

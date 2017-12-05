@@ -9,7 +9,12 @@ namespace Cookie.API.Datacenter
     public class MonsterRace : IDataObject
     {
         public const string MODULE = "MonsterRaces";
+		public int AggressiveZoneSize;
         public int Id;
+		public int AggressiveLevelDiff;
+		public bool UseRaceValues;
+		public string AggressiveImmunityCriterion;
+		public int AggressiveAttackDelay;
         public List<uint> Monsters;
         public uint NameId;
         public int SuperRaceId;

@@ -103,6 +103,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\Datacenter\misc\Subhints.cs" />
+    <Compile Include="API\Datacenter\spells\SpellVariant.cs" />
     <Compile Include="API\Gamedata\D2i\FastD2I.cs" />
     <Compile Include="API\Gamedata\D2i\FastD2IReader.cs" />
     <Compile Include="API\Gamedata\D2OParsing.cs" />

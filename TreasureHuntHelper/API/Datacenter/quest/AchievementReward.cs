@@ -10,7 +10,11 @@ namespace Cookie.API.Datacenter
     {
         public const string MODULE = "AchievementRewards";
         public uint AchievementId;
+		public string Criteria;
         public List<uint> EmotesReward;
+		public double KamasRatio;
+		public double ExperienceRatio;
+		public bool KamasScaleWithPlayerLevel;
         public uint Id;
         public List<uint> ItemsQuantityReward;
         public List<uint> ItemsReward;

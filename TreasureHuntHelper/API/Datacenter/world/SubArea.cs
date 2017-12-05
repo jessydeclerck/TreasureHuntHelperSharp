@@ -31,6 +31,7 @@ namespace Cookie.API.Datacenter
         public uint NameId;
         public List<List<int>> Npcs;
         public int PackId;
+        public bool MountAutoTripAllowed;
         public List<List<int>> Playlists;
         public List<List<int>> Quests;
         public List<int> Shape;

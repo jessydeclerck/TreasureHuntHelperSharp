@@ -16,11 +16,13 @@ namespace Cookie.API.Datacenter
         public List<EffectInstanceDice> CriticalEffect;
         public uint CriticalHitProbability;
         public List<EffectInstanceDice> Effects;
+        public List<string> AdditionalEffectsZones;
         public int GlobalCooldown;
         public uint Grade;
         public bool Hidden;
         public bool HideEffects;
         public uint Id;
+        public List<SpellState> StatesAuthorized;
         public uint InitialCooldown;
         public uint MaxCastPerTarget;
         public uint MaxCastPerTurn;

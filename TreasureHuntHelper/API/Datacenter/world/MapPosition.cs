@@ -13,6 +13,8 @@ namespace Cookie.API.Datacenter
         public bool HasPriorityOnWorldmap;
         public int Id;
         public bool IsUnderWater;
+		public bool IsTransition;
+		public int TacticalModeTemplateId;
         public int NameId;
         public bool Outdoor;
         public List<List<int>> Playlists;
